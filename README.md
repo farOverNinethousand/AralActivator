@@ -5,7 +5,9 @@ Script zum automatischen Aktivieren von gekauften Aral Karten (Aral "SuperCard")
 Aral Karten können ohne Aktivierung nicht verwendet werden.
 Das händische Aktivieren vieler Aral Karten kostet Zeit - diese wollen wir uns sparen.
 Aral Karten kauft man idR nur, wenn es Rabatte gibt wie z.B. hier (Nov. 2019):
+
 https://www.mydealz.de/deals/aral-supercard-fur-50-kaufen-5-geschenkt-1465573
+
 Man darf die Bestellscheine und die nicht aktivierten Karten nicht voneinander trennen ansonsten kann man nicht mehr zuordnen, welche Karte mit welchem Aktivierungscode aktiviert werden muss.
 
 ## Eigenschaften von Aral (Tank-)Karten
@@ -32,7 +34,9 @@ Aral Karten laufen nicht so schnell ab - wer also viele bestellt hat kann getros
 ## Links
 OCR Software / Library:
 https://pypi.org/project/pytesseract/
+
 Karten hier aktivieren:
 https://www.aral-supercard.de/services/karte-aktivieren/
+
 Hier Guthaben abfragen (Captcha notwendig!):
 https://www.aral-supercard.de/services/kartenguthaben-abrufen/
