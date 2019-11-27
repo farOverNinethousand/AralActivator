@@ -48,7 +48,7 @@ def getSerialNumber():
     # Function END
     
 def getSupercardNumber():
-    # TODO: Length of 19 is probably wrong!
+    # According to their website, their card numbers are really 19 digits lol
     print('Enter supercard number (19 digits):')
     return userInputDefinedLengthNumber(19)
     # Function END
@@ -117,6 +117,7 @@ if emailSource != None:
             #print('Adding ' + orderNumberStr + ':' + activationCodeStr)
             tmpVoucherList = []
             currOrder = {'order_number':orderNumber}
+            # TODO: Add valid_until field (+ 3 years from activation date on)
             currVoucher = {'activation_code':activationCode,'activated':False, 'start_balance':voucherBalance, 'current_balance':voucherBalance}
             tmpVoucherList.append(currVoucher)
             currOrder['vouchers'] = tmpVoucherList
@@ -143,7 +144,8 @@ for currOrder in orderArray:
         continue
     print('Activate order: %d' % currOrder['order_number'])
     currVoucher['card_number'] = getSupercardNumber()
-    currVoucher['serial_number'] = getSerialNumber()
+    # We do not need this information
+    #currVoucher['serial_number'] = getSerialNumber()
     currVoucher['registration_code'] = getRegistrationCode()
     # TODO: Add activation function
     # TODO: Add balance checker function (low priority)

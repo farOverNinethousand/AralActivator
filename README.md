@@ -12,11 +12,14 @@ Man darf die Bestellscheine und die nicht aktivierten Karten nicht voneinander t
 
 ## Eigenschaften von Aral (Tank-)Karten
 Die Karten kommen per Post.
-Jeder Bestellung, die idealerweise nur eine zu aktivierende Karte enthält, ist eine Bestellnummer zugeordnet, die auf dem Lieferschein steht.
+Jeder Bestellung, die idealerweise nur eine zu aktivierende Karte enthält ist ein Lieferschein mit folgenden relevanten Informationen beigelegt:
+- Bestellnummer (9-stellig[?])
+- Aktivierungscode (6-10-stellig [Lt. Webseite, Stand 27.11.2019])
+
 Zudem stehen auf jeder Aral Karte Folgende Infos:
-- Aral SuperCard Nr.
-- Seriennummer
-- Registrierungscode (4-stellig, manchmal/früher war das ein Rubbelfeld)
+- Aral SuperCard Nr. (19-stellig, meist sind mind. die ersten 8 Stellen gegeben)
+- Registrierungscode (4-stellig)
+- Seriennummer (10-stellig) [irrelevant]
 Per E-Mail bekommt man dann einen Aktivierungscode, der für die gesamte Bestellung(?) gilt - meistens muss man sowieso nur eine Karte aktivieren.
 
 ## Grundsätzliche Idee

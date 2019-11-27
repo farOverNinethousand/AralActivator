@@ -1,0 +1,19 @@
+<div id="ap-content">
+                    
+
+
+
+                    
+        
+<a id="c7524"></a><header><h1 class="">
+				Kartenguthaben Ihrer Aral Supercard
+			</h1></header><div class="ce-textpic ce-center ce-above"><div class="ce-bodytext"><p><br /></p></div></div>
+
+
+
+<a id="c6370"></a><div class="hide-typo3">
+			    <div class="ap-message ap-message--error ap-message--icon">
+        <ul>
+                                                <li>Der eingegebene Code war leider nicht korrekt. Probieren Sie es erneut.</li>
+                                    </ul>
+    </div>

@@ -1,0 +1,45 @@
+<div id="ap-content">
+                    
+
+
+
+                    
+        
+<a id="c6373"></a><header><h1 class="">
+				Ihr Kartenguthaben
+			</h1></header><div class="ce-textpic ce-center ce-above"></div>
+
+
+
+<a id="c6372"></a><div class="hide-typo3">
+			
+    
+        <table class="table table-striped ap-table-outer-border table-hover">
+            <colgroup>
+                <col class="col-md-2">
+                <col class="*">
+            </colgroup>
+            <tbody>
+            <tr>
+                <th>Kartennummer</th>
+                <td>7056607412345678912</td>
+            </tr>
+            <tr>
+                <th>Guthaben</th>
+                <td>5,00 €</td>
+            </tr>
+            <tr>
+                <th>gültig bis</th>
+                <td>20.11.2022</td>
+            </tr>
+            </tbody>
+        </table>
+
+    
+		</div>
+
+
+
+<a id="c7624"></a><a href="services/kartenguthaben-abrufen/" 
+           class="btn ap-btn ap-btn--blue ap-btn--icon-arrow-right"
+           title="Weitere Kartenguthaben abrufen" target="_self">Weitere Kartenguthaben abrufen</a>

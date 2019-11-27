@@ -1,0 +1,12 @@
+<header><h1 class="">
+				Meine Karte aktivieren
+			</h1></header>
+
+
+
+<a id="c6351"></a><div class="hide-typo3">
+			    <div class="ap-message ap-message--error ap-message--icon">
+        <ul>
+                                                <li>Karte ist bereits aktiv! <a href="https://www.aral-supercard.de/services/kartenguthaben-abrufen">Hier Ihr Guthaben abfragen!</a></li>
+                                    </ul>
+    </div>
