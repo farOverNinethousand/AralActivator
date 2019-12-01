@@ -56,6 +56,10 @@ Du solltest diese Datei nicht löschen - nur dann kann der Activator auch in Zuk
 settings.json:
 Enthält die Einstellungen des Scripts
 
+## TODOs
+- OCR Erkennung der Infos auf Aral Karten
+- Guthaben prüfen (unklar wie sinnvoll das ist, die Captchas sind sehr nervig!)
+
 ## Links
 OCR Software / Library:
 https://pypi.org/project/pytesseract/

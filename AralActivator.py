@@ -8,7 +8,7 @@ Created on 26.11.2019
 import os, json, re, sys
 
 # Global variables
-INTERNAL_VERSION = '0.0.1'
+INTERNAL_VERSION = '0.0.2'
 PATH_STORED_VOUCHERS = os.path.join('vouchers.json')
 PATH_INPUT_MAILS = os.path.join('mails.txt')
 
@@ -16,14 +16,13 @@ PATH_INPUT_MAILS = os.path.join('mails.txt')
 def userInputDefinedLengthNumber(exact_length):
     while True:
         input_str = input()
-        print('Input = ' + input_str)
         if len(input_str) != exact_length:
-            print('Code is more or less than ' + str(exact_length) + ' digits')
+            print('Eingabe ist groesser oder kleiner als ' + str(exact_length) + ' Stellen')
             continue
         if not input_str.isdecimal():
-            print('Please enter a NUMBER')
+            print('Bitte gib eine ZAHL ein')
             continue
-        break
+        return int(input_str)
     # Function END
     
 def userInputNumber():
@@ -33,34 +32,43 @@ def userInputNumber():
             input_int = int(input_str)
             return input_int
         except:
-            print('Please enter a NUMBER')
+            print('Bitte gib eine ZAHL ein')
             continue
     # Function END
 
 def getRegistrationCode():
-    print('Enter registration code (4 digits):')
+    print('Gib den Registrierungscode ein (4 digits):')
     return userInputDefinedLengthNumber(4)
     # Function END
     
 def getSerialNumber():
-    print('Enter serial number (10 digits):')
+    print('Gib die Seriennummer ein (10 digits):')
     return userInputDefinedLengthNumber(10)
     # Function END
     
-def getSupercardNumber():
+def getSupercardNumber(supercard_hint):
     # According to their website, their card numbers are really 19 digits lol
-    print('Enter supercard number (19 digits):')
-    return userInputDefinedLengthNumber(19)
+    exact_length = 19
+    if supercard_hint != None and len(supercard_hint) < 19 and supercard_hint.isdecimal():
+        # Parts of our number are already given - only ask user for the rest
+        exact_length = exact_length - len(supercard_hint)
+        print('Gib die restlichen %d Stellen der SuperCard Nr. ein: %s' % (exact_length, supercard_hint))
+        supercard_number = supercard_hint + str(userInputDefinedLengthNumber(exact_length))
+        # Debug
+        print('SupercardNumber = ' + supercard_number)
+        return int(supercard_number)
+    else:
+        print('Gib die SuperCard Nr. ein (%d-stellig):' % exact_length)
+        return int(userInputDefinedLengthNumber(exact_length))
     # Function END
     
 def getActivationCode():
-    # TODO: Length of 19 is probably wrong!
-    print('Enter activation code (10 digits):')
+    print('Gib den Aktivierungscode ein (10-stellig):')
     return userInputDefinedLengthNumber(10)
     # Function END
 
 def getVoucherBalance():
-    print('Enter amount (all cards you add should have the same balance in Euro):')
+    print('Gib den Wert deiner Karten ein (alle Karten, die du einfuegst sollten jeweils denselben Wert in Euro haben):')
     return userInputNumber()
     
 
@@ -137,13 +145,18 @@ if orderArray == None:
 # print('(2) = check remaining balance of existing cards')
 # print('(3) = add new cards')
 
+#TODO: Crawl card number hint from website
+card_number_hint = '70566074'
+
 for currOrder in orderArray:
     currVoucher = currOrder['vouchers'][0]
     isActivated = currVoucher['activated']
     if isActivated:
         continue
-    print('Activate order: %d' % currOrder['order_number'])
-    currVoucher['card_number'] = getSupercardNumber()
+    print('Aktiviere Bestellung: %d' % currOrder['order_number'])
+    # TODO: Add errorhandling for typos
+    # TODO: Grab card number beginning from website so user has to type in less
+    currVoucher['card_number'] = getSupercardNumber(card_number_hint)
     # We do not need this information
     #currVoucher['serial_number'] = getSerialNumber()
     currVoucher['registration_code'] = getRegistrationCode()
@@ -152,10 +165,10 @@ for currOrder in orderArray:
     #currVoucher['activated'] = True
     # Simple 'UI'
     # TODO: Only ask if we're not already working on the last element
-    print('Activate more? 0 = Stop')
+    # TODO: Add possibility to skip current voucher
+    print('Aktiviere weitere Karten? 0 = Stop')
     user_decision = userInputDefinedLengthNumber(1)
-    # TODO: Fix this
-    if user_decision == 0 or True:
+    if user_decision == 0:
         break
     
 
