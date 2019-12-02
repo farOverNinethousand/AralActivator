@@ -49,6 +49,10 @@ def getSerialNumber():
 def getSupercardNumber(supercard_hint):
     # According to their website, their card numbers are really 19 digits lol
     exact_length = 19
+    if supercard_hint == None or len(supercard_hint) >= 19 or  not supercard_hint.isdecimal():
+        # 2019-12-02: Fallback to hardcoded value
+        supercard_hint = '70566074'
+    # TODO: Remove this check
     if supercard_hint != None and len(supercard_hint) < 19 and supercard_hint.isdecimal():
         # Parts of our number are already given - only ask user for the rest
         exact_length = exact_length - len(supercard_hint)
@@ -146,9 +150,11 @@ if orderArray == None:
 # print('(3) = add new cards')
 
 #TODO: Crawl card number hint from website
-card_number_hint = '70566074'
+card_number_hint = None
 
+orderCounter = 0
 for currOrder in orderArray:
+    print('Arbeite an Bestellung %d / %d' % (orderCounter + 1, len(orderArray)))
     currVoucher = currOrder['vouchers'][0]
     isActivated = currVoucher['activated']
     if isActivated:
@@ -163,13 +169,12 @@ for currOrder in orderArray:
     # TODO: Add activation function
     # TODO: Add balance checker function (low priority)
     #currVoucher['activated'] = True
-    # Simple 'UI'
-    # TODO: Only ask if we're not already working on the last element
     # TODO: Add possibility to skip current voucher
     print('Aktiviere weitere Karten? 0 = Stop')
-    user_decision = userInputDefinedLengthNumber(1)
-    if user_decision == 0:
-        break
+    if orderCounter + 1 < len(orderArray) -1:
+        user_decision = userInputDefinedLengthNumber(1)
+        if user_decision == 0:
+            break
     
 
 # Save orders
