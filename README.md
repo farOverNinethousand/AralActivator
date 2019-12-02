@@ -30,17 +30,16 @@ Die Bilder werden per OCR Erkennung in Text umgewandelt.
 Danach kann man über die Bestellnummer alle nötigen Informationen zum Aktivieren verknüpfen und alle Karten automatisiert aktivieren.
 Diese Informationen könnte man noch abspeichern - so könnte man später das Guthaben (benötigt Eingabe von Captcha-Code) halb-automatisiert abfragen falls man sich bei einzelnen bereits verwendeten Karten nach dem Einkauf/Tanken nicht gemerkt hat, wie viel noch übrig ist.
 
-## Wo ist das Script??
-Das ist bisher nur eine Idee. Um diese umzusetzen brauche ich zum Einen noch Zeit und zum Anderen erhoffe ich mir von der frühen Erstellungs dieses GitHub Projektes Ideen / Tipps zur Umsetzung.
-Aral Karten laufen nicht so schnell ab - wer also viele bestellt hat kann getrost mit der Aktivierung warten und mit etwas Glück bringt euch dieses Projekt was und falls nicht ist auch kein Weltuntergang ;)
-Update 27.11.2019:
-Da die Sache mit der Texterkennung noch ein wenig dauern kann, werde ich zunächst eine "halbautomatische" Version bauen, die lediglich den Aktivierungscode automatisch eingeben kann.
-
-## Anleitung [Halbautomatische Version] (Achtung es gibt noch keine lauffähige Version!)
-1. Sammle die Inhalte aller Aral Aktivierungs-Mails und kopiere sie in eine Textdatei mit dem Namen 'mails.txt'.
+## Anleitung [Halbautomatische Version]
+1. Lege alle zu aktivierenden Aral Karten samt Lieferschein auf eine Oberfläche in der Nähe deines PCs.
+2. Sammle die Inhalte aller Aral Aktivierungs-Mails und kopiere sie in eine Textdatei mit dem Namen 'mails.txt'.
 Kopiere diese in den Ordner, in dem auch das Script liegt.
-2. Startet das Script. Es sollte die Bestellnummern samt Aktivierungscodes automatisch finden und dich nach den restlichen Informationen fragen.
-3. Solltest du keine Lust mehr auf weitere Aktivierungsvorgänge (nicht einfach das Fenster schließen!), wird der Status gespeichert und du kannst das nächste Mal einfach fortfahren.
+Tipp: Im GMail Webmailer findest du die Mails z.B. so:
+`subject:("aktivierung ihrer aral supercard")`
+3. Starte das Script. Es sollte alle Bestellnummern samt Aktivierungscodes automatisch erfassen und dich nach den restlichen Informationen fragen.
+4. Solltest du keine Lust mehr auf weitere Aktivierungsvorgänge hast, beende das Programm übers Menü und nicht über das "X", sodass der status gespeichert werden kann.
+
+Du kannst bei jedem Start neue mails in die mails.txt legen - es macht nichts, wenn bereits hinzugefügte Mails in der Datei verbleiben.
 
 ## Einstellungen (settings.json)
 setting_max_voucher_failures_before_stop = Max. Anzahl unbekannter Fehler bei der Aktivierung hintereinander
@@ -56,7 +55,8 @@ Du solltest diese Datei nicht löschen - nur dann kann der Activator auch in Zuk
 settings.json:
 Enthält die Einstellungen des Scripts
 
-## TODOs
+## TODOs (Geordnet nach Prioritäten)
+- Mehr Fehlertoleranz
 - OCR Erkennung der Infos auf Aral Karten
 - Guthaben prüfen (unklar wie sinnvoll das ist, die Captchas sind sehr nervig!)
 
