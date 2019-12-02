@@ -141,7 +141,8 @@ if emailSource != None:
             orderArray.append(currOrder)
             numberof_new_vouchers += 1
         print('%d neue Bestellungen gefunden' % numberof_new_vouchers)
-        print('Anzahl aller Bestellungen: %d' % (numberof_new_vouchers * voucherBalance))
+        if numberof_new_vouchers > 0:
+            print('Gesamtwert aller neuen Bestellungen: %d' % (numberof_new_vouchers * voucherBalance))
 
 if orderArray == None:
     print('Es konnten keine Bestellungen befunden werden --> Abbruch')
@@ -167,12 +168,14 @@ try:
     successfullyActivatedOrdersCounter = 0
     for currOrder in orderArray:
         try:
-            print('Arbeite an Bestellung %d / %d' % (orderCounter + 1, len(orderArray)))
+            print('Arbeite an Bestellung %d / %d: %d' % (orderCounter + 1, len(orderArray), currOrder['order_number']))
             currVoucher = currOrder['vouchers'][0]
             isActivated = currVoucher['activated']
             if isActivated:
+                print('Bestellung wurde bereits aktiviert')
                 continue
-            print('Aktiviere Bestellung: %d' % currOrder['order_number'])
+            # Not needed anymore
+            #print('Aktiviere Bestellung: %d' % currOrder['order_number'])
             
             response = br.open('https://www.aral-supercard.de/services/karte-aktivieren/')
             html = response.read()
@@ -241,7 +244,8 @@ finally:
     with open(PATH_STORED_VOUCHERS, 'w') as outfile:
         json.dump(orderArray, outfile)
     
-    print('Done')
+    print('Done - druecke ENTER zum Schließen des Fensters')
     # Debug
     #raise
+    input()
     sys.exit()

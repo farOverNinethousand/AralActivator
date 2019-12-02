@@ -30,6 +30,12 @@ Die Bilder werden per OCR Erkennung in Text umgewandelt.
 Danach kann man über die Bestellnummer alle nötigen Informationen zum Aktivieren verknüpfen und alle Karten automatisiert aktivieren.
 Diese Informationen könnte man noch abspeichern - so könnte man später das Guthaben (benötigt Eingabe von Captcha-Code) halb-automatisiert abfragen falls man sich bei einzelnen bereits verwendeten Karten nach dem Einkauf/Tanken nicht gemerkt hat, wie viel noch übrig ist.
 
+## Installation (Windows)
+1. Installiere Python 3
+2. Installiere folgende python Module:
+mechanize
+3. Starte AralActivator.py per Doppelklick.
+
 ## Anleitung [Halbautomatische Version]
 1. Lege alle zu aktivierenden Aral Karten samt Lieferschein auf eine Oberfläche in der Nähe deines PCs.
 2. Sammle die Inhalte aller Aral Aktivierungs-Mails und kopiere sie in eine Textdatei mit dem Namen 'mails.txt'.
