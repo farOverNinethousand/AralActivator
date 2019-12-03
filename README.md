@@ -47,12 +47,15 @@ Tipp: Im GMail Webmailer findest du die Mails z.B. so:
 
 Du kannst bei jedem Start neue mails in die mails.txt legen - es macht nichts, wenn bereits hinzugefügte Mails in der Datei verbleiben.
 
-## Einstellungen (settings.json)
-setting_max_voucher_failures_before_stop = Max. Anzahl unbekannter Fehler bei der Aktivierung hintereinander
-setting_save_log = Log speichern?
+## Tipps
+1. Füge maximal 10 zu aktivierende Karten/EMails gleichzeitig ein es sei denn du bist sehr gut organisiert, hast gute Augen und eine große Fläche zum Ausbreiten von Karten samt Lieferscheinen.
+2. Füge nur Karten desselben Wertes in einer Tour hinzu.
+Das ist zwar bisher nur wichtig für einen internen Wert, der gespeichert wird, könnte jedoch irgendwann in Zukunft nützlich sein.
 
 ## Fehler und deren Bedeutung
-1. Email crawler failed: Length mismatch: Vermutlich hat Aral die Textbausteine der Aktivierungs-Mails geändert. Bitte lass' mir eine (zensierte) Fassung deiner Mails zukommen, damit ich das aktualisieren kann.
+1. "Email crawler failed: Length mismatch":
+
+Vermutlich hat Aral die Textbausteine der Aktivierungs-Mails geändert. Bitte lass' mir eine (zensierte) Fassung deiner Mails zukommen, damit ich das aktualisieren kann.
 
 ## Dateien und deren Inhalt
 vouchers.json:

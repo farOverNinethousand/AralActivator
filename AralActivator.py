@@ -7,7 +7,7 @@ Created on 26.11.2019
 import os, json, re, sys, mechanize
 
 # Global variables
-INTERNAL_VERSION = '0.1.2'
+INTERNAL_VERSION = '0.1.3'
 PATH_STORED_VOUCHERS = os.path.join('vouchers.json')
 PATH_INPUT_MAILS = os.path.join('mails.txt')
 
@@ -38,13 +38,13 @@ def userInputNumber():
 
 
 def getRegistrationCode():
-    print('Gib den Registrierungscode ein (4 digits):')
+    print('Gib den Registrierungscode ein (4-stellig):')
     return userInputDefinedLengthNumber(4)
     # Function END
 
     
 def getSerialNumber():
-    print('Gib die Seriennummer ein (10 digits):')
+    print('Gib die Seriennummer ein (10-stellig):')
     return userInputDefinedLengthNumber(10)
     # Function END
 
@@ -81,7 +81,7 @@ def getVoucherBalance():
     return userInputNumber()
     
 
-print('Welcome to AralActivator ' + INTERNAL_VERSION)
+print('Welcome to AralActivator %s' % INTERNAL_VERSION)
 
 # Load settings and user data
 orderArray = []
@@ -105,12 +105,10 @@ except:
 
 # Crawl data from emailSource
 if emailSource != None:
-    print('Crawling email source')
+    print('Extrahiere Bestellnummern und Aktivierungscodes aus den E-Mails ...')
     voucherBalance = 0
     crawledOrderNumbers = re.compile(r'Ihre Aral SuperCard Bestellung\s+(\d+)').findall(emailSource)
     crawledActivationCodes = re.compile(r'Der Aktivierungscode lautet:\s*(\d+)').findall(emailSource)
-    print(crawledOrderNumbers)
-    print(crawledActivationCodes)
     numberof_new_vouchers = 0
     if len(crawledOrderNumbers) != len(crawledActivationCodes):
         print('Email crawler failed: Length mismatch')
@@ -126,6 +124,7 @@ if emailSource != None:
                     alreadyExists = True
                     break
             if alreadyExists:
+                # Skip existing mails
                 print('Ueberspringe bereits existierende Bestellnummer: ' + orderNumberStr)
                 continue
             if voucherBalance == 0:
@@ -143,9 +142,12 @@ if emailSource != None:
         print('%d neue Bestellungen gefunden' % numberof_new_vouchers)
         if numberof_new_vouchers > 0:
             print('Gesamtwert aller neuen Bestellungen: %d' % (numberof_new_vouchers * voucherBalance))
+        else:
+            print('Deine E-Mails enthielten keine neuen Bestellungen')
 
 if orderArray == None:
-    print('Es konnten keine Bestellungen befunden werden --> Abbruch')
+    # There is nothing we can do --> Exit
+    print('Es konnten keine Bestellungen gefunden werden --> Abbruch')
     sys.exit()
 
 # TODO: Add functionality
@@ -162,20 +164,29 @@ br.set_handle_robots(False)  # ignore robots
 br.set_handle_refresh(False)  # can sometimes hang without this
 br.addheaders = [('User-agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36')]
 
+numberof_un_activated_cards = 0
+for currOrder in orderArray:
+    currVoucher = currOrder['vouchers'][0]
+    isActivated = currVoucher['activated']
+    if isActivated == False:
+        numberof_un_activated_cards += 1
+
 try:
     card_number_hint = None
-    orderCounter = 0
+    loopCounter = 0
+    attemptedActivations = 0
     successfullyActivatedOrdersCounter = 0
     for currOrder in orderArray:
         try:
-            print('Arbeite an Bestellung %d / %d: %d' % (orderCounter + 1, len(orderArray), currOrder['order_number']))
             currVoucher = currOrder['vouchers'][0]
             isActivated = currVoucher['activated']
             if isActivated:
-                print('Bestellung wurde bereits aktiviert')
+                # Skip already activated cards
                 continue
+            attemptedActivations += 1
+            print('Aktiviere Karte von Bestellnummer %d / %d: %d' % (attemptedActivations, numberof_un_activated_cards, currOrder['order_number']))
             # Not needed anymore
-            #print('Aktiviere Bestellung: %d' % currOrder['order_number'])
+            # print('Aktiviere Bestellung: %d' % currOrder['order_number'])
             
             response = br.open('https://www.aral-supercard.de/services/karte-aktivieren/')
             html = response.read()
@@ -203,7 +214,7 @@ try:
             # currVoucher['serial_number'] = getSerialNumber()
             currVoucher['registration_code'] = getRegistrationCode()
             # We already have our activation code!
-            #currVoucher['activation_code'] = getActivationCode()
+            # currVoucher['activation_code'] = getActivationCode()
             
             br['supercardnumber'] = str(currVoucher['card_number'])
             br['activationcode'] = str(currVoucher['activation_code'])
@@ -231,13 +242,19 @@ try:
             # Update voucher status
             currVoucher['activated'] = True
             # TODO: Add possibility to skip current voucher
-            print('Aktiviere weitere Karten? 0 = Stop')
-            if orderCounter + 1 < len(orderArray) - 1:
-                user_decision = userInputDefinedLengthNumber(1)
-                if user_decision == 0:
+            print('Aktiviere weitere Karten? 0 = Abbrechen')
+            if loopCounter + 1 < len(orderArray) - 1:
+                user_decision = input()
+                if user_decision.isdecimal() and int(user_decision) == 0:
                     break
         finally:
-            orderCounter += 1
+            loopCounter += 1
+
+
+    if successfullyActivatedOrdersCounter != numberof_un_activated_cards:
+        print('Anzahl fehlgeschlagener/uebersprungener Aktivierungen: ')
+    else:
+        print('Alle %d neuen Karten wurden erfolgreich aktiviert' % numberof_un_activated_cards)
 
 finally:
     # Make sure to always save orders!
@@ -246,6 +263,6 @@ finally:
     
     print('Done - druecke ENTER zum Schließen des Fensters')
     # Debug
-    #raise
+    # raise
     input()
     sys.exit()
