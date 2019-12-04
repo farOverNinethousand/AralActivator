@@ -7,10 +7,18 @@ Created on 26.11.2019
 import os, json, re, sys, mechanize
 
 # Global variables
-INTERNAL_VERSION = '0.1.3'
+INTERNAL_VERSION = '0.1.4'
 PATH_STORED_VOUCHERS = os.path.join('vouchers.json')
+PATH_STORED_SETTINGS = os.path.join('settings.json')
+PATH_STORED_COOKIES = os.path.join('cookies.txt')
 PATH_INPUT_MAILS = os.path.join('mails.txt')
 
+
+BASE_DOMAIN = 'https://www.aral-supercard.de'
+
+
+def isLoggedIN(html):
+    return b'class=\"login-link logout\"' in html
 
 def userInputDefinedLengthNumber(exact_length):
     while True:
@@ -83,6 +91,77 @@ def getVoucherBalance():
 
 print('Welcome to AralActivator %s' % INTERNAL_VERSION)
 
+print('Achtung: Dieses Script kann nur Bestellungen mit jeweils einer zu aktivierenden Karte verarbeiten und nur Bestellungen auf diesem Account!')
+
+settings = {}
+# Load settings
+try: 
+    readFile = open(PATH_STORED_SETTINGS, 'r')
+    settingsJson = readFile.read()
+    settings = json.loads(settingsJson)
+    readFile.close
+except:
+    print('Failed to load ' + PATH_STORED_SETTINGS)
+    
+settings.setdefault('email', None)
+settings.setdefault('password', None)
+settings.setdefault('requires_account', True)
+account_email = settings['email']
+account_password = ['password']
+
+if settings['email'] == None or settings['password'] == None:
+    print('Gib deine aral-supercard.de Zugangsdaten ein')
+    print('Gib deine E-Mail ein:')
+    settings['email'] = input()
+    print('Gib dein Passwort ein:')
+    settings['password'] = input()
+else:
+    print('Gespeicherte Zugangsdaten wurden erfolgreich geladen')
+    print('Verwende email: ' + account_email)
+
+
+# Prepare browser
+br = mechanize.Browser()
+# br.set_all_readonly(False)    # allow everything to be written to
+br.set_handle_robots(False)  # ignore robots
+br.set_handle_refresh(False)  # can sometimes hang without this
+br.addheaders = [('User-agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36')]
+# Try to login via stored cookies first - Aral only allows one active session which means we will most likely have to perform a full login
+cookies = mechanize.LWPCookieJar(PATH_STORED_COOKIES)
+br.set_cookiejar(cookies)
+
+response = br.open(BASE_DOMAIN)
+html = response.read()
+if not isLoggedIN(html):
+    print('Versuche vollstaendigen Login')
+    response = br.open(BASE_DOMAIN + '/login')
+    # TODO: Improve this to make sure we got the correct form
+    try:
+        br.select_form(nr=2)
+        email_field = br['email']
+        password_field = br['password']
+    except:
+        # Fatal failure
+        print('Login-Form konnte nicht gefunden werden')
+        raise
+    br['email'] = settings['email']
+    br['password'] = settings['password']
+    response = br.submit()
+    html = response.read()
+    if not isLoggedIN(html):
+        print('Login failed')
+        sys.exit()
+    else:
+        print('Vollstaendiger Login erfolgreich')
+else:
+    print('Login ueber gueltige Cookies erfolgreich')
+
+# Save cookies and logindata
+cookies.save()
+with open(PATH_STORED_SETTINGS, 'w') as outfile:
+    json.dump(settings, outfile)
+
+# TODO: 
 # Load settings and user data
 orderArray = []
 emailSource = None
@@ -150,19 +229,14 @@ if orderArray == None:
     print('Es konnten keine Bestellungen gefunden werden --> Abbruch')
     sys.exit()
 
+# TODO: Crawel all order-IDs from here, then activate all orders for which we do have activationCodes for: https://www.aral-supercard.de/services/bestellungen?page=1
+#ordersInAccount = []
+
 # TODO: Add functionality
 # print('What do you want to do?')
 # print('(0) = exit')
 # print('(1) = activate cards')
-# print('(2) = check remaining balance of existing cards')
-# print('(3) = add new cards')
-
-# Prepare browser
-br = mechanize.Browser()
-# br.set_all_readonly(False)    # allow everything to be written to
-br.set_handle_robots(False)  # ignore robots
-br.set_handle_refresh(False)  # can sometimes hang without this
-br.addheaders = [('User-agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36')]
+# print('(2) = add new cards')
 
 numberof_un_activated_cards = 0
 for currOrder in orderArray:
@@ -193,14 +267,10 @@ try:
             # TODO: Improve this to make sure we got the correct form
             try:
                 br.select_form(nr=2)
+                card_number_hint = br['supercardnumber']
             except:
                 # Fatal failure
                 print('Form konnte nicht gefunden werden')
-                raise
-            try:
-                card_number_hint = br['supercardnumber']
-            except:
-                print('Falsche Form gefunden')
                 raise
             
             # Debug: output contents of form

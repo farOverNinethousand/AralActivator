@@ -23,12 +23,10 @@ Zudem stehen auf jeder Aral Karte Folgende Infos:
 Per E-Mail bekommt man dann einen Aktivierungscode, der für die gesamte Bestellung(?) gilt - meistens muss man sowieso nur eine Karte aktivieren.
 
 ## Grundsätzliche Idee
-Man macht Bilder auf denen jeweils ein- oder mehrere Karten und die dazugehörigen Lieferscheine sind (im Idealfall gehen mehrere Karten & Lieferscheine pro Bild).
-Dann kopiert man alle Texte aller Mails mit den Aktivierungscodes in ein Textdokument.
-Das Script filtert aus den Mails die Bestellnummern + Aktivierungscodes heraus.
-Die Bilder werden per OCR Erkennung in Text umgewandelt.
-Danach kann man über die Bestellnummer alle nötigen Informationen zum Aktivieren verknüpfen und alle Karten automatisiert aktivieren.
-Diese Informationen könnte man noch abspeichern - so könnte man später das Guthaben (benötigt Eingabe von Captcha-Code) halb-automatisiert abfragen falls man sich bei einzelnen bereits verwendeten Karten nach dem Einkauf/Tanken nicht gemerkt hat, wie viel noch übrig ist.
+Die Aral E-Mails mit den Bestellnummern + Aktivierungscode abgreifen und dann automatisch alle Karten aller Bestellungen hier aktivieren:
+https://www.aral-supercard.de/services/bestellungen/
+Der Kartenwert einzelner Bestellungen bzw. Karten lässt sich hier extrahieren:
+https://www.aral-supercard.de/services/bestellungen/detailansicht/<Bestellnummer>
 
 ## Installation (Windows)
 1. Installiere Python 3
@@ -64,17 +62,18 @@ Du solltest diese Datei nicht löschen - nur dann kann der Activator auch in Zuk
 settings.json:
 Enthält die Einstellungen des Scripts
 
+settings.json:
+Enthält die aral-supercard.de Zugangsdaten und alle möglichen Einstellungen.
+
 ## TODOs (Geordnet nach Prioritäten)
 - Mehr Fehlertoleranz
-- OCR Erkennung der Infos auf Aral Karten
 - Guthaben prüfen (unklar wie sinnvoll das ist, die Captchas sind sehr nervig!)
 
 ## Links
-OCR Software / Library:
-https://pypi.org/project/pytesseract/
-
-Karten hier aktivieren:
+Karten hier 'manuell' bzw. ohne sich einzuloggen aktivieren:
 https://www.aral-supercard.de/services/karte-aktivieren/
+Karten hier (einfacher) aktivieren, wenn man eingeloggt ist:
+https://www.aral-supercard.de/services/bestellungen/
 
 Hier Guthaben abfragen (Captcha notwendig!):
 https://www.aral-supercard.de/services/kartenguthaben-abrufen/
