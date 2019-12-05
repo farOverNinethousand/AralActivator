@@ -7,7 +7,7 @@ Created on 26.11.2019
 import os, json, re, sys, mechanize, time
 
 # Global variables
-INTERNAL_VERSION = '0.3.5'
+INTERNAL_VERSION = '0.3.6'
 PATH_STORED_VOUCHERS = os.path.join('vouchers.json')
 PATH_STORED_SETTINGS = os.path.join('settings.json')
 PATH_STORED_COOKIES = os.path.join('cookies.txt')
@@ -209,9 +209,53 @@ def activateSemiAutomatic(br, orderArray):
 #         print('Anzahl fehlgeschlagener/uebersprungener Aktivierungen: ')
 #     else:
 #         print('Alle %d neuen Karten wurden erfolgreich aktiviert' % numberof_un_activated_cards)
-    # Def end
+    return
     
-def crawlOrderNumbers(br, accountCrawledOrderNumbers, emailOrders):
+def crawlOrderNumbersFromMail(orderArray):
+        # Load mails
+    try: 
+        readFile = open(PATH_INPUT_MAILS, 'r')
+        emailSource = readFile.read()
+        readFile.close
+    except:
+        print('Failed to load ' + PATH_INPUT_MAILS)
+    
+    # Crawl data from emailSource
+    if emailSource != None:
+        print('Extrahiere Bestellnummern und Aktivierungscodes aus E-Mails ...')
+        crawledOrderNumbers = re.compile(r'Ihre Aral SuperCard Bestellung\s*(\d+)').findall(emailSource)
+        crawledActivationCodes = re.compile(r'Der Aktivierungscode lautet\s*:\s*(\d+)').findall(emailSource)
+        numberof_new_vouchers = 0
+        if len(crawledOrderNumbers) != len(crawledActivationCodes):
+            print('Email crawler failed: Length mismatch')
+        else:
+            for i in range(len(crawledOrderNumbers)):
+                orderNumberStr = crawledOrderNumbers[i]
+                orderNumber = int(orderNumberStr)
+                activationCode = int(crawledActivationCodes[i])
+                currOrder = None
+                for o in orderArray:
+                    if orderNumber == o['order_number']:
+                        currOrder = o
+                        break
+                if currOrder != None and 'activation_code' in currOrder:
+                    # Skip existing orders that already have assigned order_numbers
+                    # Debug, TODO: Use official logging functionality
+                    # print('Ueberspringe bereits existierende Bestellnummer: ' + orderNumberStr)
+                    continue
+                #print('Bestellnummer:Aktivierungscode --> ' + orderNumberStr + ':' + str(activationCode))
+                currOrder = {'order_number':orderNumber,'activation_code':activationCode,'activated':False}
+                # TODO: Add activation date (= current date)
+                # TODO: Add valid_until field (+ 3 years from activation date on)
+                orderArray.append(currOrder)
+                numberof_new_vouchers += 1
+            if numberof_new_vouchers > 0:
+                print('%d neue Bestellungen gefunden' % numberof_new_vouchers)
+            else:
+                print('Deine E-Mails enthielten keine neuen Bestellungen')
+    return
+
+def crawlOrderNumbersFromAccount(br, accountCrawledOrderNumbers, emailOrders):
     # TODO: Optimize to stop on known codes on last site --> Orders are sorted from newest --> oldest --> Saves time and http requests
     page_counter = 0
     max_items_per_page = 20
@@ -227,9 +271,10 @@ def crawlOrderNumbers(br, accountCrawledOrderNumbers, emailOrders):
             break
         found_new_entry = False
         for currCrawledOrderNumber in currentCrawledOrderNumbers:
-            if emailOrders != None or currCrawledOrderNumber not in emailOrders:
+            currCrawledOrderNumber = int(currCrawledOrderNumber)
+            if emailOrders != None and not any(emailOrderNumber['order_number'] == currCrawledOrderNumber for emailOrderNumber in emailOrders):
                 found_new_entry = True
-                accountCrawledOrderNumbers.append(int(currCrawledOrderNumber))
+                accountCrawledOrderNumbers.append(currCrawledOrderNumber)
         page_check = '?page=' + str(page_counter + 1)
         # Stop-conditions and fail-safes
         if page_check not in html:
@@ -240,29 +285,30 @@ def crawlOrderNumbers(br, accountCrawledOrderNumbers, emailOrders):
             print('Alle Bestellnummern gefunden(?) --> Aktuelle Seite enthaelt weniger als %d Elemente' %  len(currentCrawledOrderNumbers))
             break
         elif found_new_entry == False:
-            # TODO: Check if this works
+            # This improves speed significantly for users who have many orders in their account
             print('Stoppe Suche nach neuen Bestellnummern, da die letzten %d Eintraege bereits vom letzten Crawlvorgang bekannt sind' % len(currentCrawledOrderNumbers))
             break
         time.sleep(2)
         # Continue
-    print('Anzahl gefundener Bestellnummern: %d auf insgesamt %d Seiten' % (len(accountCrawledOrderNumbers), page_counter))
-    # End of while loop
+    print('Anzahl gefundener aktivierbarer Bestellnummern: %d auf insgesamt %d Seiten' % (len(accountCrawledOrderNumbers), page_counter))
+    return
     
 def activateAutomatic(br, orderArray):
     max_numberof_failures_in_a_row = 3
     numberof_failures_in_a_row = 0
     numberof_un_activated_cards = 0
-    for currOrder in orderArray:
-        if currOrder['activated'] == False:
-            numberof_un_activated_cards += 1
     # Crawl all OrderNumbers from website
     accountCrawledOrderNumbers = []
-    crawlOrderNumbers(br, accountCrawledOrderNumbers, orderArray)
+    crawlOrderNumbersFromAccount(br, accountCrawledOrderNumbers, orderArray)
     if len(orderArray) == 0:
         print('Es konnten keine Bestellnummern gefunden werden --> Fehler im Script oder ungueltige Zugangsdaten')
         return None
     for element in accountCrawledOrderNumbers:
         print('Found orderNumber: ' + str(element))
+        
+    for currOrder in orderArray:
+        if 'activated' not in currOrder or currOrder['activated'] == False:
+            numberof_un_activated_cards += 1
     
     # Now find out which orders are not yet activated AND have their activation_code given
     progressCounter = 0
@@ -278,18 +324,21 @@ def activateAutomatic(br, orderArray):
                 if order_number == accountCrawledOrderNumber:
                     mailOrder = tmpOrder
                     break
-            if mailOrder == None:
-                # TODO: Add new items without activationnumber so we can improve the speed of our OrderCrawler
+            if mailOrder == None or 'activation_code' not in mailOrder:
                 # Skip such items as we do not have the activation-number
-                #print('Bestellnummer konnte keiner E-Mail Bestellnummer zugeordnet werden --> Ueberspringe diese Nummer')
+                print('Bestellnummer konnte keiner E-Mail Bestellnummer zugeordnet werden --> Ueberspringe diese Nummer')
                 orderActivationImpossibleArray.append({'order_number':accountCrawledOrderNumber,'failure_reason':'Aktivierungscode konnte nicht gefunden werden'})
+                if mailOrder == None:
+                    # Add item to array of crawled orders which will improve account order crawler speed in the future
+                    mailOrder = {'order_number':accountCrawledOrderNumber}
+                    orderArray.append(mailOrder)
                 continue
             print('Arbeite an Bestellung: ' + str(accountCrawledOrderNumber))
             isActivated = mailOrder['activated']
             activationCode = mailOrder['activation_code']
             print('Bestellnummer = %d --> Aktivierungscode = %d' %(accountCrawledOrderNumber, activationCode))
             
-            if isActivated:
+            if isActivated == True:
                 # Skip already activated cards
                 print('Diese Bestellnummer wurde bereits zuvor (per Script?) aktiviert')
                 continue
@@ -465,49 +514,8 @@ try:
     orderArray = json.loads(settingsJson)
 except:
     print('Failed to load ' + PATH_STORED_VOUCHERS)
-# Load mails
-try: 
-    readFile = open(PATH_INPUT_MAILS, 'r')
-    emailSource = readFile.read()
-    readFile.close
-except:
-    print('Failed to load ' + PATH_INPUT_MAILS)
 
-# TODO: Maybe add the possibility to let the user add vouchers manually
-
-# Crawl data from emailSource
-if emailSource != None:
-    print('Extrahiere Bestellnummern und Aktivierungscodes aus E-Mails ...')
-    crawledOrderNumbers = re.compile(r'Ihre Aral SuperCard Bestellung\s*(\d+)').findall(emailSource)
-    crawledActivationCodes = re.compile(r'Der Aktivierungscode lautet\s*:\s*(\d+)').findall(emailSource)
-    numberof_new_vouchers = 0
-    if len(crawledOrderNumbers) != len(crawledActivationCodes):
-        print('Email crawler failed: Length mismatch')
-    else:
-        for i in range(len(crawledOrderNumbers)):
-            orderNumberStr = crawledOrderNumbers[i]
-            orderNumber = int(orderNumberStr)
-            activationCode = int(crawledActivationCodes[i])
-            alreadyExists = False
-            for o in orderArray:
-                if orderNumber == o['order_number']:
-                    alreadyExists = True
-                    break
-            if alreadyExists:
-                # Skip existing mails
-                # Debug, TODO: Use official logging functionality
-                # print('Ueberspringe bereits existierende Bestellnummer: ' + orderNumberStr)
-                continue
-            #print('Bestellnummer:Aktivierungscode --> ' + orderNumberStr + ':' + str(activationCode))
-            currOrder = {'order_number':orderNumber,'activation_code':activationCode,'activated':False}
-            # TODO: Add activation date (= current date)
-            # TODO: Add valid_until field (+ 3 years from activation date on)
-            orderArray.append(currOrder)
-            numberof_new_vouchers += 1
-        if numberof_new_vouchers > 0:
-            print('%d neue Bestellungen gefunden' % numberof_new_vouchers)
-        else:
-            print('Deine E-Mails enthielten keine neuen Bestellungen')
+crawlOrderNumbersFromMail(orderArray)
 
 if orderArray == None:
     # There is nothing we can do --> Exit
@@ -534,6 +542,6 @@ finally:
     
     print('Done - druecke ENTER zum Schließen des Fensters')
     # Debug
-    #raise
+    raise
     input()
     sys.exit()
