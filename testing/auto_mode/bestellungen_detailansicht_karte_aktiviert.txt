@@ -1,0 +1,1371 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+
+<meta charset="utf-8">
+<!-- 
+	This website is powered by TYPO3 - inspiring people to share!
+	TYPO3 is a free open source Content Management Framework initially created by Kasper Skaarhoj and licensed under GNU/GPL.
+	TYPO3 is copyright 1998-2019 of Kasper Skaarhoj. Extensions are copyright of their respective owners.
+	Information and contribution at https://typo3.org/
+-->
+
+<base href="https://www.aral-supercard.de/">
+
+<title>Bestellung - Aral SuperCard</title>
+<meta name="generator" content="TYPO3 CMS">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+
+<link rel="stylesheet" type="text/css" href="https://dccdn.de/www.aral-supercard.de/typo3conf/ext/aral_provider/Resources/Public/css/main.typo3.min.1574953180.css" media="all">
+<link rel="stylesheet" type="text/css" href="https://dccdn.de/www.aral-supercard.de/typo3conf/ext/aral_provider/Resources/Public/css/meforyou.min.1574953179.css" media="all">
+
+
+
+
+<script src="https://dccdn.de/www.aral-supercard.de/typo3conf/ext/aral_provider/Resources/Public/js/vendor.min.1574953206.js" type="text/javascript"></script>
+<script src="https://dccdn.de/www.aral-supercard.de/typo3conf/ext/aral_provider/Resources/Public/js/main.min.1574953191.js" type="text/javascript"></script>
+<script src="https://dccdn.de/www.aral-supercard.de/typo3conf/ext/aral_provider/Resources/Public/js/shop.min.1574953189.js" type="text/javascript"></script>
+<script src="https://dccdn.de/www.aral-supercard.de/typo3conf/ext/aral_provider/Resources/Public/js/meforyou.min.1574953191.js" type="text/javascript"></script>
+
+
+
+
+        <link rel="schema.DCTERMS" href="http://purl.org/dc/terms/">
+<meta name="DCTERMS.title" content="Bestellung">
+<meta name="description" content="">
+<meta name="DCTERMS.description" content="">
+<meta name="keywords" content="">
+<meta name="DCTERMS.subject" content="">
+<meta name="date" content="2017-09-19T09:21:52+02:00">
+<meta name="DCTERMS.date" content="2017-09-19T09:21:52+02:00">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://aral-supercard-b2c-cms.antwerpes.com/services/bestellungen/bestellung/">
+
+
+</head>
+<body class="nojs page-853">
+
+            <script>
+window.dataLayer = window.dataLayer || [];
+dataLayer = [{"pageUrl":"https:\/\/www.aral-supercard.de\/services\/bestellungen\/detailansicht\/123456789","loginStatus":"logged in","debitorenID":51754646,"contentSection_1":"services","contentSection_2":"bestellungen","contentSection_3":"detailansicht"}];
+</script>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-MMSDLRH');</script>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MMSDLRH"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+                        
+
+<noscript>
+    <div class="container-fluid" id="noscript">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="container">
+                    <div class="row">
+                        <div class="column-12">
+                            <h3>JavaScript deaktiviert!</h3>
+
+                            <p>Um den vollen Funktionsumfang dieser Webseite zu erfahren, benötigen Sie JavaScript.<br>
+                                Eine Anleitung wie Sie JavaScript in Ihrem Browser aktivieren finden Sie
+                                <a href="http://www.enable-javascript.com/de/" target="_blank">hier</a>.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</noscript>
+
+<div class="container-fluid" id="cookieinfo">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="container">
+                <div class="row ap-margin-top--10 ap-margin-bottom--10">
+                    <div class="column-9">
+                        <p class="ap-margin-bottom--0"><strong>Wir nutzen Cookies</strong>, um Ihnen den bestmöglichen Service auf unserer Webseite zu bieten.
+                            Durch den Besuch unserer Webseite erklären Sie sich mit der Verwendung von Cookies einverstanden...
+                            <a href="http://www.aral.de/de/retail/cookie-information.html" class="ap-link-orange-arrow">Mehr dazu</a></p>
+                    </div>
+                    <div class="column-3 text-right">
+                        <a class="ap-btn ap-btn--blue ap-bpicon-cross ap-margin-bottom--0" id="closeCookieInfo">Schließen</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="ap-header-wrap">
+    
+
+<div class="container">
+    <header class="ap-header">
+        <div class="ap-logo">
+    <div class="ap-logo-image">
+        <a href="/">
+            <img src="https://dccdn.de/www.aral-supercard.de/typo3conf/ext/aral_provider/Resources/Public/img/logos/aral.png"
+                 alt="Aral Logo" width="54" height="54"/>
+        </a>
+    </div>
+
+    <div class="ap-logo-text">
+        <p>
+            <span class="ap-welcome">Aral SuperCard</span>
+        </p>
+    </div>
+</div>
+
+        <div class="ap-header-right">
+            <!--Login menu-->
+            
+            <div class="ap-login ">
+
+                                
+                    <a class="hidden-xs" href="https://business.aral-supercard.de">
+                        Zum Geschäftskundenbereich
+                    </a>
+                
+                                
+                        <a href="https://www.aral-supercard.de/logout" class="login-link logout">Logout</a>
+            
+            </div>
+            <!--Login menu-->
+
+            <!--Search box-->
+            
+                    <div class="ap-search-box">
+                        <form method="get" action="/suchen">
+                            <input type="text" name="q" class="ap-search" placeholder="Suchbegriff">
+                            <button type="submit" name="submitSearch" class="ap-submit">S</button>
+                        </form>
+                    </div>
+                
+            <!--Search box-->
+        </div>
+    </header>
+</div>
+
+
+    
+
+
+<nav id="ap-main-menu" class="navbar navbar-default">
+    
+    <button type="button" class="navbar-toggle collapsed" data-toggle="offcanvas">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar icon-bar--top"></span>
+        <span class="icon-bar icon-bar--middle"></span>
+        <span class="icon-bar icon-bar--bottom"></span>
+    </button>
+
+    <!-- @todo: Avoid absolute path. -->
+
+    
+
+    
+    
+            <form class="navbar-right ap-navbar-search" role="search" method="get" action="/suchen">
+                <a class="btn btn-default toggle-only" id="nav-search-toggle-btn"></a>
+                <div class="ap-search-form-group">
+                    <input type="text" name="q" class="form-control">
+                    <button type="submit" class="btn btn-default" id="nav-search-btn"></button>
+                </div>
+            </form>
+        
+
+    <div class="container">
+        <div class="collapse navbar-collapse">
+            
+                
+                    <ul class="nav navbar-nav">
+                        
+                            <li class="">
+                                <a href="/">
+                                    
+
+
+
+
+
+    
+
+                                    Home
+                                </a>
+                                
+                            </li>
+                        
+                            <li class="ap-dropdown level1">
+                                <a href="uebersicht/">
+                                    
+
+
+
+
+
+    
+
+                                    Übersicht
+                                </a>
+                                
+                                    
+                                        
+                                            <ul class="ap-dropdown-menu">
+                                                
+                                                    <li class="ap-dropdown level2">
+                                                        <a href="uebersicht/aktionen/">Aktionen</a>
+                                                        
+                                                            
+
+                                                                <ul class="ap-dropdown-menu">
+                                                                    
+                                                                        <li>
+                                                                            <a href="uebersicht/aktionen/pummelcup-gewinnspiel/">Pummelcup Gewinnspiel</a>
+                                                                        </li>
+                                                                    
+                                                                        <li>
+                                                                            <a href="uebersicht/aktionen/jp-performance-aktion/">JP Performance Aktion</a>
+                                                                        </li>
+                                                                    
+                                                                        <li>
+                                                                            <a href="uebersicht/aktionen/triff-deinen-helden/">Triff Deinen Helden</a>
+                                                                        </li>
+                                                                    
+                                                                        <li>
+                                                                            <a href="uebersicht/aktionen/sportgewinnspiel/">Sportgewinnspiel</a>
+                                                                        </li>
+                                                                    
+                                                                </ul>
+
+                                                            
+                                                        
+                                                    </li>
+                                                
+                                                    <li class="ap-dropdown level2">
+                                                        <a href="uebersicht/kartenvarianten/">Kartenvarianten</a>
+                                                        
+                                                            
+
+                                                                <ul class="ap-dropdown-menu">
+                                                                    
+                                                                        <li>
+                                                                            <a href="uebersicht/kartenvarianten/standardkarten/">Standardkarten</a>
+                                                                        </li>
+                                                                    
+                                                                        <li>
+                                                                            <a href="uebersicht/kartenvarianten/for-you/">For You</a>
+                                                                        </li>
+                                                                    
+                                                                        <li>
+                                                                            <a href="uebersicht/kartenvarianten/sammelkarten/">Sammelkarten</a>
+                                                                        </li>
+                                                                    
+                                                                </ul>
+
+                                                            
+                                                        
+                                                    </li>
+                                                
+                                                    <li class="">
+                                                        <a href="uebersicht/geschenkverpackungen/">Geschenkverpackungen</a>
+                                                        
+                                                    </li>
+                                                
+                                                    <li class="">
+                                                        <a href="uebersicht/fragen-und-antworten/">Fragen und Antworten</a>
+                                                        
+                                                    </li>
+                                                
+                                            </ul>
+                                        
+                                    
+                                
+                            </li>
+                        
+                            <li class="">
+                                <a href="me4you/">
+                                    
+
+
+
+
+
+    
+
+                                    Me4You
+                                </a>
+                                
+                            </li>
+                        
+                            <li class="">
+                                <a href="shop/">
+                                    
+
+
+
+
+
+    
+        <span class="icon icon-ap-shop"></span>
+    
+
+                                    Shop
+                                </a>
+                                
+                            </li>
+                        
+                    </ul>
+                
+            
+
+            <ul class="nav navbar-nav navbar-right">
+                
+                    
+                        
+                            <li class="ap-dropdown level1">
+                                <a href="services/">
+                                    
+
+
+
+
+
+    
+        <span class="icon icon-ap-cogs"></span>
+    
+
+                                    Services
+                                </a>
+
+                                
+                                    
+                                        
+                                            <ul class="ap-dropdown-menu">
+                                                
+                                                    <li class="ap-dropdown level2">
+                                                        <a href="services/profildaten/">Profildaten</a>
+                                                        
+                                                            
+                                                                <ul class="ap-dropdown-menu">
+                                                                    
+                                                                        <li>
+                                                                            <a href="services/profildaten/meine-daten/">Meine Daten</a>
+                                                                        </li>
+                                                                    
+                                                                        <li>
+                                                                            <a href="services/profildaten/lieferadressen/">Lieferadressen</a>
+                                                                        </li>
+                                                                    
+                                                                        <li>
+                                                                            <a href="services/profildaten/passwort-aendern/">Passwort ändern</a>
+                                                                        </li>
+                                                                    
+                                                                </ul>
+                                                            
+                                                        
+                                                    </li>
+                                                
+                                                    <li class="">
+                                                        <a href="services/bestellungen/">Bestellungen</a>
+                                                        
+                                                    </li>
+                                                
+                                                    <li class="">
+                                                        <a href="services/karte-aktivieren/">Karte aktivieren</a>
+                                                        
+                                                    </li>
+                                                
+                                                    <li class="">
+                                                        <a href="services/kartenguthaben-abrufen/">Kartenguthaben abrufen</a>
+                                                        
+                                                    </li>
+                                                
+                                                    <li class="">
+                                                        <a href="services/karte-registrieren/">Karte registrieren</a>
+                                                        
+                                                    </li>
+                                                
+                                                    <li class="">
+                                                        <a href="services/kartenverwaltung/">Kartenverwaltung</a>
+                                                        
+                                                    </li>
+                                                
+                                            </ul>
+                                        
+                                    
+                                
+                            </li>
+                        
+                    
+                
+
+                                <li>
+                    <a href="https://www.aral-supercard.de/shop/warenkorb" class="ap-cart-link">
+                        <i class="icon icon-ap-cart"></i>
+                        <span>Warenkorb</span>
+                        <span class="ap-cart-link__count"></span>
+                    </a>
+                </li>
+                            </ul>
+        </div>
+    </div>
+</nav>
+
+</div>
+
+<div class="ap-canvas">
+    <div class="ap-canvas__on">
+        <div class="container">
+            
+        
+    
+        <div class="row hidden-xs">
+            <div class="column-12">
+                <ol class="breadcrumb">
+                    <li><a href="/">Home</a></li>
+                    
+                        
+                            <li>
+                                
+                                        <a href="services/">Services</a>
+                                    
+                            </li>
+                        
+                            <li>
+                                
+                                        <a href="services/bestellungen/">Bestellungen</a>
+                                    
+                            </li>
+                        
+                            <li>
+                                
+                                        Bestellung
+                                    
+                            </li>
+                        
+                    
+                </ol>
+            </div>
+        </div>
+        <div class="ap-margin-bottom--25 hidden-sm hidden-md hidden-lg"></div>
+    
+
+    
+
+            <div class="row">
+                
+        
+            <div id="ap-sidebar">
+                
+                        
+    
+        
+    
+    
+    
+        
+            
+                
+        
+                    
+                    <ul class="ap-sidebar-menu">
+    
+                        
+                            <li class="ap-sidebar-menu-dropdown ap-sidebar-menu-lvl1 sub ">
+                                
+                                        <div class="ap-sidebar-menu-link-wrapper">
+                                            <a href="services/profildaten/">Profildaten</a>
+                                            <a class="ap-sidebar-menu-dropdown-toggle" data-toggle="sidebar-menu-dropdown"></a>
+                                        </div>
+                                    
+                                
+                                    
+                                        
+                                            
+                                            
+                                            <ul class="ap-sidebar-menu-dropdown-menu">
+                                                
+                                                    <li class=" ">
+                                                        
+                                                                <a href="services/profildaten/meine-daten/">Meine Daten</a>
+                                                            
+                                                        
+    
+                                                    </li>
+                                                
+                                                    <li class=" ">
+                                                        
+                                                                <a href="services/profildaten/lieferadressen/">Lieferadressen</a>
+                                                            
+                                                        
+    
+                                                    </li>
+                                                
+                                                    <li class=" ">
+                                                        
+                                                                <a href="services/profildaten/passwort-aendern/">Passwort ändern</a>
+                                                            
+                                                        
+    
+                                                    </li>
+                                                
+                                            </ul>
+    
+                                        
+                                    
+                                
+                            </li>
+                        
+                            <li class=" active">
+                                
+                                        <a href="services/bestellungen/">Bestellungen</a>
+                                    
+                                
+                            </li>
+                        
+                            <li class=" ">
+                                
+                                        <a href="services/karte-aktivieren/">Karte aktivieren</a>
+                                    
+                                
+                            </li>
+                        
+                            <li class=" ">
+                                
+                                        <a href="services/kartenguthaben-abrufen/">Kartenguthaben abrufen</a>
+                                    
+                                
+                            </li>
+                        
+                            <li class=" ">
+                                
+                                        <a href="services/karte-registrieren/">Karte registrieren</a>
+                                    
+                                
+                            </li>
+                        
+                            <li class=" ">
+                                
+                                        <a href="services/kartenverwaltung/">Kartenverwaltung</a>
+                                    
+                                
+                            </li>
+                        
+    
+                    </ul>
+        
+                
+            
+        
+    
+
+                    
+            </div>
+        
+    
+
+                <div id="ap-content">
+                    
+
+
+
+                    
+        
+<a id="c6406"></a><header><h1 class="">
+				Detailansicht
+			</h1></header>
+
+
+
+<a id="c6407"></a><div class="hide-typo3">
+			    <p>Detailansicht Ihrer Bestellung mit der Nummer 123456789.</p>
+
+    <p class="text-right">
+        <a href="https://www.aral-supercard.de/services/bestellungen/bestellung-aktivieren/123456789"
+           class="ap-btn ap-btn--blue ap-btn--icon-arrow-right">Zur Kartenaktivierung</a>
+    </p>
+
+    
+    <table class="table table-striped ap-table-outer-border table-hover">
+        <tbody>
+        <tr>
+            <th>Kartenart</th>
+            <th>Anzahl</th>
+            <th>Kartenwert EUR</th>
+        </tr>
+                                    <tr>
+                    <td>Individueller Wert Aral SuperCard Einkaufen &amp; Tanken</td>
+                    <td>1</td>
+                    <td>30,00 €</td>
+                </tr>
+                                                <tr>
+                    <td>Bearbeitungsgebühren</td>
+                    <td>1</td>
+                    <td>0,95 €</td>
+                </tr>
+                                                <tr>
+                    <td>Versandkosten</td>
+                    <td>1</td>
+                    <td>3,00 €</td>
+                </tr>
+                            </tbody>
+    </table>
+
+            <h3>Karten, die zu einem festen Termin aktiviert werden</h3>
+
+        <table class="table table-striped ap-table-outer-border table-hover">
+            <tbody>
+            <tr>
+                <th>Karte(n)</th>
+                <th>Termin</th>
+                <th></th>
+            </tr>
+                            <tr>
+                                            <td>Alle Karten</td>
+                                        <td>06.12.2019</td>
+                    <td>
+                        <a href="https://www.aral-supercard.de/services/bestellungen/aktivierung-loeschen/123456789/348360">Löschen</a>
+                    </td>
+                </tr>
+                        </tbody>
+        </table>
+
+        <h3>Aktivierte Karten</h3>
+
+        <table class="table table-striped ap-table-outer-border table-hover">
+            <tbody>
+            <tr>
+                <th>Karte(n)</th>
+                <th>Termin</th>
+            </tr>
+                        </tbody>
+        </table>
+    
+    <a href="https://www.aral-supercard.de/services/bestellungen"
+       class="ap-btn ap-btn--blue ap-bpicon-chevron-left">Zurück zur Übersicht</a>
+		</div>
+
+
+    
+                    <button class="ap-back-to-top">
+    <span class="icon icon-ap-arrow-up ap-back-to-top__icon"></span>
+    <span class="ap-back-to-top__text">TOP</span>
+</button>
+                    
+                                        
+                    <div id="search-results" style="display: none;">
+                        <h1>Suchergebnisse</h1>
+                        <p>Zu Ihrer Suche wurden keine Ergebnisse gefunden</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+
+<footer>
+    <div class="container">
+        <div class="row">
+            
+            <div class="column-4">
+                
+
+
+
+
+
+    
+            <nav class="ap-secondary-menu ap-secondary-menu--legal">
+                
+                        <h5 class="ap-secondary-menu__title">Legal</h5>
+                    
+                <ul class="ap-secondary-menu__items">
+                    
+                        <li class="ap-secondary-menu__item">
+                            <a class="ap-secondary-menu__link" href="impressum/">
+                                
+
+
+
+
+
+    
+Impressum
+                            </a>
+                        </li>
+                    
+                        <li class="ap-secondary-menu__item">
+                            <a class="ap-secondary-menu__link" href="datenschutz/">
+                                
+
+
+
+
+
+    
+Datenschutz
+                            </a>
+                        </li>
+                    
+                        <li class="ap-secondary-menu__item">
+                            <a class="ap-secondary-menu__link" href="seitenindex/">
+                                
+
+
+
+
+
+    
+Seitenstruktur
+                            </a>
+                        </li>
+                    
+                        <li class="ap-secondary-menu__item">
+                            <a class="ap-secondary-menu__link" href="agb/">
+                                
+
+
+
+
+
+    
+AGB
+                            </a>
+                        </li>
+                    
+                </ul>
+            </nav>
+    
+
+            </div>
+            <div class="column-4">
+                
+
+
+
+
+
+    
+            <nav class="ap-secondary-menu">
+                
+                        <h5 class="ap-secondary-menu__title">Weitere Links</h5>
+                    
+                <ul class="ap-secondary-menu__items">
+                    
+                        <li class="ap-secondary-menu__item">
+                            <a class="ap-secondary-menu__link" href="preisliste/">
+                                
+
+
+
+
+
+    
+Preisliste
+                            </a>
+                        </li>
+                    
+                </ul>
+            </nav>
+    
+
+
+                
+
+
+
+
+
+    
+            <nav class="ap-secondary-menu">
+                
+                        <h5 class="ap-secondary-menu__title">Teilnahmebedingungen</h5>
+                    
+                <ul class="ap-secondary-menu__items">
+                    
+                        <li class="ap-secondary-menu__item">
+                            <a class="ap-secondary-menu__link" href="teilnahmebedingungen/">
+                                
+
+
+
+
+
+    
+Teilnahmebedingungen Gewinnspiel
+                            </a>
+                        </li>
+                    
+                        <li class="ap-secondary-menu__item">
+                            <a class="ap-secondary-menu__link" href="pummeleinhorn-gewinnspiel-teilnahmbedingungen/">
+                                
+
+
+
+
+
+    
+Teilnahmebedingungen Pummeleinhorn
+                            </a>
+                        </li>
+                    
+                </ul>
+            </nav>
+    
+
+            </div>
+            <div class="column-4">
+                
+
+
+
+
+
+    
+            <nav class="ap-secondary-menu">
+                
+                        <h5 class="ap-secondary-menu__title">Haben Sie noch Fragen?</h5>
+                    
+                <ul class="ap-secondary-menu__items">
+                    
+                        <li class="ap-secondary-menu__item">
+                            <a class="ap-secondary-menu__link" href="kontaktieren-sie-uns/">
+                                
+
+
+
+
+
+    
+        <span class="icon icon-ap-envelope ap-secondary-menu__icon"></span>
+    
+Kontaktieren Sie Uns
+                            </a>
+                        </li>
+                    
+                        <li class="ap-secondary-menu__item">
+                            <a class="ap-secondary-menu__link" href="uebersicht/fragen-und-antworten/">
+                                
+
+
+
+
+
+    
+        <span class="icon icon-ap-exclamation-mark ap-secondary-menu__icon"></span>
+    
+Fragen &amp; Antworten
+                            </a>
+                        </li>
+                    
+                </ul>
+            </nav>
+    
+
+                
+
+
+
+
+    <nav class="ap-secondary-menu">
+        <ul class="ap-secondary-menu__items">
+            <li class="ap-secondary-menu__item">
+                <a class="ap-secondary-menu__link" href="https://business.aral-supercard.de">
+                    <span class="icon icon-ap-star ap-secondary-menu__icon"></span>
+                    Zum Geschäftskundenbereich
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+
+            </div>
+        </div>
+
+        
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="ap-service-provider-menu">
+                    <li class="ap-service-provider-menu__item">
+                        <img src="https://dccdn.de/www.aral-supercard.de/typo3conf/ext/aral_provider/Resources/Public/img/logos/mastercard_logo.svg"
+                             width="53" height="33" alt="MasterCard Logo" />
+                    </li>
+                    <li class="ap-service-provider-menu__item">
+                        <img src="https://dccdn.de/www.aral-supercard.de/typo3conf/ext/aral_provider/Resources/Public/img/logos/visa_logo.svg"
+                             width="52" height="33" alt="Visa Logo" />
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+
+        
+        <div class="ap-footer__copyright">
+            <div class="ap-copyright">Copyright &copy; 2019 Aral</div>
+            <div class="ap-hint-bpgroup">
+                <a href="http://www.bp.com/de_de/germany.html" target="_blank" class="ap-hint-bpgroup__link">
+                    <span>Aral — ein Unternehmen der BP Group</span>
+                    <span class="ap-hint-bpgroup__icon"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+        <div class="ap-canvas__overlay"></div>
+    </div>
+    <div class="ap-canvas__off">
+        
+
+<nav class="ap-offcanvas-menu">
+    
+    
+        
+        
+            <ul class="ap-offcanvas-menu__level ap-offcanvas-menu__level--1">
+                
+                    <li class="ap-offcanvas-menu__item ">
+                        <div class="ap-offcanvas-menu__link-wrapper">
+                            
+                                    <a class="ap-offcanvas-menu__link" href="/">Home</a>
+                                
+                        </div>
+                        
+                        
+                        
+                    </li>
+                
+                    <li class="ap-offcanvas-menu__item  ap-offcanvas-menu__item--has-children">
+                        <div class="ap-offcanvas-menu__link-wrapper">
+                            
+                                    <a class="ap-offcanvas-menu__link" href="uebersicht/">Übersicht</a>
+                                    <a class="ap-offcanvas-menu__toggle"></a>
+                                
+                        </div>
+                        
+                        
+                        
+                            
+                                
+                                    <ul class="ap-offcanvas-menu__level ap-offcanvas-menu__level--2">
+                                        
+                                            <li class="ap-offcanvas-menu__item  ap-offcanvas-menu__item--has-children">
+                                                <div class="ap-offcanvas-menu__link-wrapper">
+                                                    
+                                                            <a class="ap-offcanvas-menu__link" href="uebersicht/aktionen/">Aktionen</a>
+                                                            <a class="ap-offcanvas-menu__toggle"></a>
+                                                        
+                                                </div>
+                                              
+                                                
+                                                
+                                                    
+                                                        <ul class="ap-offcanvas-menu__level ap-offcanvas-menu__level--3">
+                                                            
+                                                                <li class="ap-offcanvas-menu__item ">
+                                                                    <div class="ap-offcanvas-menu__link-wrapper">
+                                                                        
+                                                                                <a class="ap-offcanvas-menu__link" href="uebersicht/aktionen/pummelcup-gewinnspiel/">Pummelcup Gewinnspiel</a>
+                                                                            
+                                                                    </div>
+                                                                    
+                                                                    
+                                                                    
+                                                                </li>
+                                                            
+                                                                <li class="ap-offcanvas-menu__item ">
+                                                                    <div class="ap-offcanvas-menu__link-wrapper">
+                                                                        
+                                                                                <a class="ap-offcanvas-menu__link" href="uebersicht/aktionen/jp-performance-aktion/">JP Performance Aktion</a>
+                                                                            
+                                                                    </div>
+                                                                    
+                                                                    
+                                                                    
+                                                                </li>
+                                                            
+                                                                <li class="ap-offcanvas-menu__item ">
+                                                                    <div class="ap-offcanvas-menu__link-wrapper">
+                                                                        
+                                                                                <a class="ap-offcanvas-menu__link" href="uebersicht/aktionen/triff-deinen-helden/">Triff Deinen Helden</a>
+                                                                            
+                                                                    </div>
+                                                                    
+                                                                    
+                                                                    
+                                                                </li>
+                                                            
+                                                                <li class="ap-offcanvas-menu__item ">
+                                                                    <div class="ap-offcanvas-menu__link-wrapper">
+                                                                        
+                                                                                <a class="ap-offcanvas-menu__link" href="uebersicht/aktionen/sportgewinnspiel/">Sportgewinnspiel</a>
+                                                                            
+                                                                    </div>
+                                                                    
+                                                                    
+                                                                    
+                                                                </li>
+                                                            
+                                                        </ul>
+                                                    
+                                                
+                                            </li>
+                                        
+                                            <li class="ap-offcanvas-menu__item  ap-offcanvas-menu__item--has-children">
+                                                <div class="ap-offcanvas-menu__link-wrapper">
+                                                    
+                                                            <a class="ap-offcanvas-menu__link" href="uebersicht/kartenvarianten/">Kartenvarianten</a>
+                                                            <a class="ap-offcanvas-menu__toggle"></a>
+                                                        
+                                                </div>
+                                              
+                                                
+                                                
+                                                    
+                                                        <ul class="ap-offcanvas-menu__level ap-offcanvas-menu__level--3">
+                                                            
+                                                                <li class="ap-offcanvas-menu__item ">
+                                                                    <div class="ap-offcanvas-menu__link-wrapper">
+                                                                        
+                                                                                <a class="ap-offcanvas-menu__link" href="uebersicht/kartenvarianten/standardkarten/">Standardkarten</a>
+                                                                            
+                                                                    </div>
+                                                                    
+                                                                    
+                                                                    
+                                                                </li>
+                                                            
+                                                                <li class="ap-offcanvas-menu__item ">
+                                                                    <div class="ap-offcanvas-menu__link-wrapper">
+                                                                        
+                                                                                <a class="ap-offcanvas-menu__link" href="uebersicht/kartenvarianten/for-you/">For You</a>
+                                                                            
+                                                                    </div>
+                                                                    
+                                                                    
+                                                                    
+                                                                </li>
+                                                            
+                                                                <li class="ap-offcanvas-menu__item  ap-offcanvas-menu__item--has-children">
+                                                                    <div class="ap-offcanvas-menu__link-wrapper">
+                                                                        
+                                                                                <a class="ap-offcanvas-menu__link" href="uebersicht/kartenvarianten/sammelkarten/">Sammelkarten</a>
+                                                                                <a class="ap-offcanvas-menu__toggle"></a>
+                                                                            
+                                                                    </div>
+                                                                    
+                                                                    
+                                                                    
+                                                                        
+                                                                            <ul class="ap-offcanvas-menu__level ap-offcanvas-menu__level--4">
+                                                                                
+                                                                                    <li class="ap-offcanvas-menu__item ap-offcanvas-menu__item--has-children">
+                                                                                        <div class="ap-offcanvas-menu__link-wrapper">
+                                                                                            <a class="ap-offcanvas-menu__link" href="uebersicht/kartenvarianten/sammelkarten/fussball/">Fußball</a>
+                                                                                        </div>
+                                                                                    </li>
+                                                                                
+                                                                                    <li class="ap-offcanvas-menu__item ap-offcanvas-menu__item--has-children">
+                                                                                        <div class="ap-offcanvas-menu__link-wrapper">
+                                                                                            <a class="ap-offcanvas-menu__link" href="uebersicht/kartenvarianten/sammelkarten/handball/">Handball</a>
+                                                                                        </div>
+                                                                                    </li>
+                                                                                
+                                                                                    <li class="ap-offcanvas-menu__item ap-offcanvas-menu__item--has-children">
+                                                                                        <div class="ap-offcanvas-menu__link-wrapper">
+                                                                                            <a class="ap-offcanvas-menu__link" href="uebersicht/kartenvarianten/sammelkarten/basketball/">Basketball</a>
+                                                                                        </div>
+                                                                                    </li>
+                                                                                
+                                                                                    <li class="ap-offcanvas-menu__item ap-offcanvas-menu__item--has-children">
+                                                                                        <div class="ap-offcanvas-menu__link-wrapper">
+                                                                                            <a class="ap-offcanvas-menu__link" href="uebersicht/kartenvarianten/sammelkarten/eishockey/">Eishockey</a>
+                                                                                        </div>
+                                                                                    </li>
+                                                                                
+                                                                                    <li class="ap-offcanvas-menu__item ap-offcanvas-menu__item--has-children">
+                                                                                        <div class="ap-offcanvas-menu__link-wrapper">
+                                                                                            <a class="ap-offcanvas-menu__link" href="uebersicht/kartenvarianten/sammelkarten/motorsport/">Motorsport</a>
+                                                                                        </div>
+                                                                                    </li>
+                                                                                
+                                                                                    <li class="ap-offcanvas-menu__item">
+                                                                                        <div class="ap-offcanvas-menu__link-wrapper">
+                                                                                            <a class="ap-offcanvas-menu__link" href="uebersicht/kartenvarianten/sammelkarten/pummeleinhorn/">Pummeleinhorn</a>
+                                                                                        </div>
+                                                                                    </li>
+                                                                                
+                                                                            </ul>
+                                                                        
+                                                                    
+                                                                </li>
+                                                            
+                                                        </ul>
+                                                    
+                                                
+                                            </li>
+                                        
+                                            <li class="ap-offcanvas-menu__item ">
+                                                <div class="ap-offcanvas-menu__link-wrapper">
+                                                    
+                                                            <a class="ap-offcanvas-menu__link" href="uebersicht/geschenkverpackungen/">Geschenkverpackungen</a>
+                                                        
+                                                </div>
+                                              
+                                                
+                                                
+                                            </li>
+                                        
+                                            <li class="ap-offcanvas-menu__item ">
+                                                <div class="ap-offcanvas-menu__link-wrapper">
+                                                    
+                                                            <a class="ap-offcanvas-menu__link" href="uebersicht/fragen-und-antworten/">Fragen und Antworten</a>
+                                                        
+                                                </div>
+                                              
+                                                
+                                                
+                                            </li>
+                                        
+                                    </ul>
+                                
+                            
+                        
+                    </li>
+                
+                    <li class="ap-offcanvas-menu__item ">
+                        <div class="ap-offcanvas-menu__link-wrapper">
+                            
+                                    <a class="ap-offcanvas-menu__link" href="me4you/">Me4You</a>
+                                
+                        </div>
+                        
+                        
+                        
+                    </li>
+                
+                    <li class="ap-offcanvas-menu__item ">
+                        <div class="ap-offcanvas-menu__link-wrapper">
+                            
+                                    <a class="ap-offcanvas-menu__link" href="shop/">Shop</a>
+                                
+                        </div>
+                        
+                        
+                        
+                    </li>
+                
+            </ul>
+        
+    
+    
+    
+    
+        
+        
+            <ul class="ap-offcanvas-menu__level ap-offcanvas-menu__level--1">
+                
+                    <li class="ap-offcanvas-menu__item  ap-offcanvas-menu__item--has-children">
+                        <div class="ap-offcanvas-menu__link-wrapper">
+                            
+                                    <a class="ap-offcanvas-menu__link" href="services/">Services</a>
+                                    <a class="ap-offcanvas-menu__toggle"></a>
+                                
+                        </div>
+
+                        
+                        
+                            
+                                
+                                    <ul class="ap-offcanvas-menu__level ap-offcanvas-menu__level--2">
+                                        
+                                            <li class="ap-offcanvas-menu__item  ap-offcanvas-menu__item--has-children">
+                                                <div class="ap-offcanvas-menu__link-wrapper">
+                                                    
+                                                            <a class="ap-offcanvas-menu__link" href="services/profildaten/">Profildaten</a>
+                                                            <a class="ap-offcanvas-menu__toggle"></a>
+                                                        
+                                                </div>
+
+                                                
+                                                
+                                                    
+                                                        <ul class="ap-offcanvas-menu__level ap-offcanvas-menu__level--3">
+                                                            
+                                                                <li class="ap-offcanvas-menu__item ">
+                                                                    <div class="ap-offcanvas-menu__link-wrapper">
+                                                                        
+                                                                                <a class="ap-offcanvas-menu__link" href="services/profildaten/meine-daten/">Meine Daten</a>
+                                                                            
+                                                                    </div>
+
+                                                                    
+                                                                    
+                                                                </li>
+                                                            
+                                                                <li class="ap-offcanvas-menu__item ">
+                                                                    <div class="ap-offcanvas-menu__link-wrapper">
+                                                                        
+                                                                                <a class="ap-offcanvas-menu__link" href="services/profildaten/lieferadressen/">Lieferadressen</a>
+                                                                            
+                                                                    </div>
+
+                                                                    
+                                                                    
+                                                                </li>
+                                                            
+                                                                <li class="ap-offcanvas-menu__item ">
+                                                                    <div class="ap-offcanvas-menu__link-wrapper">
+                                                                        
+                                                                                <a class="ap-offcanvas-menu__link" href="services/profildaten/passwort-aendern/">Passwort ändern</a>
+                                                                            
+                                                                    </div>
+
+                                                                    
+                                                                    
+                                                                </li>
+                                                            
+                                                        </ul>
+                                                    
+                                                
+                                            </li>
+                                        
+                                            <li class="ap-offcanvas-menu__item ">
+                                                <div class="ap-offcanvas-menu__link-wrapper">
+                                                    
+                                                            <a class="ap-offcanvas-menu__link" href="services/bestellungen/">Bestellungen</a>
+                                                        
+                                                </div>
+
+                                                
+                                                
+                                            </li>
+                                        
+                                            <li class="ap-offcanvas-menu__item ">
+                                                <div class="ap-offcanvas-menu__link-wrapper">
+                                                    
+                                                            <a class="ap-offcanvas-menu__link" href="services/karte-aktivieren/">Karte aktivieren</a>
+                                                        
+                                                </div>
+
+                                                
+                                                
+                                            </li>
+                                        
+                                            <li class="ap-offcanvas-menu__item ">
+                                                <div class="ap-offcanvas-menu__link-wrapper">
+                                                    
+                                                            <a class="ap-offcanvas-menu__link" href="services/kartenguthaben-abrufen/">Kartenguthaben abrufen</a>
+                                                        
+                                                </div>
+
+                                                
+                                                
+                                            </li>
+                                        
+                                            <li class="ap-offcanvas-menu__item ">
+                                                <div class="ap-offcanvas-menu__link-wrapper">
+                                                    
+                                                            <a class="ap-offcanvas-menu__link" href="services/karte-registrieren/">Karte registrieren</a>
+                                                        
+                                                </div>
+
+                                                
+                                                
+                                            </li>
+                                        
+                                            <li class="ap-offcanvas-menu__item ">
+                                                <div class="ap-offcanvas-menu__link-wrapper">
+                                                    
+                                                            <a class="ap-offcanvas-menu__link" href="services/kartenverwaltung/">Kartenverwaltung</a>
+                                                        
+                                                </div>
+
+                                                
+                                                
+                                            </li>
+                                        
+                                    </ul>
+                                
+                            
+                        
+                    </li>
+                
+            </ul>
+        
+    
+</nav>
+        
+
+
+
+
+
+    
+            <nav class="ap-secondary-menu">
+                
+                <ul class="ap-secondary-menu__items">
+                    
+                        <li class="ap-secondary-menu__item">
+                            <a class="ap-secondary-menu__link" href="kontaktieren-sie-uns/">
+                                
+
+
+
+
+
+    
+        <span class="icon icon-ap-envelope ap-secondary-menu__icon"></span>
+    
+Kontaktieren Sie Uns
+                            </a>
+                        </li>
+                    
+                        <li class="ap-secondary-menu__item">
+                            <a class="ap-secondary-menu__link" href="uebersicht/fragen-und-antworten/">
+                                
+
+
+
+
+
+    
+        <span class="icon icon-ap-exclamation-mark ap-secondary-menu__icon"></span>
+    
+Fragen &amp; Antworten
+                            </a>
+                        </li>
+                    
+                </ul>
+            </nav>
+    
+
+        
+
+
+
+
+    <nav class="ap-secondary-menu">
+        <ul class="ap-secondary-menu__items">
+            <li class="ap-secondary-menu__item">
+                <a class="ap-secondary-menu__link" href="https://business.aral-supercard.de">
+                    <span class="icon icon-ap-star ap-secondary-menu__icon"></span>
+                    Zum Geschäftskundenbereich
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+
+    </div>
+</div>
+
+
+
+    
+</body>
+</html>
