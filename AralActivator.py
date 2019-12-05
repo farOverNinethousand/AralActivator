@@ -7,7 +7,7 @@ Created on 26.11.2019
 import os, json, re, sys, mechanize, time
 
 # Global variables
-INTERNAL_VERSION = '0.3.6'
+INTERNAL_VERSION = '0.3.7'
 PATH_STORED_VOUCHERS = os.path.join('vouchers.json')
 PATH_STORED_SETTINGS = os.path.join('settings.json')
 PATH_STORED_COOKIES = os.path.join('cookies.txt')
@@ -255,10 +255,11 @@ def crawlOrderNumbersFromMail(orderArray):
                 print('Deine E-Mails enthielten keine neuen Bestellungen')
     return
 
-def crawlOrderNumbersFromAccount(br, accountCrawledOrderNumbers, emailOrders):
+def crawlOrderNumbersFromAccount(br, orderArray):
     # TODO: Optimize to stop on known codes on last site --> Orders are sorted from newest --> oldest --> Saves time and http requests
     page_counter = 0
     max_items_per_page = 20
+    numberof_new_items = 0
     while True:
         page_counter+= 1
         print('Lade Bestellnummern Seite %d von ?' % page_counter)
@@ -272,9 +273,10 @@ def crawlOrderNumbersFromAccount(br, accountCrawledOrderNumbers, emailOrders):
         found_new_entry = False
         for currCrawledOrderNumber in currentCrawledOrderNumbers:
             currCrawledOrderNumber = int(currCrawledOrderNumber)
-            if emailOrders != None and not any(emailOrderNumber['order_number'] == currCrawledOrderNumber for emailOrderNumber in emailOrders):
+            if not any(emailOrderNumber['order_number'] == currCrawledOrderNumber for emailOrderNumber in orderArray):
                 found_new_entry = True
-                accountCrawledOrderNumbers.append(currCrawledOrderNumber)
+                numberof_new_items += 1
+                orderArray.append({'order_number':currCrawledOrderNumber})
         page_check = '?page=' + str(page_counter + 1)
         # Stop-conditions and fail-safes
         if page_check not in html:
@@ -290,7 +292,7 @@ def crawlOrderNumbersFromAccount(br, accountCrawledOrderNumbers, emailOrders):
             break
         time.sleep(2)
         # Continue
-    print('Anzahl gefundener aktivierbarer Bestellnummern: %d auf insgesamt %d Seiten' % (len(accountCrawledOrderNumbers), page_counter))
+    print('Anzahl NEU gecrawlter Bestellnummern: %d auf insgesamt %d Seiten' % (numberof_new_items, page_counter))
     return
     
 def activateAutomatic(br, orderArray):
@@ -298,13 +300,10 @@ def activateAutomatic(br, orderArray):
     numberof_failures_in_a_row = 0
     numberof_un_activated_cards = 0
     # Crawl all OrderNumbers from website
-    accountCrawledOrderNumbers = []
-    crawlOrderNumbersFromAccount(br, accountCrawledOrderNumbers, orderArray)
+    crawlOrderNumbersFromAccount(br, orderArray)
     if len(orderArray) == 0:
         print('Es konnten keine Bestellnummern gefunden werden --> Fehler im Script oder ungueltige Zugangsdaten')
         return None
-    for element in accountCrawledOrderNumbers:
-        print('Found orderNumber: ' + str(element))
         
     for currOrder in orderArray:
         if 'activated' not in currOrder or currOrder['activated'] == False:
@@ -314,42 +313,33 @@ def activateAutomatic(br, orderArray):
     progressCounter = 0
     successfullyActivatedOrdersCounter = 0
     orderActivationImpossibleArray = []
-    for accountCrawledOrderNumber in accountCrawledOrderNumbers:
+    for orderInfo in orderArray:
         try:
             progressCounter += 1
             # Try to find activation code for current order number which should have been crawled beforehand from the users' emails
-            mailOrder = None
-            for tmpOrder in orderArray:
-                order_number = tmpOrder['order_number']
-                if order_number == accountCrawledOrderNumber:
-                    mailOrder = tmpOrder
-                    break
-            if mailOrder == None or 'activation_code' not in mailOrder:
+            order_number = orderInfo['order_number']
+            if 'activation_code' not in orderInfo or orderInfo['activation_code'] == None:
                 # Skip such items as we do not have the activation-number
-                print('Bestellnummer konnte keiner E-Mail Bestellnummer zugeordnet werden --> Ueberspringe diese Nummer')
-                orderActivationImpossibleArray.append({'order_number':accountCrawledOrderNumber,'failure_reason':'Aktivierungscode konnte nicht gefunden werden'})
-                if mailOrder == None:
-                    # Add item to array of crawled orders which will improve account order crawler speed in the future
-                    mailOrder = {'order_number':accountCrawledOrderNumber}
-                    orderArray.append(mailOrder)
+                #print('Bestellnummer konnte keiner E-Mail Bestellnummer zugeordnet werden --> Ueberspringe diese Nummer')
+                orderActivationImpossibleArray.append({'order_number':order_number,'failure_reason':'Aktivierungscode konnte nicht gefunden werden'})
                 continue
-            print('Arbeite an Bestellung: ' + str(accountCrawledOrderNumber))
-            isActivated = mailOrder['activated']
-            activationCode = mailOrder['activation_code']
-            print('Bestellnummer = %d --> Aktivierungscode = %d' %(accountCrawledOrderNumber, activationCode))
+            print('Arbeite an Bestellung: ' + str(order_number))
+            isActivated = orderInfo['activated']
+            activationCode = orderInfo['activation_code']
+            print('Bestellnummer = %d --> Aktivierungscode = %d' %(order_number, activationCode))
             
             if isActivated == True:
                 # Skip already activated cards
                 print('Diese Bestellnummer wurde bereits zuvor (per Script?) aktiviert')
                 continue
             # TODO: Make sure that we're always logged-in!
-            response = br.open('https://www.aral-supercard.de/services/bestellungen/detailansicht/' + str(accountCrawledOrderNumber))
+            response = br.open('https://www.aral-supercard.de/services/bestellungen/detailansicht/' + str(order_number))
             html = getHTML(response)
             try:
                 # TODO: Fix this so it will work for other card names as well
                 voucher_money_valueStr =  re.compile(r'Individueller Wert Aral SuperCard[^<>]*</td>\s*<td>1</td>\s*<td>(\d+,\d{1,2}) €</td>').search(html).group(1).replace(',', '.')
                 # TODO: Check for old balance value. Only set new value if old one does not exist or is lower than new one!
-                mailOrder['balance'] = float(voucher_money_valueStr)
+                orderInfo['balance'] = float(voucher_money_valueStr)
                 print('Kartenwert gefunden: %s €' % voucher_money_valueStr)
             except:
                 # Failed to find money value --> Not a big problem
@@ -359,11 +349,11 @@ def activateAutomatic(br, orderArray):
             #isActivatedAccordingToOrderOverview = bool(re.match(r'<h3>\s*Aktivierte Karten\s*</h3>', html))
             if isActivatedAccordingToOrderOverview:
                 print('Bestellung ist laut Bestelluebersicht bereits aktiviert')
-                mailOrder['activated'] = True
+                orderInfo['activated'] = True
                 continue
             print('Aktivierung Schritt 1 ...')
             time.sleep(2)
-            response = br.open('https://www.aral-supercard.de/services/bestellungen/bestellung-aktivieren/' + str(accountCrawledOrderNumber))
+            response = br.open('https://www.aral-supercard.de/services/bestellungen/bestellung-aktivieren/' + str(order_number))
             html = getHTML(response)
             form_index = getFormIndexBySubmitKey(br, 'activationCode')
             if form_index == -1:
@@ -387,14 +377,14 @@ def activateAutomatic(br, orderArray):
             html = getHTML(response)
             if '>Bitte überprüfen Sie Ihren Aktivierungscode<' in html:
                 print('Ungueltiger Aktivierungscode')
-                orderActivationImpossibleArray.append({'order_number':accountCrawledOrderNumber,'failure_reason':'Aktivierungscode ist falsch(?)'})
+                orderActivationImpossibleArray.append({'order_number':order_number,'failure_reason':'Aktivierungscode ist falsch(?)'})
                 continue
             elif 'ist erfolgreich bei uns eingegangen' not in html:
                 print('Unbekannter Fehler')
-                orderActivationImpossibleArray.append({'order_number':accountCrawledOrderNumber,'failure_reason':'Unbekannter Fehler'})
+                orderActivationImpossibleArray.append({'order_number':order_number,'failure_reason':'Unbekannter Fehler'})
                 continue
             # Success! Yeey!
-            mailOrder['activated'] = True
+            orderInfo['activated'] = True
             successfullyActivatedOrdersCounter += 1
             # Reset that counter
             numberof_failures_in_a_row = 0
