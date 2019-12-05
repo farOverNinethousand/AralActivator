@@ -7,7 +7,7 @@ Created on 26.11.2019
 import os, json, re, sys, mechanize, time
 
 # Global variables
-INTERNAL_VERSION = '0.3.4'
+INTERNAL_VERSION = '0.3.5'
 PATH_STORED_VOUCHERS = os.path.join('vouchers.json')
 PATH_STORED_SETTINGS = os.path.join('settings.json')
 PATH_STORED_COOKIES = os.path.join('cookies.txt')
@@ -154,14 +154,11 @@ def activateSemiAutomatic(br, orderArray):
             
             response = br.open('https://www.aral-supercard.de/services/karte-aktivieren/')
             html = getHTML(response)
-            # TODO: Improve this to make sure we got the correct form
-            try:
-                br.select_form(nr=2)
-                card_number_hint = br['supercardnumber']
-            except:
-                # Fatal failure
-                print('Form konnte nicht gefunden werden')
-                raise
+            form_index = getFormIndexBySubmitKey(br, 'supercardnumber')
+            if form_index == -1:
+                print('SuperCardForm konnte nicht gefunden werden')
+                return
+            br.select_form(nr=form_index)
             
             # TODO: Add errorhandling for typos
             # TODO: Grab card number beginning from website so user has to type in less
@@ -206,10 +203,12 @@ def activateSemiAutomatic(br, orderArray):
             loopCounter += 1
 
 
-    if successfullyActivatedOrdersCounter != numberof_un_activated_cards:
-        print('Anzahl fehlgeschlagener/uebersprungener Aktivierungen: ')
-    else:
-        print('Alle %d neuen Karten wurden erfolgreich aktiviert' % numberof_un_activated_cards)
+    if successfullyActivatedOrdersCounter > 0:
+        print('Es wurden %d neue Karten aktiviert' % successfullyActivatedOrdersCounter)
+#     if successfullyActivatedOrdersCounter != numberof_un_activated_cards:
+#         print('Anzahl fehlgeschlagener/uebersprungener Aktivierungen: ')
+#     else:
+#         print('Alle %d neuen Karten wurden erfolgreich aktiviert' % numberof_un_activated_cards)
     # Def end
     
 def crawlOrderNumbers(br, accountCrawledOrderNumbers, emailOrders):
@@ -366,12 +365,57 @@ def activateAutomatic(br, orderArray):
     if successfullyActivatedOrdersCounter > 0:
         print('Anzahl erfolgreich aktivierter Karten: ' + str(successfullyActivatedOrdersCounter))
     else:
-        print('Es wurden keine neuen Karten aktiviert --> Fehler oder es gibt (noch) keine neuen Aktivierungscodes zu ausstehenden Bestellungen')
-    if successfullyActivatedOrdersCounter != numberof_un_activated_cards:
-        print('Anzahl fehlgeschlagener/uebersprungener Aktivierungen: ')
+        print('Es wurden keine neuen Karten aktiviert --> Fehler im Script oder manche Bestellungen haben noch keine Aktivierungscodes erhalten')
+#     if successfullyActivatedOrdersCounter != numberof_un_activated_cards:
+#         print('Anzahl fehlgeschlagener/uebersprungener Aktivierungen: ')
+#     else:
+#         print('Alle %d neuen Karten wurden erfolgreich aktiviert' % numberof_un_activated_cards)
+    return
+    
+    
+def loginAccount(br, settings):
+    # Try to login via stored cookies first - Aral only allows one active session which means we will most likely have to perform a full login
+    cookies = mechanize.LWPCookieJar(PATH_STORED_COOKIES)
+    br.set_cookiejar(cookies)
+    if settings['email'] == None or settings['password'] == None:
+        print('Gib deine aral-supercard.de Zugangsdaten ein')
+        print('Gib deine E-Mail ein:')
+        settings['email'] = input()
+        print('Gib dein Passwort ein:')
+        settings['password'] = input()
     else:
-        print('Alle %d neuen Karten wurden erfolgreich aktiviert' % numberof_un_activated_cards)
-    # Def end
+        print('Gespeicherte Zugangsdaten wurden erfolgreich geladen')
+        print('Verwende email: ' + account_email)
+    response = br.open(BASE_DOMAIN)
+    html = getHTML(response)
+    logged_in = isLoggedIN(html)
+    if not logged_in:
+        print('Versuche vollstaendigen Login')
+        response = br.open(BASE_DOMAIN + '/login')
+        form_index = getFormIndexBySubmitKey(br, 'email')
+        if form_index == -1:
+            print('Login-Form konnte nicht gefunden werden')
+            return False
+        br.select_form(nr=form_index)
+        br['email'] = settings['email']
+        br['password'] = settings['password']
+        response = br.submit()
+        html = getHTML(response)
+        if not isLoggedIN(html):
+            print('Login failed')
+            logged_in = False
+        else:
+            print('Vollstaendiger Login erfolgreich')
+            logged_in = True
+    else:
+        print('Login ueber gueltige Cookies erfolgreich')
+    
+    # Save cookies and logindata
+    cookies.save()
+    with open(PATH_STORED_SETTINGS, 'w') as outfile:
+        json.dump(settings, outfile)
+    return logged_in
+    
     
 # Main script START
 print('Welcome to AralActivator %s' % INTERNAL_VERSION)
@@ -408,51 +452,8 @@ if requires_account == False:
     # Continue without loggin in
     print('Fahre ohne login fort')
 else:
-    # Try to login via stored cookies first - Aral only allows one active session which means we will most likely have to perform a full login
-    cookies = mechanize.LWPCookieJar(PATH_STORED_COOKIES)
-    br.set_cookiejar(cookies)
-    
-    response = br.open(BASE_DOMAIN)
-    html = getHTML(response)
-    logged_in = isLoggedIN(html)
-    if not logged_in:
-        print('Versuche vollstaendigen Login')
-        response = br.open(BASE_DOMAIN + '/login')
-        # TODO: Improve this to make sure we got the correct form
-        try:
-            br.select_form(nr=2)
-            email_field = br['email']
-            password_field = br['password']
-        except:
-            # Fatal failure
-            print('Login-Form konnte nicht gefunden werden')
-            raise
-        br['email'] = settings['email']
-        br['password'] = settings['password']
-        response = br.submit()
-        html = getHTML(response)
-        if not isLoggedIN(html):
-            print('Login failed')
-            logged_in = False
-        else:
-            print('Vollstaendiger Login erfolgreich')
-            logged_in = True
-    else:
-        print('Login ueber gueltige Cookies erfolgreich')
-    
-    # Save cookies and logindata
-    cookies.save()
-    with open(PATH_STORED_SETTINGS, 'w') as outfile:
-        json.dump(settings, outfile)
-    if settings['email'] == None or settings['password'] == None:
-        print('Gib deine aral-supercard.de Zugangsdaten ein')
-        print('Gib deine E-Mail ein:')
-        settings['email'] = input()
-        print('Gib dein Passwort ein:')
-        settings['password'] = input()
-    else:
-        print('Gespeicherte Zugangsdaten wurden erfolgreich geladen')
-        print('Verwende email: ' + account_email)
+    logged_in = loginAccount(br, settings)
+
 
 # Load vouchers and activation codes from email source
 orderArray = []
@@ -476,7 +477,7 @@ except:
 
 # Crawl data from emailSource
 if emailSource != None:
-    print('Extrahiere Bestellnummern und Aktivierungscodes aus den E-Mails ...')
+    print('Extrahiere Bestellnummern und Aktivierungscodes aus E-Mails ...')
     crawledOrderNumbers = re.compile(r'Ihre Aral SuperCard Bestellung\s*(\d+)').findall(emailSource)
     crawledActivationCodes = re.compile(r'Der Aktivierungscode lautet\s*:\s*(\d+)').findall(emailSource)
     numberof_new_vouchers = 0
