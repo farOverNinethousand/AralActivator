@@ -8,6 +8,8 @@ Aral Karten kauft man idR nur, wenn es Rabatte gibt wie z.B. hier (Nov. 2019):
 
 https://www.mydealz.de/deals/aral-supercard-fur-50-kaufen-5-geschenkt-1465573
 
+https://www.mydealz.de/deals/aral-supercard-einkaufen-und-tanken-fur-30-kaufen-5-supercard-einkaufen-und-tanken-geschenkt-jeweils-36-monate-gultig-1477242
+
 ## Eigenschaften von Aral (Tank-)Karten
 Die Karten kommen per Post.
 Jeder Bestellung, die idealerweise nur eine zu aktivierende Karte enthält ist ein Lieferschein mit folgenden relevanten Informationen beigelegt:
@@ -19,6 +21,10 @@ Zudem stehen auf jeder Aral Karte Folgende Infos:
 - Registrierungscode (4-stellig)
 - Seriennummer (10-stellig) [irrelevant]
 Per E-Mail bekommt man dann einen Aktivierungscode, der für die gesamte Bestellung(?) gilt - meistens muss man sowieso nur eine Karte aktivieren.
+
+## Haltbarkeit und Einlösebedingungen
+- SuperCards sind ab Aktivierungsdatum 3 Jahre lang' gültig
+- Manche der gratis Karten werden erst zu einem bestimmten Datum automatisch von Aral aktiviert
 
 ## Grundsätzliche Idee
 Die Aral E-Mails mit den Bestellnummern + Aktivierungscode abgreifen und dann automatisch alle Karten aller Bestellungen hier aktivieren:
@@ -77,8 +83,8 @@ Screenshot:
 TODO
 
 ## TODOs (Geordnet nach Prioritäten)
+- IMAP E-Mail Crawler ergänzen
 - Mehr Fehlertoleranz
-- Guthaben prüfen (unklar wie sinnvoll das ist, die Captchas sind sehr nervig!)
 
 ## Links
 Karten hier 'manuell' bzw. ohne sich einzuloggen aktivieren:

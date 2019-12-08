@@ -5,9 +5,10 @@ Created on 26.11.2019
 '''
 
 import os, json, re, sys, mechanize, time
+from html.parser import HTMLParser
 
 # Global variables
-INTERNAL_VERSION = '0.3.7'
+INTERNAL_VERSION = '0.3.8'
 PATH_STORED_VOUCHERS = os.path.join('vouchers.json')
 PATH_STORED_SETTINGS = os.path.join('settings.json')
 PATH_STORED_COOKIES = os.path.join('cookies.txt')
@@ -15,10 +16,6 @@ PATH_INPUT_MAILS = os.path.join('mails.txt')
 
 
 BASE_DOMAIN = 'https://www.aral-supercard.de'
-
-
-def isLoggedIN(html):
-    return 'class=\"login-link logout\"' in html
 
 def userInputDefinedLengthNumber(exact_length):
     while True:
@@ -212,6 +209,7 @@ def activateSemiAutomatic(br, orderArray):
     return
     
 def crawlOrderNumbersFromMail(orderArray):
+        # TODO: Crawl order-date from mails and save it later on
         # Load mails
     try: 
         readFile = open(PATH_INPUT_MAILS, 'r')
@@ -262,7 +260,7 @@ def crawlOrderNumbersFromAccount(br, orderArray):
     numberof_new_items = 0
     while True:
         page_counter+= 1
-        print('Lade Bestellnummern Seite %d von ?' % page_counter)
+        print('Lade Bestelldaten von Aral | Seite %d von ?' % page_counter)
         response = br.open('https://www.aral-supercard.de/services/bestellungen?page=' + str(page_counter))
         html = getHTML(response)
         try:
@@ -277,9 +275,9 @@ def crawlOrderNumbersFromAccount(br, orderArray):
                 found_new_entry = True
                 numberof_new_items += 1
                 orderArray.append({'order_number':currCrawledOrderNumber})
-        page_check = '?page=' + str(page_counter + 1)
+        next_page_available = '?page=' + str(page_counter + 1)
         # Stop-conditions and fail-safes
-        if page_check not in html:
+        if next_page_available not in html:
             print('Alle Bestellnummern gefunden(?)')
             break
         elif len(currentCrawledOrderNumbers) < max_items_per_page:
@@ -292,7 +290,7 @@ def crawlOrderNumbersFromAccount(br, orderArray):
             break
         time.sleep(2)
         # Continue
-    print('Anzahl NEU gecrawlter Bestellnummern: %d auf insgesamt %d Seiten' % (numberof_new_items, page_counter))
+    print('Anzahl neu erfasster Bestellnummern (seit dem letzten Start): %d auf insgesamt %d Seiten' % (numberof_new_items, page_counter))
     return
     
 def activateAutomatic(br, orderArray):
@@ -335,11 +333,21 @@ def activateAutomatic(br, orderArray):
             # TODO: Make sure that we're always logged-in!
             response = br.open('https://www.aral-supercard.de/services/bestellungen/detailansicht/' + str(order_number))
             html = getHTML(response)
+            if 'Diese Bestellung konnte nicht angezeigt werden' in html:
+                orderActivationImpossibleArray.append({'order_number':order_number,'failure_reason':'Ungueltige Bestellnummer --> Ueber einen anderen Aral Account bestellt??'})
+                continue
             try:
                 # TODO: Fix this so it will work for other card names as well
-                voucher_money_valueStr =  re.compile(r'Individueller Wert Aral SuperCard[^<>]*</td>\s*<td>1</td>\s*<td>(\d+,\d{1,2}) €</td>').search(html).group(1).replace(',', '.')
+                card_infoMatchObject = re.compile(r'<th>Kartenart</th>\s*<th>Anzahl</th>\s*<th>Kartenwert EUR</th>\s*</tr>\s*<tr>\s*<td>(.*?)</td>\s*<td>1</td>\s*<td>(\d+,\d{1,2}) €</td>').search(html)
+                voucher_name = card_infoMatchObject.group(1)
+                # TODO: Replace this so we do not use this deprecated method!
+                voucher_name = HTMLParser().unescape(voucher_name)
+                #voucher_name = html.unescape(voucher_name)
+                voucher_money_valueStr =  card_infoMatchObject.group(2).replace(',', '.')
                 # TODO: Check for old balance value. Only set new value if old one does not exist or is lower than new one!
                 orderInfo['balance'] = float(voucher_money_valueStr)
+                # E.g. 'Aral SuperCard For You - Ostern - Eier    '
+                orderInfo['voucher_name'] = voucher_name
                 print('Kartenwert gefunden: %s €' % voucher_money_valueStr)
             except:
                 # Failed to find money value --> Not a big problem
@@ -384,6 +392,7 @@ def activateAutomatic(br, orderArray):
                 orderActivationImpossibleArray.append({'order_number':order_number,'failure_reason':'Unbekannter Fehler'})
                 continue
             # Success! Yeey!
+            # TODO: Save activation-date
             orderInfo['activated'] = True
             successfullyActivatedOrdersCounter += 1
             # Reset that counter
@@ -396,11 +405,13 @@ def activateAutomatic(br, orderArray):
                 print('Mehr als %d unbekannte Fehler hintereinander --> Abbruch')
                 break
     
+    printSeparator()
     if len(orderActivationImpossibleArray) > 0:
         print('Liste von Bestellnummern, die noch nicht aktiviert werden konnten --> (Noch) kein Aktivierungscode vorhanden?')
         for failedOrder in orderActivationImpossibleArray:
             print(str(failedOrder['order_number']) + ' --> ' + failedOrder['failure_reason'])
     
+    printSeparator()
     if successfullyActivatedOrdersCounter > 0:
         print('Anzahl erfolgreich aktivierter Karten: ' + str(successfullyActivatedOrdersCounter))
     else:
@@ -411,13 +422,21 @@ def activateAutomatic(br, orderArray):
 #         print('Alle %d neuen Karten wurden erfolgreich aktiviert' % numberof_un_activated_cards)
     return
     
-    
+
+def printSeparator():
+    print('*******************************************************************')
+
+def isLoggedIN(html):
+    return 'class=\"login-link logout\"' in html
+
 def loginAccount(br, settings):
     # Try to login via stored cookies first - Aral only allows one active session which means we will most likely have to perform a full login
     cookies = mechanize.LWPCookieJar(PATH_STORED_COOKIES)
     br.set_cookiejar(cookies)
     if settings['email'] == None or settings['password'] == None:
         print('Gib deine aral-supercard.de Zugangsdaten ein')
+        print('Falls du ueber mehrere Accounts bestellt hast musst du dieses Script jeweils 1x pro Account in verschiedenen Ordnern duplizieren!')
+        print('Bedenke, dass auch die jeweiligen E-Mail Adressen möglichst nur die Mails enthalten sollten, die auch zu den Bestellungen des eingetragenen Aral Accounts passen ansonsten wird der Aktivierungsprozess unnötig lange dauern und es erscheinen ggf. Fehlermeldungen.')
         print('Gib deine E-Mail ein:')
         settings['email'] = input()
         print('Gib dein Passwort ein:')
@@ -441,7 +460,7 @@ def loginAccount(br, settings):
         response = br.submit()
         html = getHTML(response)
         if not isLoggedIN(html):
-            print('Login failed')
+            print('Login fehlgeschlagen - Ungueltige Zugangsdaten? Korrigiere deine eingetragenen Zugangsdaten in der Datei %s bevor du dieses Script wieder startest!' % PATH_STORED_SETTINGS)
             logged_in = False
         else:
             print('Vollstaendiger Login erfolgreich')
@@ -532,6 +551,6 @@ finally:
     
     print('Done - druecke ENTER zum Schließen des Fensters')
     # Debug
-    raise
+    #raise
     input()
     sys.exit()
