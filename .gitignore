@@ -1,12 +1,8 @@
-notes.txt
-
 .project
 .pydevproject
 
 vouchers.json
+orders.json
 settings.json
 mails.txt
-mails2.txt
 cookies.txt
-
-EmailPlayground.py

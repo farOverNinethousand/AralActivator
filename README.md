@@ -10,50 +10,33 @@ https://www.mydealz.de/deals/aral-supercard-fur-50-kaufen-5-geschenkt-1465573
 
 https://www.mydealz.de/deals/aral-supercard-einkaufen-und-tanken-fur-30-kaufen-5-supercard-einkaufen-und-tanken-geschenkt-jeweils-36-monate-gultig-1477242
 
-## Eigenschaften von Aral (Tank-)Karten
-Die Karten kommen per Post.
-Jeder Bestellung, die idealerweise nur eine zu aktivierende Karte enthält ist ein Lieferschein mit folgenden relevanten Informationen beigelegt:
-- Bestellnummer (9-stellig[?])
-- Aktivierungscode (6-10-stellig [Lt. Webseite, Stand 27.11.2019])
-
-Zudem stehen auf jeder Aral Karte Folgende Infos:
-- Aral SuperCard Nr. (19-stellig, meist sind mind. die ersten 8 Stellen gegeben)
-- Registrierungscode (4-stellig)
-- Seriennummer (10-stellig) [irrelevant]
-Per E-Mail bekommt man dann einen Aktivierungscode, der für die gesamte Bestellung(?) gilt - meistens muss man sowieso nur eine Karte aktivieren.
-
-## Haltbarkeit und Einlösebedingungen
-- SuperCards sind ab Aktivierungsdatum 3 Jahre lang' gültig
-- Manche der gratis Karten werden erst zu einem bestimmten Datum automatisch von Aral aktiviert
-
-## Grundsätzliche Idee
-Die Aral E-Mails mit den Bestellnummern + Aktivierungscode abgreifen und dann automatisch alle Karten aller Bestellungen hier aktivieren:
+## Was das Script tut
+Die Aral E-Mails mit den Bestellnummern + Aktivierungscode abgreifen und automatisch alle Karten aller Bestellungen darüber aktivieren:
 https://www.aral-supercard.de/services/bestellungen/
-Der Kartenwert einzelner Bestellungen bzw. Karten lässt sich hier extrahieren:
-https://www.aral-supercard.de/services/bestellungen/detailansicht/<Bestellnummer>
 
 ## Installation (Windows)
 1. Installiere Python 3
 2. Installiere folgende python Module:
-mechanize
+mechanize und imaplib
 3. Starte AralActivator.py per Doppelklick.
 
+## Vorbereitung
+Du solltest wissen, wie viele Karten noch aktiviert werden müssen um das Ergebnis gegenprüfen zu können.
+Du musst deine aral-supercard.de Zugangsdaten UND deine E-Mail Zugangsdaten samt IMAP-URL wissen.
+
 ## Anleitung [Vollautomatische Version - empfohlen]
-1. Sammle alle Mails mit Aral Aktivierungscodes und füge deren Inhalt in eine Datei namens "mails.txt" ein. Dieser Schritt wird mit einer der nächsten Versionen noch automatisiert!
-Tipp: Im GMail Webmailer findest du die Mails z.B. so:
-`subject:("aktivierung ihrer aral supercard")`
-Die mails.txt Datei muss in dem Ordner liegen, in dem sich auch das Script befindet.
-2. Starte das Script. Es wird dich beim ersten Start nach deinen Aral-Supercard.de Zugangsdaten fragen.
-3. Das Script wird nun alle Karten aus deiner Aral Bestellübersicht aktivieren zu denen es in den Mails die passenden Aktivierungscodes findet.
+1. Starte das Script(AralActivator.py). Es wird dich beim ersten Start nach deinen Aral-Supercard.de Zugangsdaten UND E-Mail IMAP Zugangsdaten fragen.
+2. Das Script wird nun alle Karten aus deiner Aral Bestellübersicht aktivieren zu denen es in deinen Mails die passenden Aktivierungscodes findet.
 Am Ende wird ggf. eine Übersicht der fehlgeschlagenen Aktivierungen angezeigt.
 
-## Anleitung [Halbautomatische Version]
-1. Lege alle zu aktivierenden Aral Karten samt Lieferschein auf eine Oberfläche in der Nähe deines PCs.
+## Anleitung [Halbautomatische Version - nicht empfohlen]
+Um diesen Modus verwenden zu können, musst den in der settings.json Datei den Wert "requires_aral_account" auf "false" setzen.
+1. Lege alle zu aktivierenden Aral Karten samt Lieferschein auf eine Oberfläche in der Nähe deines Computers.
 2. Sammle die Inhalte aller Aral Aktivierungs-Mails und kopiere sie in eine Textdatei mit dem Namen 'mails.txt'.
 Kopiere diese in den Ordner, in dem auch das Script liegt.
 Tipp: Im GMail Webmailer findest du die Mails z.B. so:
 `subject:("aktivierung ihrer aral supercard")`
-3. Starte das Script. Es sollte alle Bestellnummern samt Aktivierungscodes automatisch erfassen und dich nach den restlichen Informationen fragen.
+3. Starte das Script(AralActivator.py). Es sollte alle Bestellnummern samt Aktivierungscodes automatisch erfassen und dich nach den restlichen Informationen fragen.
 4. Solltest du keine Lust mehr auf weitere Aktivierungsvorgänge hast, beende das Programm übers Menü und nicht über das "X", sodass der status gespeichert werden kann.
 
 Du kannst bei jedem Start neue mails in die mails.txt legen - es macht nichts, wenn bereits hinzugefügte Mails in der Datei verbleiben.
@@ -67,14 +50,22 @@ Füge maximal 10 zu aktivierende Karten/EMails gleichzeitig ein es sei denn du b
 Vermutlich hat Aral die Textbausteine der Aktivierungs-Mails geändert. Bitte lass' mir eine (zensierte) Fassung deiner Mails zukommen, damit ich das aktualisieren kann.
 
 ## Dateien und deren Inhalt
+cookies.txt
+Gespeicherte Cookies deines Aral Accounts.
+
 vouchers.json:
 Enthält alle vom Script gesammelten Infos zu deinen Karten.
 Du solltest diese Datei nicht löschen - nur dann kann der Activator auch in Zukunft zuverlässig funktionieren (z.B. bereits hinzugefügte Bestellungen/Karten überspringen).
+
+orders.json:
+Enthält die aus dem Aral Account gesammelten Infos zu deinen Bestellungen.
+Wird benötigt, damit der Crawler beim nächsten Start weiß, welche Bestellnummern er bereits erfasst hat und somit schneller ist.
+
 settings.json:
 Enthält die Einstellungen des Scripts
 
 settings.json:
-Enthält die aral-supercard.de Zugangsdaten und alle möglichen Einstellungen.
+Enthält die aral-supercard.de Zugangsdaten und sonstige einstellungsmöglichkeiten.
 requires_account --> Falls deaktiviert lassen sich Codes auch manuell und ohne aral-supercard.de Account aktivieren (nicht empfohlen).
 
 ## Bekannte Fehler auf der Aral Webseite
@@ -83,8 +74,30 @@ Screenshot:
 TODO
 
 ## TODOs (Geordnet nach Prioritäten)
-- IMAP E-Mail Crawler ergänzen
 - Mehr Fehlertoleranz
+- Testen
+- Schönere Ausgaben
+- Kleinere Fehlerbehebungen
+
+
+## Unnützes Wissen über Aral-Supercards
+
+### Eigenschaften von Aral (Tank-)Karten
+Die Karten kommen per Post.
+Jeder Bestellung, die idealerweise nur eine zu aktivierende Karte enthält ist ein Lieferschein mit folgenden relevanten Informationen beigelegt:
+- Bestellnummer (9-stellig[?])
+- Aktivierungscode (6-10-stellig [Lt. Webseite, Stand 27.11.2019])
+
+Zudem stehen auf jeder Aral Karte Folgende Infos:
+- Aral SuperCard Nr. (19-stellig, meist sind mind. die ersten 8 Stellen gegeben)
+- Registrierungscode (4-stellig)
+- Seriennummer (10-stellig) [irrelevant]
+Per E-Mail bekommt man dann einen Aktivierungscode, der für die gesamte Bestellung(?) gilt - meistens muss man sowieso nur eine Karte aktivieren.
+
+### Haltbarkeit und Einlösebedingungen
+- SuperCards sind ab Aktivierungsdatum 3 Jahre lang' gültig
+- Manche der gratis Karten werden erst zu einem bestimmten Datum automatisch von Aral aktiviert
+- SuperCards sind idR. erst ab dem nächsten Tag nach Aktivierung gültig
 
 ## Links
 Karten hier 'manuell' bzw. ohne sich einzuloggen aktivieren:

@@ -5,11 +5,14 @@ Created on 26.11.2019
 '''
 
 import os, json, re, sys, mechanize, time
+from EmailCrawler import crawl_mails
 from html.parser import HTMLParser
+from datetime import date
 
 # Global variables
-INTERNAL_VERSION = '0.3.8'
+INTERNAL_VERSION = '0.4.1'
 PATH_STORED_VOUCHERS = os.path.join('vouchers.json')
+PATH_STORED_ORDERS = os.path.join('orders.json')
 PATH_STORED_SETTINGS = os.path.join('settings.json')
 PATH_STORED_COOKIES = os.path.join('cookies.txt')
 PATH_INPUT_MAILS = os.path.join('mails.txt')
@@ -102,8 +105,8 @@ def getFormIndexBySubmitKey(br, submitKey):
 #             print(control)
 #             print(control.type)
 #             print(control.name)
-            if control.name != None:
-                print('submitKey: ' + control.name)
+#             if control.name != None:
+#                 print('submitKey: ' + control.name)
             if control.name != None and control.name == submitKey:
                 #print('Found form')
                 target_index = current_index
@@ -208,52 +211,64 @@ def activateSemiAutomatic(br, orderArray):
 #         print('Alle %d neuen Karten wurden erfolgreich aktiviert' % numberof_un_activated_cards)
     return
     
-def crawlOrderNumbersFromMail(orderArray):
+def crawlOrderNumbersFromMail(settings, orderArray):
         # TODO: Crawl order-date from mails and save it later on
         # Load mails
-    try: 
-        readFile = open(PATH_INPUT_MAILS, 'r')
-        emailSource = readFile.read()
-        readFile.close
-    except:
-        print('Failed to load ' + PATH_INPUT_MAILS)
-    
-    # Crawl data from emailSource
-    if emailSource != None:
-        print('Extrahiere Bestellnummern und Aktivierungscodes aus E-Mails ...')
-        crawledOrderNumbers = re.compile(r'Ihre Aral SuperCard Bestellung\s*(\d+)').findall(emailSource)
-        crawledActivationCodes = re.compile(r'Der Aktivierungscode lautet\s*:\s*(\d+)').findall(emailSource)
-        numberof_new_vouchers = 0
-        if len(crawledOrderNumbers) != len(crawledActivationCodes):
-            print('Email crawler failed: Length mismatch')
-        else:
-            for i in range(len(crawledOrderNumbers)):
-                orderNumberStr = crawledOrderNumbers[i]
-                orderNumber = int(orderNumberStr)
-                activationCode = int(crawledActivationCodes[i])
-                currOrder = None
-                for o in orderArray:
-                    if orderNumber == o['order_number']:
-                        currOrder = o
-                        break
-                if currOrder != None and 'activation_code' in currOrder:
-                    # Skip existing orders that already have assigned order_numbers
-                    # Debug, TODO: Use official logging functionality
-                    # print('Ueberspringe bereits existierende Bestellnummer: ' + orderNumberStr)
-                    continue
-                #print('Bestellnummer:Aktivierungscode --> ' + orderNumberStr + ':' + str(activationCode))
-                currOrder = {'order_number':orderNumber,'activation_code':activationCode,'activated':False}
-                # TODO: Add activation date (= current date)
-                # TODO: Add valid_until field (+ 3 years from activation date on)
-                orderArray.append(currOrder)
-                numberof_new_vouchers += 1
-            if numberof_new_vouchers > 0:
-                print('%d neue Bestellungen gefunden' % numberof_new_vouchers)
+    use_old_crawler = False
+    if use_old_crawler == True:
+        try: 
+            readFile = open(PATH_INPUT_MAILS, 'r')
+            emailSource = readFile.read()
+            readFile.close
+        except:
+            print('Failed to load ' + PATH_INPUT_MAILS)
+        
+        # Crawl data from emailSource
+        if emailSource != None:
+            print('Extrahiere Bestellnummern und Aktivierungscodes aus E-Mails ...')
+            crawledOrderNumbers = re.compile(r'Ihre Aral SuperCard Bestellung\s*(\d+)').findall(emailSource)
+            crawledActivationCodes = re.compile(r'Der Aktivierungscode lautet\s*:\s*(\d+)').findall(emailSource)
+            numberof_new_vouchers = 0
+            if len(crawledOrderNumbers) != len(crawledActivationCodes):
+                print('Email crawler failed: Length mismatch')
             else:
-                print('Deine E-Mails enthielten keine neuen Bestellungen')
+                for i in range(len(crawledOrderNumbers)):
+                    orderNumberStr = crawledOrderNumbers[i]
+                    orderNumber = int(orderNumberStr)
+                    activationCode = int(crawledActivationCodes[i])
+                    currOrder = None
+                    for o in orderArray:
+                        if orderNumber == o['order_number']:
+                            currOrder = o
+                            break
+                    if currOrder != None and 'activation_code' in currOrder:
+                        # Skip existing orders that already have assigned order_numbers
+                        # Debug, TODO: Use official logging functionality
+                        # print('Ueberspringe bereits existierende Bestellnummer: ' + orderNumberStr)
+                        continue
+                    if currOrder == None:
+                        currOrder = {'order_number':orderNumber}
+                    currOrder ['activation_code'] = activationCode
+                    orderArray.append(currOrder)
+                    numberof_new_vouchers += 1
+                if numberof_new_vouchers > 0:
+                    print('%d neue Bestellungen gefunden' % numberof_new_vouchers)
+                else:
+                    print('Deine E-Mails enthielten keine neuen Bestellungen')
+    else:
+        crawl_mails(settings, orderArray)
     return
 
-def crawlOrderNumbersFromAccount(br, orderArray):
+def crawlOrderNumbersFromAccount(br):
+    # Load vouchers and activation codes from email source
+    accountOrdersArray = []
+    try: 
+        readFile = open(PATH_STORED_ORDERS, 'r')
+        settingsJson = readFile.read()
+        readFile.close
+        accountOrdersArray = json.loads(settingsJson)
+    except:
+        print('Failed to load ' + PATH_STORED_VOUCHERS)
     # TODO: Optimize to stop on known codes on last site --> Orders are sorted from newest --> oldest --> Saves time and http requests
     page_counter = 0
     max_items_per_page = 20
@@ -271,10 +286,10 @@ def crawlOrderNumbersFromAccount(br, orderArray):
         found_new_entry = False
         for currCrawledOrderNumber in currentCrawledOrderNumbers:
             currCrawledOrderNumber = int(currCrawledOrderNumber)
-            if not any(emailOrderNumber['order_number'] == currCrawledOrderNumber for emailOrderNumber in orderArray):
+            if currCrawledOrderNumber not in accountOrdersArray:
                 found_new_entry = True
                 numberof_new_items += 1
-                orderArray.append({'order_number':currCrawledOrderNumber})
+                accountOrdersArray.append(currCrawledOrderNumber)
         next_page_available = '?page=' + str(page_counter + 1)
         # Stop-conditions and fail-safes
         if next_page_available not in html:
@@ -291,16 +306,19 @@ def crawlOrderNumbersFromAccount(br, orderArray):
         time.sleep(2)
         # Continue
     print('Anzahl neu erfasster Bestellnummern (seit dem letzten Start): %d auf insgesamt %d Seiten' % (numberof_new_items, page_counter))
-    return
+    # Save these
+    with open(PATH_STORED_ORDERS, 'w') as outfile:
+        json.dump(accountOrdersArray, outfile)
+    return accountOrdersArray
     
 def activateAutomatic(br, orderArray):
     max_numberof_failures_in_a_row = 3
     numberof_failures_in_a_row = 0
     numberof_un_activated_cards = 0
     # Crawl all OrderNumbers from website
-    crawlOrderNumbersFromAccount(br, orderArray)
+    accountOrderArray = crawlOrderNumbersFromAccount(br)
     if len(orderArray) == 0:
-        print('Es konnten keine Bestellnummern gefunden werden --> Fehler im Script oder ungueltige Zugangsdaten')
+        print('Es konnten keine Bestellnummern im Account gefunden werden')
         return None
         
     for currOrder in orderArray:
@@ -311,20 +329,24 @@ def activateAutomatic(br, orderArray):
     progressCounter = 0
     successfullyActivatedOrdersCounter = 0
     orderActivationImpossibleArray = []
+    printSeparator()
     for orderInfo in orderArray:
         try:
             progressCounter += 1
             # Try to find activation code for current order number which should have been crawled beforehand from the users' emails
             order_number = orderInfo['order_number']
-            if 'activation_code' not in orderInfo or orderInfo['activation_code'] == None:
+            # TODO: Why do we have to have a cast to int here?
+            activationCode = int(orderInfo.get('activation_code', 0))
+            if activationCode == 0:
                 # Skip such items as we do not have the activation-number
-                #print('Bestellnummer konnte keiner E-Mail Bestellnummer zugeordnet werden --> Ueberspringe diese Nummer')
                 orderActivationImpossibleArray.append({'order_number':order_number,'failure_reason':'Aktivierungscode konnte nicht gefunden werden'})
                 continue
-            print('Arbeite an Bestellung: ' + str(order_number))
-            isActivated = orderInfo['activated']
-            activationCode = orderInfo['activation_code']
-            print('Bestellnummer = %d --> Aktivierungscode = %d' %(order_number, activationCode))
+            elif order_number not in accountOrderArray:
+                orderActivationImpossibleArray.append({'order_number':order_number,'failure_reason':'Bestellnummer aus E-Mail existiert nicht im Aral Account'})
+                continue
+            print('Arbeite an Bestellung: %d mit Aktivierungscode %d' % (order_number, activationCode))
+            isActivated = orderInfo.get('activated', False)
+            #print('Bestellnummer = %d --> Aktivierungscode = %d' %(order_number, activationCode))
             
             if isActivated == True:
                 # Skip already activated cards
@@ -394,16 +416,19 @@ def activateAutomatic(br, orderArray):
             # Success! Yeey!
             # TODO: Save activation-date
             orderInfo['activated'] = True
+            orderInfo['activation_date'] = date.today().strftime("%Y-%m-%d")
             successfullyActivatedOrdersCounter += 1
             # Reset that counter
             numberof_failures_in_a_row = 0
             # Cooldown
             time.sleep(2)
             # Continue with the next voucher
+            print('Bestellung erfolgreich aktiviert: %d' % order_number)
         finally:
             if numberof_failures_in_a_row >= max_numberof_failures_in_a_row:
                 print('Mehr als %d unbekannte Fehler hintereinander --> Abbruch')
                 break
+            printSeparator()
     
     printSeparator()
     if len(orderActivationImpossibleArray) > 0:
@@ -414,8 +439,9 @@ def activateAutomatic(br, orderArray):
     printSeparator()
     if successfullyActivatedOrdersCounter > 0:
         print('Anzahl erfolgreich aktivierter Karten: ' + str(successfullyActivatedOrdersCounter))
+        print('Bedenke: SuperCards sind idR. erst ab dem naechsten Tag nach der Aktivierung gueltig!')
     else:
-        print('Es wurden keine neuen Karten aktiviert --> Fehler im Script oder manche Bestellungen haben noch keine Aktivierungscodes erhalten')
+        print('Es wurden keine neuen Karten aktiviert --> Entweder es wurden bereits alle Karten aktiviert oder fuer manche Karten/Bestellungen existieren noch keine Aktivierungscodes')
 #     if successfullyActivatedOrdersCounter != numberof_un_activated_cards:
 #         print('Anzahl fehlgeschlagener/uebersprungener Aktivierungen: ')
 #     else:
@@ -433,30 +459,31 @@ def loginAccount(br, settings):
     # Try to login via stored cookies first - Aral only allows one active session which means we will most likely have to perform a full login
     cookies = mechanize.LWPCookieJar(PATH_STORED_COOKIES)
     br.set_cookiejar(cookies)
-    if settings['email'] == None or settings['password'] == None:
+    if settings['login_aral_email'] == None or settings['login_aral_password'] == None:
         print('Gib deine aral-supercard.de Zugangsdaten ein')
         print('Falls du ueber mehrere Accounts bestellt hast musst du dieses Script jeweils 1x pro Account in verschiedenen Ordnern duplizieren!')
         print('Bedenke, dass auch die jeweiligen E-Mail Adressen möglichst nur die Mails enthalten sollten, die auch zu den Bestellungen des eingetragenen Aral Accounts passen ansonsten wird der Aktivierungsprozess unnötig lange dauern und es erscheinen ggf. Fehlermeldungen.')
+        print('Achtung: Logge dich NICHT per Browser auf der Aral Webseite ein solange dieses Script laeuft')
         print('Gib deine E-Mail ein:')
-        settings['email'] = input()
+        settings['login_aral_email'] = input()
         print('Gib dein Passwort ein:')
-        settings['password'] = input()
+        settings['login_aral_password'] = input()
     else:
-        print('Gespeicherte Zugangsdaten wurden erfolgreich geladen')
-        print('Verwende email: ' + account_email)
+        print('Gespeicherte aral-supercard Zugangsdaten wurden erfolgreich geladen')
+        print('Verwende E-Mail: ' + account_email)
     response = br.open(BASE_DOMAIN)
     html = getHTML(response)
     logged_in = isLoggedIN(html)
     if not logged_in:
-        print('Versuche vollstaendigen Login')
+        print('Login aral | %s' % settings['login_aral_email'])
         response = br.open(BASE_DOMAIN + '/login')
         form_index = getFormIndexBySubmitKey(br, 'email')
         if form_index == -1:
             print('Login-Form konnte nicht gefunden werden')
             return False
         br.select_form(nr=form_index)
-        br['email'] = settings['email']
-        br['password'] = settings['password']
+        br['email'] = settings['login_aral_email']
+        br['password'] = settings['login_aral_password']
         response = br.submit()
         html = getHTML(response)
         if not isLoggedIN(html):
@@ -490,12 +517,12 @@ try:
 except:
     print('Failed to load ' + PATH_STORED_SETTINGS)
     
-settings.setdefault('email', None)
-settings.setdefault('password', None)
-settings.setdefault('requires_account', True)
-account_email = settings['email']
-account_password = ['password']
-requires_account = settings['requires_account']
+settings.setdefault('login_aral_email', None)
+settings.setdefault('login_aral_password', None)
+settings.setdefault('requires_aral_account', True)
+account_email = settings['login_aral_email']
+account_password = ['login_aral_password']
+requires_account = settings['requires_aral_account']
 
 # Prepare browser
 br = mechanize.Browser()
@@ -524,7 +551,7 @@ try:
 except:
     print('Failed to load ' + PATH_STORED_VOUCHERS)
 
-crawlOrderNumbersFromMail(orderArray)
+crawlOrderNumbersFromMail(settings, orderArray)
 
 if orderArray == None:
     # There is nothing we can do --> Exit
@@ -548,9 +575,12 @@ finally:
     # Make sure to always save orders!
     with open(PATH_STORED_VOUCHERS, 'w') as outfile:
         json.dump(orderArray, outfile)
+    # Save (account-) settings
+    with open(PATH_STORED_SETTINGS, 'w') as outfile:
+        json.dump(settings, outfile)
     
     print('Done - druecke ENTER zum Schließen des Fensters')
     # Debug
-    #raise
+    # raise
     input()
     sys.exit()
