@@ -10,7 +10,7 @@ from html.parser import HTMLParser
 from datetime import date
 
 # Global variables
-INTERNAL_VERSION = '0.4.1'
+INTERNAL_VERSION = '0.4.2'
 PATH_STORED_VOUCHERS = os.path.join('vouchers.json')
 PATH_STORED_ORDERS = os.path.join('orders.json')
 PATH_STORED_SETTINGS = os.path.join('settings.json')
@@ -214,8 +214,8 @@ def activateSemiAutomatic(br, orderArray):
 def crawlOrderNumbersFromMail(settings, orderArray):
         # TODO: Crawl order-date from mails and save it later on
         # Load mails
-    use_old_crawler = False
-    if use_old_crawler == True:
+    use_old_mail_crawler = False
+    if use_old_mail_crawler == True:
         try: 
             readFile = open(PATH_INPUT_MAILS, 'r')
             emailSource = readFile.read()

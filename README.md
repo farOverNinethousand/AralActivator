@@ -49,6 +49,13 @@ Füge maximal 10 zu aktivierende Karten/EMails gleichzeitig ein es sei denn du b
 
 Vermutlich hat Aral die Textbausteine der Aktivierungs-Mails geändert. Bitte lass' mir eine (zensierte) Fassung deiner Mails zukommen, damit ich das aktualisieren kann.
 
+## Wie kann ich die Aktivierung bestimmter Bestellnummern vermeiden?
+Falls du manche Bestellungen aus _Gründen_ noch nicht aktivieren möchtest (z.B. Aktivierungscode kam bereits an, Karte aber noch nicht) gibt es zwei Möglichkeiten:
+1. Einfachste Möglichkeit: Lösche die E-Mail mit dem Aktivierungscode dieser Bestellnummer endgültig (inhalt davor sichern).
+2. Kompliziertere Möglichkeit: Ändere im Script die Zeile 'use_old_mail_crawler = False' auf 'use_old_mail_crawler = True'.
+Das deaktiviert das automatische Crawlen von E-Mails.
+Kopiere alle E-Mails (kompletter Inhalt), deren Bestellungen aktiviert werden sollen in eine Datei mit dem Namen 'mails.txt' und speichere diese im Ordner in dem auch das Script liegt.
+
 ## Dateien und deren Inhalt
 cookies.txt
 Gespeicherte Cookies deines Aral Accounts.
@@ -71,7 +78,7 @@ requires_account --> Falls deaktiviert lassen sich Codes auch manuell und ohne a
 ## Bekannte Fehler auf der Aral Webseite
 Wenn man eine komplette Bestellung aus Versehen mehrfach aktiviert, enthält die Detailansicht (/services/bestellungen/detailansicht/<Bestellnummer>) mehrere Einträge, obwohl eigentlich nur eine Karte aktiviert wird.
 Screenshot:
-TODO
+![alt text](https://raw.githubusercontent.com/farOverNinethousand/AralActivator/master/testing/Screenshots/2019_12_05_Bug_eine_Bestellung_mehrmals_aktivieren.png "Veranschaulichung Zugangsdaten in Script eintragen")
 
 ## TODOs (Geordnet nach Prioritäten)
 - Mehr Fehlertoleranz
