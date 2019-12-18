@@ -8,6 +8,7 @@ import re, sys, imaplib, os, json
 
 list_response_pattern = re.compile(r'\((?P<flags>.*?)\) "(?P<delimiter>.*)" (?P<name>.*)')
 
+# According to docs/example: https://pymotw.com/2/imaplib/
 def parse_list_response(line):
     line = line.decode('utf-8')
     flags, delimiter, mailbox_name = list_response_pattern.match(line).groups()
