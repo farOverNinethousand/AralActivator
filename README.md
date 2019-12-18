@@ -11,7 +11,9 @@ https://www.mydealz.de/deals/aral-supercard-fur-50-kaufen-5-geschenkt-1465573
 https://www.mydealz.de/deals/aral-supercard-einkaufen-und-tanken-fur-30-kaufen-5-supercard-einkaufen-und-tanken-geschenkt-jeweils-36-monate-gultig-1477242
 
 ## Was das Script tut
-Die Aral E-Mails mit den Bestellnummern + Aktivierungscode abgreifen und automatisch alle Karten aller Bestellungen darüber aktivieren:
+- Aral E-Mails mit Bestellnummern + Aktivierungscode abgreifen
+- Bestellungen aus dem Aral Account automatisch aktivieren:
+
 https://www.aral-supercard.de/services/bestellungen/
 
 ## Installation (Windows)
@@ -29,7 +31,7 @@ Du musst deine aral-supercard.de Zugangsdaten UND deine E-Mail Zugangsdaten samt
 2. Das Script wird nun alle Karten aus deiner Aral Bestellübersicht aktivieren zu denen es in deinen Mails die passenden Aktivierungscodes findet.
 Am Ende wird ggf. eine Übersicht der fehlgeschlagenen Aktivierungen angezeigt.
 
-## Anleitung [Halbautomatische Version - nicht empfohlen]
+##### Anleitung [Halbautomatische Version - veraltet nicht empfohlen!]
 Um diesen Modus verwenden zu können, musst den in der settings.json Datei den Wert "requires_aral_account" auf "false" setzen.
 1. Lege alle zu aktivierenden Aral Karten samt Lieferschein auf eine Oberfläche in der Nähe deines Computers.
 2. Sammle die Inhalte aller Aral Aktivierungs-Mails und kopiere sie in eine Textdatei mit dem Namen 'mails.txt'.
@@ -46,15 +48,15 @@ Füge maximal 10 zu aktivierende Karten/EMails gleichzeitig ein es sei denn du b
 
 ## Fehler und deren Bedeutung
 1. "Email crawler failed: Length mismatch":
-
 Vermutlich hat Aral die Textbausteine der Aktivierungs-Mails geändert. Bitte lass' mir eine (zensierte) Fassung deiner Mails zukommen, damit ich das aktualisieren kann.
+2. "Fehler: Konnte Informationen aus E-Mails nicht extrahieren" --> Eventuell hat sich der Inhalt der Aral E-Mails geändert und das Script benoetigt ein Update
 
 ## Wie kann ich die Aktivierung bestimmter Bestellnummern vermeiden?
-Falls du manche Bestellungen aus _Gründen_ noch nicht aktivieren möchtest (z.B. Aktivierungscode kam bereits an, Karte aber noch nicht) gibt es zwei Möglichkeiten:
+Falls du manche Bestellungen aus irgewndwelchen Gründen noch nicht aktivieren möchtest (z.B. Aktivierungscode kam bereits an, Karte aber noch nicht) gibt es zwei Möglichkeiten:
 1. Einfachste Möglichkeit: Lösche die E-Mail mit dem Aktivierungscode dieser Bestellnummer endgültig (inhalt davor sichern).
 2. Kompliziertere Möglichkeit: Ändere im Script die Zeile 'use_old_mail_crawler = False' auf 'use_old_mail_crawler = True'.
 Das deaktiviert das automatische Crawlen von E-Mails.
-Kopiere alle E-Mails (kompletter Inhalt), deren Bestellungen aktiviert werden sollen in eine Datei mit dem Namen 'mails.txt' und speichere diese im Ordner in dem auch das Script liegt.
+Weitere Infos dazu siehe Punkt "Halbautomatische Version".
 
 ## Dateien und deren Inhalt
 cookies.txt
