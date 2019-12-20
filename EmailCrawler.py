@@ -1,9 +1,3 @@
-'''
-Created on 05.12.2019
-
-@author: over_nine_thousand
-'''
-
 import re, sys, imaplib, os, json
 
 list_response_pattern = re.compile(r'\((?P<flags>.*?)\) "(?P<delimiter>.*)" (?P<name>.*)')
@@ -15,6 +9,7 @@ def parse_list_response(line):
     mailbox_name = mailbox_name.strip('"')
     return flags, delimiter, mailbox_name
 
+# Returns object of orderArray where 'order_number' == orderNumber
 def findOrderObjectByOrderNumber(orderArray, orderNumber):
     currOrder = None
     for o in orderArray:
@@ -23,6 +18,7 @@ def findOrderObjectByOrderNumber(orderArray, orderNumber):
             break
     return currOrder
 
+# Crawls mails which contain a certain String in their subject
 def crawlMailsBySubject(connection, email_array, subject):
     typ, [msg_ids] = connection.search(None, '(SUBJECT "' + subject + '")')
     # print('INBOX', typ, msg_ids)
@@ -39,6 +35,48 @@ def crawlMailsBySubject(connection, email_array, subject):
                 # print(mail_part)
                 complete_mail += mail_part
         email_array.append(complete_mail)
+
+def crawl_mailsOLD(settings, orderArray):
+    PATH_INPUT_MAILS = os.path.join('mails.txt')
+    try:
+        readFile = open(PATH_INPUT_MAILS, 'r')
+        emailSource = readFile.read()
+        readFile.close
+    except:
+        print('Failed to load ' + PATH_INPUT_MAILS)
+
+    # Crawl data from emailSource
+    if emailSource != None:
+        print('Extrahiere Bestellnummern und Aktivierungscodes aus E-Mails ...')
+        crawledOrderNumbers = re.compile(r'Ihre Aral SuperCard Bestellung\s*(\d+)').findall(emailSource)
+        crawledActivationCodes = re.compile(r'Der Aktivierungscode lautet\s*:\s*(\d+)').findall(emailSource)
+        numberof_new_vouchers = 0
+        if len(crawledOrderNumbers) != len(crawledActivationCodes):
+            print('Email crawler failed: Length mismatch')
+        else:
+            for i in range(len(crawledOrderNumbers)):
+                orderNumberStr = crawledOrderNumbers[i]
+                orderNumber = int(orderNumberStr)
+                activationCode = int(crawledActivationCodes[i])
+                currOrder = None
+                for o in orderArray:
+                    if orderNumber == o['order_number']:
+                        currOrder = o
+                        break
+                if currOrder is not None and 'activation_code' in currOrder:
+                    # Skip existing orders that already have assigned order_numbers
+                    # Debug, TODO: Use official logging functionality
+                    # print('Ueberspringe bereits existierende Bestellnummer: ' + orderNumberStr)
+                    continue
+                if currOrder is None:
+                    currOrder = {'order_number': orderNumber}
+                currOrder['activation_code'] = activationCode
+                orderArray.append(currOrder)
+                numberof_new_vouchers += 1
+            if numberof_new_vouchers > 0:
+                print('%d neue Bestellungen gefunden' % numberof_new_vouchers)
+            else:
+                print('Deine E-Mails enthielten keine neuen Bestellungen')
 
 def crawl_mails(settings, orderArray):
     #     print('INBOX Status:')
@@ -88,7 +126,7 @@ def crawl_mails(settings, orderArray):
                 order_infoMatchObject = re.compile(r'Ihre Aral SuperCard Bestellung\s*(\d+)\s*vom\s*(\d{2}\.\d{2}\.\d{4})').search(aral_mail)
                 orderNumber = int(order_infoMatchObject.group(1))
                 orderDate = order_infoMatchObject.group(2)
-                activationCode = re.compile(r'Aktivierungscode lautet\s*:\s*(\d+)').search(aral_mail).group(1)
+                activationCode = int(re.compile(r'Aktivierungscode lautet\s*:\s*(\d+)').search(aral_mail).group(1))
                 numberof_successfully_parsed_mails += 1
                 currOrder = findOrderObjectByOrderNumber(orderArray, orderNumber)
                 if currOrder is not None and 'activation_code' in currOrder:
@@ -105,7 +143,7 @@ def crawl_mails(settings, orderArray):
             except:
                 print('Fehler: Aktivierungscode konnte nicht aus E-Mail geparsed werden')
                 continue
-        # Crawl serial numbers for already activated cards - this is not soo important
+        # Crawl serial numbers for already activated cards - this is not soo important; do not stop if this fails!
         for aral_mail_serial in aral_mails_serials:
             try:
                 order_infoMatchObject = re.compile(r'Bestellnummer\s*:\s*(\d+)').search(aral_mail_serial)
@@ -117,7 +155,10 @@ def crawl_mails(settings, orderArray):
                     # Skip already existing objects
                     continue
                 currOrder['serial_number'] = serial_number
-                orderArray.append(currOrder)
+                # We know that this order must have been activated already!
+                # 2019-12-20: Do not (yet) set orders to activated because if we go into the order details to try to activate such orders we will be able to crawl more details and save them!
+                # currOrder['activated'] = True
+                # orderArray.append(currOrder)
                 print('Neue Seriennummer gefunden: Bestellnummer: %d | Seriennummer: %d' % (orderNumber, serial_number))
             except:
                 print('Fehler: Seriennummer konnte nicht aus E-Mail geparsed werden')
@@ -140,6 +181,7 @@ def crawl_mails(settings, orderArray):
     return
 
 
+# Logs into IMAP mailbox
 def login_mail(settings):
     if settings.get('login_email_username', None) is None or settings.get('login_email_password', None) is None or settings.get('login_email_imap', None) is None:
         print('Gib deine E-Mail Zugangsdaten ein')
