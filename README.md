@@ -66,16 +66,15 @@ Gespeicherte Cookies deines Aral Accounts.
 vouchers.json:
 Enthält alle vom Script gesammelten Infos zu deinen Karten.
 Du solltest diese Datei nicht löschen - nur dann kann der Activator auch in Zukunft zuverlässig funktionieren (z.B. bereits hinzugefügte Bestellungen/Karten überspringen).
+Enthält ausschließlich Bestellungen, zu denen Aktivierungscodes in den E-Mails gefunden wurden.
+TODO: Auch alte Bestellungen aus dem Aral Account hinzufügen, die bereits älter sind und händisch aktiviert wurden.
 
 orders.json:
 Enthält die aus dem Aral Account gesammelten Infos zu deinen Bestellungen.
 Wird benötigt, damit der Crawler beim nächsten Start weiß, welche Bestellnummern er bereits erfasst hat und somit schneller ist.
 
 settings.json:
-Enthält die Einstellungen des Scripts
-
-settings.json:
-Enthält die aral-supercard.de Zugangsdaten und sonstige einstellungsmöglichkeiten.
+Enthält alle Zugangsdaten und sonstige Einstellungsmöglichkeiten.
 requires_account --> Falls deaktiviert lassen sich Codes auch manuell und ohne aral-supercard.de Account aktivieren (nicht empfohlen).
 
 ## Bekannte Fehler auf der Aral Webseite
@@ -108,6 +107,7 @@ Per E-Mail bekommt man dann einen Aktivierungscode, der für die gesamte Bestell
 - SuperCards sind ab Aktivierungsdatum 3 Jahre lang' gültig
 - Manche der gratis Karten werden erst zu einem bestimmten Datum automatisch von Aral aktiviert
 - SuperCards sind idR. erst ab dem nächsten Tag nach Aktivierung gültig
+- [20.12.2019] Man kann an der Tankstellen-Kasse beliebig viele Karten verwenden, allerdings ist der Maximalbetrag, den man in einem Vorgang damit bezahlen kann 100€
 
 ## Links
 Karten hier 'manuell' bzw. ohne sich einzuloggen aktivieren:

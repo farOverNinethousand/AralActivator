@@ -10,7 +10,7 @@ from html.parser import HTMLParser
 from datetime import date
 
 # Global variables
-INTERNAL_VERSION = '0.4.4'
+INTERNAL_VERSION = '0.4.5'
 PATH_STORED_VOUCHERS = os.path.join('vouchers.json')
 PATH_STORED_ORDERS = os.path.join('orders.json')
 PATH_STORED_SETTINGS = os.path.join('settings.json')
@@ -247,12 +247,12 @@ def crawlOrderNumbersFromMail(settings, orderArray):
                         if orderNumber == o['order_number']:
                             currOrder = o
                             break
-                    if currOrder != None and 'activation_code' in currOrder:
+                    if currOrder is not None and 'activation_code' in currOrder:
                         # Skip existing orders that already have assigned order_numbers
                         # Debug, TODO: Use official logging functionality
                         # print('Ueberspringe bereits existierende Bestellnummer: ' + orderNumberStr)
                         continue
-                    if currOrder == None:
+                    if currOrder is None:
                         currOrder = {'order_number': orderNumber}
                     currOrder['activation_code'] = activationCode
                     orderArray.append(currOrder)
@@ -266,7 +266,7 @@ def crawlOrderNumbersFromMail(settings, orderArray):
     return
 
 
-def crawlOrderNumbersFromAccount(br):
+def crawlOrdersFromAccount(br):
     # Load vouchers and activation codes from email source
     accountOrdersArray = []
     try:
@@ -276,7 +276,6 @@ def crawlOrderNumbersFromAccount(br):
         accountOrdersArray = json.loads(settingsJson)
     except:
         print('Failed to load ' + PATH_STORED_VOUCHERS)
-    # TODO: Optimize to stop on known codes on last site --> Orders are sorted from newest --> oldest --> Saves time and http requests
     page_counter = 0
     max_items_per_page = 20
     numberof_new_items = 0
@@ -325,7 +324,7 @@ def activateAutomatic(br, orderArray):
     numberof_failures_in_a_row = 0
     numberof_un_activated_cards = 0
     # Crawl all OrderNumbers from website
-    accountOrderArray = crawlOrderNumbersFromAccount(br)
+    accountOrderArray = crawlOrdersFromAccount(br)
     if len(orderArray) == 0:
         print('Es konnten keine Bestellnummern im Account gefunden werden')
         return None
@@ -345,6 +344,7 @@ def activateAutomatic(br, orderArray):
             # Try to find activation code for current order number which should have been crawled beforehand from the users' emails
             order_number = orderInfo['order_number']
             # TODO: Why do we have to have a cast to int here?
+            # TODO: Add check for datatype as I made a mistake in the current version and stored this as a String
             activationCode = int(orderInfo.get('activation_code', 0))
             if activationCode == 0:
                 # Skip such items as we do not have the activation-number
@@ -355,6 +355,7 @@ def activateAutomatic(br, orderArray):
                 orderActivationImpossibleArray.append({'order_number': order_number,
                                                        'failure_reason': 'Bestellnummer aus E-Mail existiert nicht im Aral Account'})
                 continue
+            # TODO: Add 'Arbeite an Bestellung X / Y mit Aktivierungscode ...'
             print('Arbeite an Bestellung: %d mit Aktivierungscode %d' % (order_number, activationCode))
             isActivated = orderInfo.get('activated', False)
             # print('Bestellnummer = %d --> Aktivierungscode = %d' %(order_number, activationCode))

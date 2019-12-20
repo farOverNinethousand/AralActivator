@@ -15,6 +15,31 @@ def parse_list_response(line):
     mailbox_name = mailbox_name.strip('"')
     return flags, delimiter, mailbox_name
 
+def findOrderObjectByOrderNumber(orderArray, orderNumber):
+    currOrder = None
+    for o in orderArray:
+        if orderNumber == o['order_number']:
+            currOrder = o
+            break
+    return currOrder
+
+def crawlMailsBySubject(connection, email_array, subject):
+    typ, [msg_ids] = connection.search(None, '(SUBJECT "' + subject + '")')
+    # print('INBOX', typ, msg_ids)
+    # print('Anzahl gefundener Aral E-Mails in diesem Postfach: %d' % len(msg_ids))
+    for msg_id in msg_ids.split():
+        # print('Fetching mail with ID %s' % msg_id)
+        typ, msg_data = connection.fetch(msg_id, '(BODY.PEEK[TEXT])')
+        complete_mail = ''
+        for response_part in msg_data:
+            # print('Printing response part:')
+            if isinstance(response_part, tuple):
+                # print('\n%s:' % msg_id)
+                mail_part = response_part[1].decode('utf-8')
+                # print(mail_part)
+                complete_mail += mail_part
+        email_array.append(complete_mail)
+
 def crawl_mails(settings, orderArray):
     #     print('INBOX Status:')
     #     print(connection.status('INBOX', '(MESSAGES RECENT UIDNEXT UIDVALIDITY UNSEEN)'))
@@ -31,6 +56,8 @@ def crawl_mails(settings, orderArray):
         # print('Anzahl gefundener Postfaecher: %d' % len(data))
         # this maybe used to speed-up the checking process - users can blacklist postboxes through this list
         postbox_ignore = ['Sent']
+        aral_mails = []
+        aral_mails_serials = []
         for line in data:
             numberof_aral_mails_in_this_mailbox = 0
             flags, delimiter, mailbox_name = parse_list_response(line)
@@ -47,28 +74,15 @@ def crawl_mails(settings, orderArray):
             # num_msgs = int(data[0])
             # print('There are %d messages in INBOX' % num_msgs)
             # Search for specific messages by subject
-            typ, [msg_ids] = connection.search(None, '(SUBJECT "Aktivierung Ihrer Aral SuperCard")')
-            # print('INBOX', typ, msg_ids)
-            # print('Anzahl gefundener Aral E-Mails in diesem Postfach: %d' % len(msg_ids))
-            aral_mails = []
-            numberof_new_vouchers = 0
             print('Sammle Aral E-Mails ...')
-            for msg_id in msg_ids.split():
-                # print('Fetching mail with ID %s' % msg_id)
-                typ, msg_data = connection.fetch(msg_id, '(BODY.PEEK[TEXT])')
-                complete_mail = ''
-                for response_part in msg_data:
-                    # print('Printing response part:')
-                    if isinstance(response_part, tuple):
-                        # print('\n%s:' % msg_id)
-                        mail_part = response_part[1].decode('utf-8')
-                        # print(mail_part)
-                        complete_mail += mail_part
-                aral_mails.append(complete_mail)
+            crawlMailsBySubject(connection, aral_mails, 'Aktivierung Ihrer Aral SuperCard')
+            # TODO: Solve charset issue 'Bestätigung Ihrer Kartenaktivierung'
+            crawlMailsBySubject(connection, aral_mails_serials, 'Ihrer Kartenaktivierung')
 
         print('Anzahl insgesamt gefundener Aral E-Mails: %d' % len(aral_mails))
         print('Suche nach Daten in E-Mails ...')
         numberof_successfully_parsed_mails = 0
+        numberof_new_vouchers = 0
         for aral_mail in aral_mails:
             try:
                 order_infoMatchObject = re.compile(r'Ihre Aral SuperCard Bestellung\s*(\d+)\s*vom\s*(\d{2}\.\d{2}\.\d{4})').search(aral_mail)
@@ -76,24 +90,39 @@ def crawl_mails(settings, orderArray):
                 orderDate = order_infoMatchObject.group(2)
                 activationCode = re.compile(r'Aktivierungscode lautet\s*:\s*(\d+)').search(aral_mail).group(1)
                 numberof_successfully_parsed_mails += 1
-                currOrder = None
-                for o in orderArray:
-                    if orderNumber == o['order_number']:
-                        currOrder = o
-                        break
+                currOrder = findOrderObjectByOrderNumber(orderArray, orderNumber)
                 if currOrder is not None and 'activation_code' in currOrder:
                     # Skip already existing objects
                     continue
                 if currOrder is None:
                     currOrder = {'order_number': orderNumber}
+                # 2019-12-20: oops, we saved activation_code as String not as int - we'll have to stick with that now ...
                 currOrder['activation_code'] = activationCode
                 currOrder['order_date'] = orderDate
                 orderArray.append(currOrder)
                 numberof_new_vouchers += 1
                 print('Neue Bestellung gefunden: Bestellnummer: %s | Bestelldatum: %s | Aktivierungscode: %s' % (orderNumber, orderDate, activationCode))
             except:
-                print('Fehler: Informationen konnten nicht aus E-Mail geparsed werden')
+                print('Fehler: Aktivierungscode konnte nicht aus E-Mail geparsed werden')
                 continue
+        # Crawl serial numbers for already activated cards - this is not soo important
+        for aral_mail_serial in aral_mails_serials:
+            try:
+                order_infoMatchObject = re.compile(r'Bestellnummer\s*:\s*(\d+)').search(aral_mail_serial)
+                orderNumber = int(order_infoMatchObject.group(1))
+                serial_number = int(re.compile(r'Seriennummern\s*:\s*(\d+)').search(aral_mail_serial).group(1))
+                numberof_successfully_parsed_mails += 1
+                currOrder = findOrderObjectByOrderNumber(orderArray, orderNumber)
+                if currOrder is None or 'serial_number' in currOrder:
+                    # Skip already existing objects
+                    continue
+                currOrder['serial_number'] = serial_number
+                orderArray.append(currOrder)
+                print('Neue Seriennummer gefunden: Bestellnummer: %d | Seriennummer: %d' % (orderNumber, serial_number))
+            except:
+                print('Fehler: Seriennummer konnte nicht aus E-Mail geparsed werden')
+                continue
+
         if numberof_successfully_parsed_mails == 0:
             print('Fehler: Konnte Informationen aus E-Mails nicht extrahieren')
         elif numberof_new_vouchers > 0:
@@ -141,10 +170,10 @@ def login_mail(settings):
 
 
 # Testing space
-# PATH_STORED_SETTINGS = os.path.join('settings.json')
-# readFile = open(PATH_STORED_SETTINGS, 'r')
-# settingsJson = readFile.read()
-# settings = json.loads(settingsJson)
-# readFile.close
-# crawl_mails(settings, [])
-# sys.exit()
+#PATH_STORED_SETTINGS = os.path.join('settings.json')
+#readFile = open(PATH_STORED_SETTINGS, 'r')
+#settingsJson = readFile.read()
+#settings = json.loads(settingsJson)
+#readFile.close
+#crawl_mails(settings, [])
+#sys.exit()
