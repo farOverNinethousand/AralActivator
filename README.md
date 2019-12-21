@@ -18,8 +18,10 @@ https://www.aral-supercard.de/services/bestellungen/
 
 ## Installation (Windows)
 1. Installiere Python 3
-2. Installiere folgende python Module:
+2. Installiere folgende python Module per Kommandozeile (pip install <modulname>)
 mechanize und imaplib
+Siehe auch:
+https://riptutorial.com/de/python/example/15322/installation-externer-module-mit-pip
 3. Starte AralActivator.py per Doppelklick.
 
 ## Vorbereitung
@@ -46,6 +48,15 @@ Du kannst bei jedem Start neue mails in die mails.txt legen - es macht nichts, w
 
 Tipps für die halbautomatische Version:
 Füge maximal 10 zu aktivierende Karten/EMails gleichzeitig ein es sei denn du bist sehr gut organisiert, hast gute Augen und eine große Fläche zum Ausbreiten von Karten samt Lieferscheinen.
+
+## Anleitung [AralOrderer - erworbene Aral Gutscheincodes automatisch bestellen]
+1. Starte das Script AralOrderer.py.
+2. Gib die z.B. bei Groupon erworbenen Gutscheincodes ein. Du kannst auch den kompletten Inhalt der PDF, die die gutscheincodes enthält einfügen.
+2. Das Script wird dich ggf. nach deinen aral-supercard.de Zugangsdaten fragen.
+3. Gib die URL zum Aktionsartikel an.
+4. Nun sollten alle Gutscheincodes automatisch eingeloest/bestellt werden.
+Du kannst das prüfen, indem du danach in deiner Bestellübersicht schaust:
+https://www.aral-supercard.de/services/bestellungen/
 
 ## Fehler und deren Bedeutung
 1. "Email crawler failed: Length mismatch":
