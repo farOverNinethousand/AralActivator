@@ -3,7 +3,6 @@ from Helper import *
 
 # Removes all products from the shopping cart
 def dumpShoppingCart(br):
-    print('Leere Warenkorb ...')
     response = br.open('https://www.aral-supercard.de/shop/abschluss')
     html = getHTML(response)
     try:
@@ -79,13 +78,14 @@ index = 0
 successful_vounter = 0
 wait_seconds_between_requests = 1
 # TODO: Add html loggers
+numberof_steps = 7
 for currentVoucher in crawledVouchers:
     index += 1
     try:
         # Dump shopping cart before each loop to ensure that we never try to buy multiple items
         print('Arbeite an Gutschein %d / %d : %s' % (index, len(crawledVouchers), currentVoucher))
+        print('Schritt 0 / %d: Warenkorb leeren' % numberof_steps)
         dumpShoppingCart(br)
-        numberof_steps = 7
         # First step
         print('Schritt 1 / %d: Oeffne Artikelseite' % numberof_steps)
         time.sleep(wait_seconds_between_requests)
