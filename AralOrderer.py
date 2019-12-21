@@ -76,7 +76,8 @@ printSeparator()
 
 index = 0
 successful_vounter = 0
-wait_seconds_between_requests = 1
+wait_seconds_between_requests = 2
+# TODO: Save vouchers in file so that we can skip already activated vouchers
 # TODO: Add html loggers
 numberof_steps = 7
 for currentVoucher in crawledVouchers:
@@ -124,9 +125,13 @@ for currentVoucher in crawledVouchers:
         if 'Der Gutscheincode ist unbekannt oder nicht mehr' in html:
             print('Gutschein ungueltig oder bereits eingeloest')
             continue
+        elif 'Zu viele Versuche' in html:
+            print('Fehler: \'Zu viele Versuche. Bitte versuchen Sie es in ein paar Minuten erneut.\'')
+            break
         # Important errorhandling!
         try:
-            cart_amountStr = re.compile(r'<span>Zwischensumme</span>\s*<span>\s*([0-9]+,[0-9]+)').search(html).group(1)
+            # cart_amountStr = re.compile(r'<span>Zwischensumme</span>\s*<span>\s*([0-9]+,[0-9]+)').search(html).group(1)
+            cart_amountStr = re.compile(r'<th>Summe<br/>\s*<small>inkl\. MwSt\.</small>\s*</th>\s*<th>([0-9]+,[0-9]+)').search(html).group(1)
             cart_amountStr = cart_amountStr.replace(',', '.')
             cart_amount = float(cart_amountStr)
             # With our voucher we should always pay 0€
@@ -147,7 +152,7 @@ for currentVoucher in crawledVouchers:
         response = br.submit()
         html = getHTML(response)
         # Next step
-        print('Schritt 6 / %d: Weiter von den Rechnungsadresse --> Lieferadresse' % numberof_steps)
+        print('Schritt 6 / %d: Weiter von Rechnungsadresse --> Lieferadresse' % numberof_steps)
         form_index = getFormIndexByActionContains(br, 'shop/abschluss/adressen')
         if form_index == -1:
             print('Konnte \'shop/abschluss/adressen\' Form nicht finden')
