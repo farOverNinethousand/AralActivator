@@ -134,7 +134,7 @@ for currentVoucher in crawledVouchers:
                 print('Fehler: Zwischensumme ist groesser als 0€')
                 continue
         except:
-            print(html)
+            # print(html)
             print('Fehler: Konnte Zwischensumme nicht finden')
             continue
         # Next step - from now on, there is no failure reason anymore - process should always be the same!
