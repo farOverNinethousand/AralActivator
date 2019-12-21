@@ -5,7 +5,6 @@ from html.parser import HTMLParser
 from datetime import date
 
 # Global variables
-INTERNAL_VERSION = '0.5.0'
 PATH_STORED_VOUCHERS = os.path.join('vouchers.json')
 PATH_STORED_ORDERS = os.path.join('orders.json')
 
@@ -199,8 +198,7 @@ def crawlOrdersFromAccount(br):
             break
         elif len(currentCrawledOrderNumbers) < max_items_per_page:
             # Double-check
-            print('Alle Bestellnummern gefunden(?) --> Aktuelle Seite enthaelt weniger als %d Elemente' % len(
-                currentCrawledOrderNumbers))
+            print('Alle Bestellnummern gefunden(?) --> Aktuelle Seite enthaelt weniger als %d Elemente' % max_items_per_page)
             break
         elif not found_new_entry:
             # This improves speed significantly for users who have many orders in their account
@@ -358,7 +356,7 @@ def activateAutomatic(br, orderArray):
 
 
 # Main script START
-print('Welcome to AralActivator %s' % INTERNAL_VERSION)
+print('Welcome to AralActivator %s' % getVersion())
 
 print(
     'Achtung: Dieses Script kann nur Bestellungen mit jeweils einer zu aktivierenden Karte verarbeiten und nur Bestellungen auf diesem Account!')

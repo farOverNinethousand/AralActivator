@@ -1,8 +1,31 @@
 import re, sys, time
 from Helper import *
 
+# Removes all products from the shopping cart
+def dumpShoppingCart(br):
+    print('Leere Warenkorb ...')
+    response = br.open('https://www.aral-supercard.de/shop/abschluss')
+    html = getHTML(response)
+    try:
+        try:
+            articleDeleteURLs = re.compile(r'\"(https?://www.aral-supercard\.de/shop/warenkorb/artikel-loeschen/[^<>\"]+)\"').findall(html)
+        except:
+            print('Warenkorb ist bereits leer')
+            return
+        print('Anzahl gefundener Artikel im Warenkorb: %d' % len(articleDeleteURLs))
+        delete_article_index = 0
+        for articleDeleteURL in articleDeleteURLs:
+            delete_article_index += 1
+            print('Loesche Artikel %d % %d' % (delete_article_index, len(articleDeleteURLs)))
+            response = br.open(articleDeleteURL)
+            # html = getHTML(response)
+    except:
+        print('Fehler beim Leeren des Warenkorbs oder keine Artikel')
+    return
+
+print('Welcome to AralActivator %s' % getVersion())
 print('Gib deine Gutscheine ein und druecke 2x ENTER.')
-print('Falls  du diese per Groupon bekommen hast, markiere den kompletten Text der PDF und fuege ihn hier ein!')
+print('Falls  du diese per Groupon [PDF] bekommen hast, markiere den kompletten Text der PDF und fuege ihn hier ein!')
 
 voucherSource = None
 
@@ -12,11 +35,6 @@ crawledVouchers = None
 
 settings = loadSettings()
 br = prepareBrowser()
-
-logged_in = loginAccount(br, settings)
-if not logged_in:
-    print('Login-Fehler')
-    sys.out()
 
 while total_numberof_vouchers == 0:
     voucherSource = ''
@@ -37,6 +55,12 @@ index = 0
 for voucher in crawledVouchers:
     index += 1
     print('Gutschein %d : %s' % (index, voucher))
+
+logged_in = loginAccount(br, settings)
+if not logged_in:
+    print('Login-Fehler')
+    sys.out()
+
 print('Achtung! Alle Gutscheine werden auf deine bevorzugte Adresse bestellt! Pruefe deine Adresse bevor du die Einloesung startest!')
 print('Falls die eingegebenen Gutscheincodes fuer 30+5€ Karten sind, druecke ENTER im den Vorgang zu starten; falls nicht, gib jetzt den Link zum passenden Aktionsartikel ein z.B. \'https://www.aral-supercard.de/shop/produkt/jp-performance-einkaufen-tanken-individueller-wert-sondermotiv-motor-show-2124\'')
 user_input_article_url = input()
@@ -58,7 +82,9 @@ wait_seconds_between_requests = 1
 for currentVoucher in crawledVouchers:
     index += 1
     try:
-        print('Verwende Gutschein %d / %d : %s' % (index, len(crawledVouchers), currentVoucher))
+        # Dump shopping cart before each loop to ensure that we never try to buy multiple items
+        print('Arbeite an Gutschein %d / %d : %s' % (index, len(crawledVouchers), currentVoucher))
+        dumpShoppingCart(br)
         numberof_steps = 7
         # First step
         print('Schritt 1 / %d: Oeffne Artikelseite' % numberof_steps)
@@ -97,6 +123,19 @@ for currentVoucher in crawledVouchers:
         html = getHTML(response)
         if 'Der Gutscheincode ist unbekannt oder nicht mehr' in html:
             print('Gutschein ungueltig oder bereits eingeloest')
+            continue
+        # Important errorhandling!
+        try:
+            cart_amountStr = re.compile(r'<span>Zwischensumme</span>\s*<span>\s*([0-9]+,[0-9]+)').search(html).group(1)
+            cart_amountStr = cart_amountStr.replace(',', '.')
+            cart_amount = float(cart_amountStr)
+            # With our voucher we should always pay 0€
+            if cart_amount > 0:
+                print('Fehler: Zwischensumme ist groesser als 0€')
+                continue
+        except:
+            print(html)
+            print('Fehler: Konnte Zwischensumme nicht finden')
             continue
         # Next step - from now on, there is no failure reason anymore - process should always be the same!
         print('Schritt 5 / %d: Weiter von den Bestelldetails --> Rechnungsadresse' % numberof_steps)

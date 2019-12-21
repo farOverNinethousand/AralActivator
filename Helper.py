@@ -17,6 +17,9 @@ def loadSettings():
     settings.setdefault('requires_aral_account', True)
     return settings
 
+def getVersion():
+    return '0.5.1'
+
 
 def getSettingsPath():
     return os.path.join('settings.json')
