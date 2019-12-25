@@ -8,18 +8,6 @@ from datetime import date
 PATH_STORED_VOUCHERS = os.path.join('vouchers.json')
 PATH_STORED_ORDERS = os.path.join('orders.json')
 
-# Returns user input with defined number of digits
-def userInputDefinedLengthNumber(numberof_digits):
-    while True:
-        input_str = input()
-        if len(input_str) != numberof_digits:
-            print('Eingabe ist groesser oder kleiner als ' + str(numberof_digits) + ' Stellen')
-            continue
-        if not input_str.isdecimal():
-            print('Bitte gib eine ZAHL ein')
-            continue
-        return int(input_str)
-
 
 # Returns user input Integer
 def userInputNumber():
@@ -216,6 +204,7 @@ def crawlOrdersFromAccount(br):
 def activateAutomatic(br, orderArray):
     max_numberof_failures_in_a_row = 3
     numberof_failures_in_a_row = 0
+    printSeparator()
     # Crawl all OrderNumbers from website
     accountOrderArray = crawlOrdersFromAccount(br)
     if len(orderArray) == 0:
@@ -242,6 +231,8 @@ def activateAutomatic(br, orderArray):
     if len(activatable_orders) == 0:
         print('Es wurden keine aktivierbaren Bestellungen gefunden')
         return
+
+    printSeparator()
 
     # Now find out which orders are not yet activated AND have their activation_code given
     progressCounter = 0
@@ -359,7 +350,9 @@ def activateAutomatic(br, orderArray):
 print('Welcome to AralActivator %s' % getVersion())
 
 print(
-    'Achtung: Dieses Script kann nur Bestellungen mit jeweils einer zu aktivierenden Karte verarbeiten und nur Bestellungen auf diesem Account!')
+    'Achtung: Dieses Script kann nur Bestellungen aktivieren, die mit dem hier eingetragenen Aral-supercard.de Account bestellt wurden!')
+
+printSeparator()
 
 # Load settings
 settings = loadSettings()
@@ -372,6 +365,8 @@ if requires_account is False:
     print('Fahre ohne login fort')
 else:
     logged_in = loginAccount(br, settings)
+
+printSeparator()
 
 # Load vouchers and activation codes from email source
 orderArray = []

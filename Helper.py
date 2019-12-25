@@ -1,5 +1,16 @@
 import mechanize, json, os
 
+# Returns user input with defined number of digits
+def userInputDefinedLengthNumber(numberof_digits):
+    while True:
+        input_str = input()
+        if len(input_str) != numberof_digits:
+            print('Eingabe ist groesser oder kleiner als ' + str(numberof_digits) + ' Stellen')
+            continue
+        if not input_str.isdecimal():
+            print('Bitte gib eine ZAHL ein')
+            continue
+        return int(input_str)
 
 def loadSettings():
     settings = {}
@@ -18,7 +29,7 @@ def loadSettings():
     return settings
 
 def getVersion():
-    return '0.5.2'
+    return '0.5.4'
 
 
 def getSettingsPath():
@@ -97,7 +108,9 @@ def getFormIndexByActionContains(br, actionPart):
 def loginAccount(br, settings):
     # Try to login via stored cookies first - Aral only allows one active session which means we will most likely have to perform a full login
     cookies = mechanize.LWPCookieJar(getCookiesPath())
-    br.set_cookiejar(cookies)
+    if cookies is not None:
+        print('Versuche Login ueber zuvor gespeicherte Cookies ...')
+        br.set_cookiejar(cookies)
     if settings.get('login_aral_email', None) is None or settings.get('login_aral_password', None) is None:
         print('Gib deine aral-supercard.de Zugangsdaten ein')
         print(
@@ -118,7 +131,7 @@ def loginAccount(br, settings):
     html = getHTML(response)
     logged_in = isLoggedIN(html)
     if not logged_in:
-        print('Login Aral | %s' % settings['login_aral_email'])
+        print('Login Aral Account | %s' % settings['login_aral_email'])
         response = br.open(getBaseDomain() + '/login')
         form_index = getFormIndexBySubmitKey(br, 'email')
         if form_index == -1:

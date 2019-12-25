@@ -19,7 +19,7 @@ https://www.aral-supercard.de/services/bestellungen/
 ## Installation (Windows)
 1. Installiere Python 3
 2. Installiere folgende python Module per Kommandozeile (pip install <modulname>)
-mechanize und imaplib
+mechanize, imaplib und validators
 Siehe auch:
 https://riptutorial.com/de/python/example/15322/installation-externer-module-mit-pip
 3. Starte AralActivator.py per Doppelklick.

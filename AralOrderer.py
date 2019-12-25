@@ -1,4 +1,4 @@
-import re, sys, time
+import re, sys, time, validators
 from Helper import *
 
 # Removes all products from the shopping cart
@@ -50,27 +50,48 @@ while total_numberof_vouchers == 0:
     total_numberof_vouchers = len(crawledVouchers)
 
 print('Anzahl gefundener Gutscheine: ' + str(len(crawledVouchers)))
+printSeparator()
+
 index = 0
 for voucher in crawledVouchers:
     index += 1
     print('Gutschein %d : %s' % (index, voucher))
+printSeparator()
 
 logged_in = loginAccount(br, settings)
 if not logged_in:
     print('Login-Fehler')
     sys.out()
 
-print('Achtung! Alle Gutscheine werden auf deine bevorzugte Adresse bestellt! Pruefe deine Adresse bevor du die Einloesung startest!')
-print('Falls die eingegebenen Gutscheincodes fuer 30+5€ Karten sind, druecke ENTER im den Vorgang zu starten; falls nicht, gib jetzt den Link zum passenden Aktionsartikel ein z.B. \'https://www.aral-supercard.de/shop/produkt/jp-performance-einkaufen-tanken-individueller-wert-sondermotiv-motor-show-2124\'')
-user_input_article_url = input()
-if 'http' in user_input_article_url:
-    print('Gueltige eingabe --> Verwende eingegebenen Artikel-Link')
-    article_url = user_input_article_url
-else:
-    print('Kein Link oder ungueltige Eingabe --> Verwende 30+5 Artikel-Link')
-    article_url = 'https://www.aral-supercard.de/shop/produkt/aral-supercard-einkaufen-tanken-30-2123'
+printSeparator()
+user_input_article_url = None
+url_article_30euro = 'https://www.aral-supercard.de/shop/produkt/aral-supercard-einkaufen-tanken-30-2123'
+url_article_40eurojp = 'https://www.aral-supercard.de/shop/produkt/jp-performance-einkaufen-tanken-individueller-wert-sondermotiv-motor-show-2124'
+while True:
+    print('Achtung! Alle Gutscheine werden auf deine bevorzugte Adresse bestellt! Pruefe deine Adresse bevor du die Einloesung startest!')
+    print('Waehle, aus welcher Aktion deine Gutscheine kommen:')
+    print('1 = 30+5Euro --> Aktionsurl: %s' % url_article_30euro)
+    print('2 = 40+6Euro_JP --> Aktionsurl: %s' % url_article_40eurojp)
+    print('3 = Andere Aktion / Link zum Aktionsartikel selbst eingeben')
+    user_input = userInputDefinedLengthNumber(1)
+    if user_input < 0 or user_input > 3:
+        # Bad user input
+        print('Ungueltige Eingabe')
+        continue
+    if user_input == 1:
+        user_input_article_url = url_article_30euro
+    elif user_input == 2:
+        user_input_article_url = url_article_40eurojp
+    else:
+        print('Gib den Link zum Aktionsartikel ein:')
+        user_input_article_url = input()
+        if not validators.url(user_input_article_url):
+            print('Ungueltige URL')
+            continue
+    # Done - step out of loop
+    break
 
-print('Verwende folgende URL als Artikel-Link: ' + article_url)
+print('Verwende folgende URL zum Aktionsartikel: ' + user_input_article_url)
 
 printSeparator()
 
@@ -90,7 +111,7 @@ for currentVoucher in crawledVouchers:
         # First step
         print('Schritt 1 / %d: Oeffne Artikelseite' % numberof_steps)
         time.sleep(wait_seconds_between_requests)
-        response = br.open(article_url)
+        response = br.open(user_input_article_url)
         html = getHTML(response)
         # Next step
         print('Schritt 2 / %d: Fuelle Warenkorb' % numberof_steps)
@@ -126,7 +147,10 @@ for currentVoucher in crawledVouchers:
             print('Gutschein ungueltig oder bereits eingeloest')
             continue
         elif 'Zu viele Versuche' in html:
+            # TODO: Auto-wait and continue
             print('Fehler: \'Zu viele Versuche. Bitte versuchen Sie es in ein paar Minuten erneut.\'')
+            print('Dieser Fehler ist bekannt; das Script wird in zukuenftigen Versione automatisch warten und fortfahren!')
+            print('Workaround Empfehlung: Kopiere die fehlgeschlagenen Codes raus und starte dieses Script in ein paar Minuten erneut ;)')
             break
         # Important errorhandling!
         try:

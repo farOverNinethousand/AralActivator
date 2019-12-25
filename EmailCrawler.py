@@ -102,8 +102,9 @@ def crawl_mails(settings, orderArray):
             if mailbox_name in postbox_ignore:
                 print('Ueberspringe Postfach: %s' % mailbox_name)
                 continue
-            print('Durchsuche Postfach %s ...' % mailbox_name)
-            typ, data = connection.select(mailbox_name, readonly=True)
+            print('Durchsuche Postfach \'%s\' ...' % mailbox_name)
+            # 2019-12-25: Without the extra '"', this will fail for mailbox names containing spaces
+            typ, data = connection.select('"' + mailbox_name + '"', readonly=True)
             if typ != 'OK':
                 # E.g. NO = Invalid mailbox (should never happen)
                 print('Fehler: Konnte Postfach %s nicht oeffnen' % mailbox_name)
