@@ -22,7 +22,6 @@ def dumpShoppingCart(br):
                 html = getHTML(response)
             except:
                 numberof_article_delete_errors += 1
-                print('')
         if numberof_article_delete_errors > 0:
             print('Warnung: %d Elemente aus dem Warenkorb konnten eventuell nicht geloescht werden' % numberof_article_delete_errors)
         else:
@@ -107,7 +106,7 @@ printSeparator()
 
 index = 0
 successful_vounter = 0
-wait_seconds_between_requests = 1
+wait_seconds_between_requests = 2
 wait_seconds_on_wait_error = 30
 # TODO: Save vouchers / log in file so users will not lose information when they close the window
 # TODO: Add html / mechanize loggers
