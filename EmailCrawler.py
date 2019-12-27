@@ -82,6 +82,7 @@ def crawl_mails(settings, orderArray):
     #     print('INBOX Status:')
     #     print(connection.status('INBOX', '(MESSAGES RECENT UIDNEXT UIDVALIDITY UNSEEN)'))
     # Select main inbox so we will later only work on this!
+    print('Suche nach Aktivierungscodes in E-Mails ...')
     connection = None
     try:
         connection = login_mail(settings)
@@ -122,6 +123,7 @@ def crawl_mails(settings, orderArray):
         print('Suche nach Daten in E-Mails ...')
         numberof_successfully_parsed_mails = 0
         numberof_new_vouchers = 0
+        numberof_possible_fatal_errors = 0
         for aral_mail in aral_mails:
             try:
                 order_infoMatchObject = re.compile(r'Ihre Aral SuperCard Bestellung\s*(\d+)\s*vom\s*(\d{2}\.\d{2}\.\d{4})').search(aral_mail)
@@ -142,6 +144,7 @@ def crawl_mails(settings, orderArray):
                 numberof_new_vouchers += 1
                 print('Neue Bestellung gefunden: Bestellnummer: %s | Bestelldatum: %s | Aktivierungscode: %s' % (orderNumber, orderDate, activationCode))
             except:
+                numberof_possible_fatal_errors += 1
                 print('Fehler: Aktivierungscode konnte nicht aus E-Mail geparsed werden')
                 continue
         # Crawl serial numbers for already activated cards - this is not soo important; do not stop if this fails!
@@ -165,12 +168,14 @@ def crawl_mails(settings, orderArray):
                 print('Fehler: Seriennummer konnte nicht aus E-Mail geparsed werden')
                 continue
 
+        if numberof_possible_fatal_errors > 0:
+            print('Warnung: Informationen aus %d E-Mails konnten nicht extrahiert werden! Falls du (neue) E-Mails mit Aktivierungscodes hast, die nicht erfasst wurden wurde die E-Mail Struktur von Aral evtl. geaendert und das Script braucht ein Update. Falls nicht, kannst du diese Information ignorieren.' % numberof_possible_fatal_errors)
         if numberof_successfully_parsed_mails == 0:
             print('Fehler: Konnte Informationen aus E-Mails nicht extrahieren')
         elif numberof_new_vouchers > 0:
-            print('%d neue Bestellungen in E-Mails gefunden' % numberof_new_vouchers)
+            print('Deine E-Mails enthielten %d neuen Bestellungen' % numberof_new_vouchers)
         else:
-            print('Deine E-Mails enthielten keine neuen Bestellungen')
+            print('Deine E-Mails enthielten KEINE neuen Bestellungen')
     #     for aral_mail in aral_mails:
     #         print(aral_mail)
     finally:

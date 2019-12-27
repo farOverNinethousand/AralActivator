@@ -186,7 +186,7 @@ def crawlOrdersFromAccount(br):
             break
         elif len(currentCrawledOrderNumbers) < max_items_per_page:
             # Double-check
-            print('Alle Bestellnummern gefunden(?) --> Aktuelle Seite enthaelt weniger als %d Elemente' % max_items_per_page)
+            print('Vermutlich alle Bestellnummern gefunden --> Aktuelle Seite enthaelt weniger als %d Elemente --> Suche nicht weiter auf naechster Seite' % max_items_per_page)
             break
         elif not found_new_entry:
             # This improves speed significantly for users who have many orders in their account
@@ -227,10 +227,11 @@ def activateAutomatic(br, orderArray):
             continue
         un_activatable_orders.append(account_order_number)
 
-    print('%d aktivierbare Bestellungen gefunden' % len(activatable_orders))
     if len(activatable_orders) == 0:
-        print('Es wurden keine aktivierbaren Bestellungen gefunden')
+        print('Es wurden KEINE aktivierbaren Bestellungen gefunden')
         return
+    else:
+        print('%d aktivierbare Bestellungen gefunden' % len(activatable_orders))
 
     printSeparator()
 

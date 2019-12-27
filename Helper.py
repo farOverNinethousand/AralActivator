@@ -29,7 +29,7 @@ def loadSettings():
     return settings
 
 def getVersion():
-    return '0.5.4'
+    return '0.5.6'
 
 
 def getSettingsPath():
@@ -106,11 +106,6 @@ def getFormIndexByActionContains(br, actionPart):
 
 
 def loginAccount(br, settings):
-    # Try to login via stored cookies first - Aral only allows one active session which means we will most likely have to perform a full login
-    cookies = mechanize.LWPCookieJar(getCookiesPath())
-    if cookies is not None:
-        print('Versuche Login ueber zuvor gespeicherte Cookies ...')
-        br.set_cookiejar(cookies)
     if settings.get('login_aral_email', None) is None or settings.get('login_aral_password', None) is None:
         print('Gib deine aral-supercard.de Zugangsdaten ein')
         print(
@@ -124,13 +119,19 @@ def loginAccount(br, settings):
         settings['login_aral_password'] = input()
     else:
         print('Gespeicherte aral-supercard Zugangsdaten wurden erfolgreich geladen')
+        # Try to login via stored cookies first - Aral only allows one active session which means we will most likely have to perform a full login
+        cookies = mechanize.LWPCookieJar(getCookiesPath())
+        if cookies is not None:
+            print('Versuche Login ueber zuvor gespeicherte Cookies ...')
+            br.set_cookiejar(cookies)
     account_email = settings['login_aral_email']
     account_password = ['login_aral_password']
-    print('Verwende E-Mail: ' + account_email)
     response = br.open(getBaseDomain())
     html = getHTML(response)
     logged_in = isLoggedIN(html)
     if not logged_in:
+        if cookies is not None:
+            print('Login ueber Cookies fehlgeschlagen --> Versuche vollstaendigen Login')
         print('Login Aral Account | %s' % settings['login_aral_email'])
         response = br.open(getBaseDomain() + '/login')
         form_index = getFormIndexBySubmitKey(br, 'email')
