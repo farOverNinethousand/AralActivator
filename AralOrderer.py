@@ -160,14 +160,12 @@ try:
                 response = br.submit()
                 html = getHTML(response)
                 if 'Zu viele Versuche' in html:
-                    # TODO: Auto-wait and continue
+                    # This may happen when user enters a lot of invalid vouchers. In my tests (2019-12-27) this would always happen on the 8th entered voucher. In my tests I never needed to wait more than 180 seconds. Wait time will be cleared serverside once waited once.
                     print('Fehler: \'Zu viele Versuche. Bitte versuchen Sie es in ein paar Minuten erneut.\'')
                     if try_counter >= max_tries:
                         # Give up
                         print('Zu viele Fehlversuche --> Stoppe')
                         break
-                    # print('Dieser Fehler ist bekannt; das Script wird in zukuenftigen Versionen automatisch warten und fortfahren!')
-                    # print('Workaround Empfehlung: Kopiere die fehlgeschlagenen Codes raus und starte dieses Script in ein paar Minuten erneut ;)')
                     print('Warte %d Sekunden bis Neuversuch ...' % wait_seconds_on_wait_error)
                     time.sleep(wait_seconds_on_wait_error)
                     continue
