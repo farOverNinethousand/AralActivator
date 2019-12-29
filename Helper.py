@@ -29,7 +29,7 @@ def loadSettings():
     return settings
 
 def getVersion():
-    return '0.5.7'
+    return '0.5.8'
 
 
 def getSettingsPath():
@@ -106,6 +106,7 @@ def getFormIndexByActionContains(br, actionPart):
 
 
 def loginAccount(br, settings):
+    cookies = None
     if settings.get('login_aral_email', None) is None or settings.get('login_aral_password', None) is None:
         print('Gib deine aral-supercard.de Zugangsdaten ein')
         print(
