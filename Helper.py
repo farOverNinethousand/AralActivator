@@ -29,7 +29,7 @@ def loadSettings():
     return settings
 
 def getVersion():
-    return '0.5.8'
+    return '0.5.9'
 
 
 def getSettingsPath():
@@ -106,9 +106,9 @@ def getFormIndexByActionContains(br, actionPart):
 
 
 def loginAccount(br, settings):
-    cookies = None
+    cookies = mechanize.LWPCookieJar(getCookiesPath())
     if settings.get('login_aral_email', None) is None or settings.get('login_aral_password', None) is None:
-        print('Gib deine aral-supercard.de Zugangsdaten ein')
+        print('Erster Start: Gib deine aral-supercard.de Zugangsdaten ein')
         print(
             'Falls du ueber mehrere Accounts bestellt hast musst du dieses Script jeweils 1x pro Account in verschiedenen Ordnern duplizieren!')
         print(
@@ -118,20 +118,17 @@ def loginAccount(br, settings):
         settings['login_aral_email'] = input()
         print('Gib dein Passwort ein:')
         settings['login_aral_password'] = input()
-    else:
-        print('Gespeicherte aral-supercard Zugangsdaten wurden erfolgreich geladen')
+    elif cookies is not None and os.path.exists(getCookiesPath()):
         # Try to login via stored cookies first - Aral only allows one active session which means we will most likely have to perform a full login
-        cookies = mechanize.LWPCookieJar(getCookiesPath())
-        if cookies is not None:
-            print('Versuche Login ueber zuvor gespeicherte Cookies ...')
-            br.set_cookiejar(cookies)
+        print('Versuche Login ueber zuvor gespeicherte Cookies ...')
+        br.set_cookiejar(cookies)
     account_email = settings['login_aral_email']
     account_password = ['login_aral_password']
     response = br.open(getBaseDomain())
     html = getHTML(response)
     logged_in = isLoggedIN(html)
     if not logged_in:
-        if cookies is not None:
+        if cookies is not None and os.path.exists(getCookiesPath()):
             print('Login ueber Cookies fehlgeschlagen --> Versuche vollstaendigen Login')
         print('Login Aral Account | %s' % settings['login_aral_email'])
         response = br.open(getBaseDomain() + '/login')
@@ -154,8 +151,12 @@ def loginAccount(br, settings):
     else:
         print('Login ueber gueltige Cookies erfolgreich')
 
-    # Save cookies and logindata
-    cookies.save()
+    if cookies is not None:
+        # Save cookies and logindata
+        print('Speichere Cookies ...')
+        cookies.save()
+    else:
+        print('Keine Cookies zum Speichern vorhanden')
     with open(getSettingsPath(), 'w') as outfile:
         json.dump(settings, outfile)
     return logged_in
