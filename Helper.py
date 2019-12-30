@@ -29,7 +29,7 @@ def loadSettings():
     return settings
 
 def getVersion():
-    return '0.5.9'
+    return '0.6.0'
 
 
 def getSettingsPath():
