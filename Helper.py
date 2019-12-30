@@ -153,7 +153,7 @@ def loginAccount(br, settings):
 
     if cookies is not None:
         # Save cookies and logindata
-        print('Speichere Cookies ...')
+        print('Speichere Cookies in ' + getCookiesPath())
         cookies.save()
     else:
         print('Keine Cookies zum Speichern vorhanden')

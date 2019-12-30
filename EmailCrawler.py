@@ -108,7 +108,7 @@ def crawl_mails(settings, orderArray):
             typ, data = connection.select('"' + mailbox_name + '"', readonly=True)
             if typ != 'OK':
                 # E.g. NO = Invalid mailbox (should never happen)
-                print('Fehler: Konnte Postfach %s nicht oeffnen' % mailbox_name)
+                print('Fehler: Konnte Postfach \'%s\' nicht oeffnen' % mailbox_name)
                 return
             # print(typ, data)
             # num_msgs = int(data[0])

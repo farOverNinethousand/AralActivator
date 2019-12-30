@@ -207,7 +207,7 @@ def activateAutomatic(br, orderArray):
     printSeparator()
     # Crawl all OrderNumbers from website
     accountOrderArray = crawlOrdersFromAccount(br)
-    if len(orderArray) == 0:
+    if len(accountOrderArray) == 0:
         print('Es konnten keine Bestellnummern im Account gefunden werden')
         return None
 
