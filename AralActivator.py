@@ -158,7 +158,8 @@ def crawlOrdersFromAccount(br):
         readFile.close
         accountOrdersArray = json.loads(ordersJson)
     except:
-        print('Failed to load ' + PATH_STORED_VOUCHERS)
+        # print('Failed to load ' + PATH_STORED_VOUCHERS)
+        pass
     page_counter = 0
     max_items_per_page = 20
     numberof_new_items = 0
@@ -238,6 +239,7 @@ def activateAutomatic(br, orderArray):
     # Now find out which orders are not yet activated AND have their activation_code given
     progressCounter = 0
     successfullyActivatedOrdersCounter = 0
+    total_activation_steps = 3
     orderActivationImpossibleArray = []
     printSeparator()
     for order_number in activatable_orders:
@@ -246,8 +248,8 @@ def activateAutomatic(br, orderArray):
             orderInfo = findOrderObjectByOrderNumber(orderArray, order_number)
             # TODO: I made a mistake in an older version and stored this as a String so let's parse it to int just to make sure it works
             activationCode = int(orderInfo.get('activation_code', None))
-            print('Arbeite an Bestellung %d / %d : Bestellnummerr: %d | Aktivierungscode: %d' % (progressCounter, len(activatable_orders), order_number, activationCode))
-            print('Aktivierung Schritt 1 [services/bestellungen/detailansicht/] ...')
+            print('Arbeite an Bestellung %d / %d : Bestellnummer: %d | Aktivierungscode: %d' % (progressCounter, len(activatable_orders), order_number, activationCode))
+            print('Aktivierung Schritt 1 / %d: [services/bestellungen/detailansicht/] ...' % total_activation_steps)
             response = br.open('https://www.aral-supercard.de/services/bestellungen/detailansicht/' + str(order_number))
             html = getHTML(response)
             if 'Diese Bestellung konnte nicht angezeigt werden' in html:
@@ -280,7 +282,7 @@ def activateAutomatic(br, orderArray):
                 print('Bestellung ist laut Bestelluebersicht bereits aktiviert')
                 orderInfo['activated'] = True
                 continue
-            print('Aktivierung Schritt 2 [services/bestellungen/bestellung-aktivieren/] ...')
+            print('Aktivierung Schritt 2 / %d: [services/bestellungen/bestellung-aktivieren/] ...' % total_activation_steps)
             time.sleep(2)
             response = br.open(
                 'https://www.aral-supercard.de/services/bestellungen/bestellung-aktivieren/' + str(order_number))
@@ -295,7 +297,7 @@ def activateAutomatic(br, orderArray):
             br.form['order'] = ['1']
             response = br.submit()
             html = getHTML(response)
-            print('Aktivierung Schritt 3 [Aktivierung bestaetigen] ...')
+            print('Aktivierung Schritt 3 / %d [Aktivierung bestaetigen] ...' % total_activation_steps)
             form_index = getFormIndexByActionContains(br, 'aktivierung-bestaetigen')
             if form_index == -1:
                 print('Konnte AktivierungsBestaetigungsForm nicht finden --> Abbruch')
@@ -319,12 +321,12 @@ def activateAutomatic(br, orderArray):
             orderInfo['activated'] = True
             orderInfo['activation_date'] = date.today().strftime("%Y-%m-%d")
             successfullyActivatedOrdersCounter += 1
-            # Reset that counter
+            # Reset 'failure-in-a-row' counter
             numberof_failures_in_a_row = 0
+            print('Bestellung erfolgreich aktiviert: %d' % order_number)
             # Cooldown
             time.sleep(2)
             # Continue with the next voucher
-            print('Bestellung erfolgreich aktiviert: %d' % order_number)
         finally:
             if numberof_failures_in_a_row >= max_numberof_failures_in_a_row:
                 print('Mehr als %d unbekannte Fehler hintereinander --> Abbruch')
@@ -378,7 +380,8 @@ try:
     readFile.close
     orderArray = json.loads(settingsJson)
 except:
-    print('Failed to load ' + PATH_STORED_VOUCHERS)
+    # print('Failed to load ' + PATH_STORED_VOUCHERS)
+    pass
 
 crawlOrderNumbersFromMail(settings, orderArray)
 

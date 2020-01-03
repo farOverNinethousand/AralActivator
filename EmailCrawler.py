@@ -1,4 +1,5 @@
 import re, sys, imaplib, os, json
+from Helper import printSeparator
 
 list_response_pattern = re.compile(r'\((?P<flags>.*?)\) "(?P<delimiter>.*)" (?P<name>.*)')
 
@@ -97,29 +98,38 @@ def crawl_mails(settings, orderArray):
         postbox_ignore = ['Sent']
         aral_mails = []
         aral_mails_serials = []
+        numberof_postboxes = len(data)
+        postbox_index = 0
+        total_postbox_steps = 2
         for line in data:
+            postbox_index += 1
             numberof_aral_mails_in_this_mailbox = 0
             flags, delimiter, mailbox_name = parse_list_response(line)
+            print('Arbeite an Postfach %d / %d: \'%s\' ...' % (postbox_index, numberof_postboxes, mailbox_name))
             if mailbox_name in postbox_ignore:
-                print('Ueberspringe Postfach: %s' % mailbox_name)
+                # Rare case
+                print('Ueberspringe aktuelles Postfach, da es sich auf der Blacklist befindet')
                 continue
-            print('Durchsuche Postfach \'%s\' ...' % mailbox_name)
             # 2019-12-25: Without the extra '"', this will fail for mailbox names containing spaces
             typ, data = connection.select('"' + mailbox_name + '"', readonly=True)
             if typ != 'OK':
                 # E.g. NO = Invalid mailbox (should never happen)
-                print('Fehler: Konnte Postfach \'%s\' nicht oeffnen' % mailbox_name)
-                return
+                print('Fehler: Postfach konnte nicht geoeffnet werden')
+                # 2020-01-03: Skip invalid mailboxes - this may happen frequently with gmail accounts (missing permissions?)
+                continue
             # print(typ, data)
             # num_msgs = int(data[0])
             # print('There are %d messages in INBOX' % num_msgs)
             # Search for specific messages by subject
-            print('Sammle Aral E-Mails ...')
+            print('Schritt %d / %d: Sammle Aral Aktivierungs-E-Mails ...' %(1, total_postbox_steps))
             crawlMailsBySubject(connection, aral_mails, 'Aktivierung Ihrer Aral SuperCard')
             # TODO: Solve charset issue 'Bestätigung Ihrer Kartenaktivierung'
+            print('Schritt %d / %d: Sammle Aktivierungs-Bestaetigungs-E-Mails' %(2, total_postbox_steps))
             crawlMailsBySubject(connection, aral_mails_serials, 'Ihrer Kartenaktivierung')
 
-        print('Anzahl insgesamt gefundener Aral E-Mails: %d' % len(aral_mails))
+        printSeparator()
+        print('Anzahl insgesamt gefundener Aral Aktivierungs-E-Mails: %d' % len(aral_mails))
+        print('Anzahl insgesamt gefundener Aral Aktivierungs-Bestaetigungs-E-Mails: %d' % len(aral_mails_serials))
         print('Suche nach Daten in E-Mails ...')
         numberof_successfully_parsed_mails = 0
         numberof_new_vouchers = 0

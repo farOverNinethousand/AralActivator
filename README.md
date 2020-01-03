@@ -45,7 +45,6 @@ Tipp: Im GMail Webmailer findest du die Mails z.B. so:
 4. Solltest du keine Lust mehr auf weitere Aktivierungsvorgänge hast, beende das Programm übers Menü und nicht über das "X", sodass der status gespeichert werden kann.
 
 Du kannst bei jedem Start neue mails in die mails.txt legen - es macht nichts, wenn bereits hinzugefügte Mails in der Datei verbleiben.
-
 Tipps für die halbautomatische Version:
 Füge maximal 10 zu aktivierende Karten/EMails gleichzeitig ein es sei denn du bist sehr gut organisiert, hast gute Augen und eine große Fläche zum Ausbreiten von Karten samt Lieferscheinen.
 
@@ -118,13 +117,23 @@ Per E-Mail bekommt man dann einen Aktivierungscode, der für die gesamte Bestell
 - SuperCards sind ab Aktivierungsdatum 3 Jahre lang' gültig
 - Manche der gratis Karten werden erst zu einem bestimmten Datum automatisch von Aral aktiviert
 - SuperCards sind idR. erst ab dem nächsten Tag nach Aktivierung gültig
-- [20.12.2019] Man kann an der Tankstellen-Kasse beliebig viele Karten verwenden, allerdings ist der Maximalbetrag, den man in einem Vorgang damit bezahlen kann 100€
+- [03.01.2020] Man kann an der Tankstellen-Kasse beliebig viele Karten verwenden; es gab mal eine angebliche Maximalsumme von 100€, die aber nicht mehr zu existieren scheint: https://www.mydealz.de/comments/permalink/24512889
+
+### Sonstiges zu Aral
+- Ab dem 01.01.2020 darf man angeblich maximal 100€ Aral SuperCards in Aral Filialen kaufen (neues Geldwäschegesetz)
 
 ## Links
 Karten hier 'manuell' bzw. ohne sich einzuloggen aktivieren:
 https://www.aral-supercard.de/services/karte-aktivieren/
+
 Mehrere Karten/Bestellungen hier (einfacher) aktivieren, wenn man eingeloggt ist:
 https://www.aral-supercard.de/services/bestellungen/
 
 Hier Guthaben abfragen (Captcha notwendig!):
 https://www.aral-supercard.de/services/kartenguthaben-abrufen/
+
+Warum man bei Aral tanken sollte bzw. wie man dort günstiger tanken kann [von mydealz.de/profile/Remy_Scherer]:
+https://docs.google.com/document/d/1qPv0Z4vss3M9wdyS4efymtHG_wVNo0bCACLaEnb6Iv0
+
+Auflistung aktueller PayBack (Aral) Coupons [oben die Tabelle 'Aral' auswählen; Autor unbekannt]:
+https://docs.google.com/spreadsheets/d/e/2PACX-1vTJuNdXygioH8a3ti_8kWlFsBcVyEOsF3NE2ze2f5tuIfx6RS94-kZWcC4-UoVU0x6nc0u01hlRrNIk/pubhtml?sfns=mo#
