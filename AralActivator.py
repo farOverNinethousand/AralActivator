@@ -163,6 +163,7 @@ def crawlOrdersFromAccount(br):
     page_counter = 0
     max_items_per_page = 20
     numberof_new_items = 0
+    print('Lade Bestelldaten von Aral --> Achtung Bestellungen ohne Detailansicht werden nicht erfasst!')
     while True:
         page_counter += 1
         print('Lade Bestelldaten von Aral | Seite %d von ?' % page_counter)
