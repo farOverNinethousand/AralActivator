@@ -1,5 +1,5 @@
 import os, json, re, sys, mechanize, time
-from EmailCrawler import crawl_mails, crawl_mailsOLD, findOrderObjectByOrderNumber
+from EmailCrawler import crawl_mails, crawl_mailsOLD
 from Helper import *
 from html.parser import HTMLParser
 from datetime import date
@@ -40,18 +40,19 @@ def getSupercardNumber(supercard_hint):
     if supercard_hint is not None or len(supercard_hint) >= 19 or not supercard_hint.isdecimal():
         # 2019-12-02: Fallback to hardcoded value
         supercard_hint = '70566074'
-    # TODO: Remove this check
-    if supercard_hint is not None and len(supercard_hint) < 19 and supercard_hint.isdecimal():
-        # Parts of our number are already given - only ask user for the rest
-        exact_length = exact_length - len(supercard_hint)
-        print('Gib die restlichen %d Stellen der SuperCard Nr. ein: %s' % (exact_length, supercard_hint))
-        supercard_number = supercard_hint + str(userInputDefinedLengthNumber(exact_length))
-        # Debug
-        print('SupercardNumber = ' + supercard_number)
-        return int(supercard_number)
-    else:
-        print('Gib die SuperCard Nr. ein (%d-stellig):' % exact_length)
-        return int(userInputDefinedLengthNumber(exact_length))
+    # if supercard_hint is not None and len(supercard_hint) < 19 and supercard_hint.isdecimal():
+    #     # Parts of our number are already given - only ask user for the rest
+    #     exact_length = exact_length - len(supercard_hint)
+    #     print('Gib die restlichen %d Stellen der SuperCard Nr. ein: %s' % (exact_length, supercard_hint))
+    #     supercard_number = supercard_hint + str(userInputDefinedLengthNumber(exact_length))
+    #     # Debug
+    #     print('SupercardNumber = ' + supercard_number)
+    #     return int(supercard_number)
+    # else:
+    #     print('Gib die SuperCard Nr. ein (%d-stellig):' % exact_length)
+    #     return int(userInputDefinedLengthNumber(exact_length))
+    print('Gib die SuperCard Nr. ein (%d-stellig):' % exact_length)
+    return int(userInputDefinedLengthNumber(exact_length))
     # Function END
 
 
@@ -149,58 +150,83 @@ def crawlOrderNumbersFromMail(settings, orderArray):
     return
 
 
-def crawlOrdersFromAccount(br):
-    # Load vouchers and activation codes from email source
-    accountOrdersArray = []
-    try:
-        readFile = open(PATH_STORED_ORDERS, 'r')
-        ordersJson = readFile.read()
-        readFile.close
-        accountOrdersArray = json.loads(ordersJson)
-    except:
-        # print('Failed to load ' + PATH_STORED_VOUCHERS)
-        pass
+def crawlOrdersFromAccount(br, orderArray):
     page_counter = 0
     max_items_per_page = 20
     numberof_new_items = 0
-    print('Lade Bestelldaten von Aral --> Achtung Bestellungen ohne Detailansicht werden nicht erfasst!')
+    newOrdersArray = []
     while True:
         page_counter += 1
         print('Lade Bestelldaten von Aral | Seite %d von ?' % page_counter)
         response = br.open('https://www.aral-supercard.de/services/bestellungen?page=' + str(page_counter))
         html = getHTML(response)
+        currentCrawledOrderNumbers = None
+        currentCrawledOrderStates = None
+        currentCrawledOrderDates = None
         try:
-            currentCrawledOrderNumbers = re.compile(r'/bestellungen/detailansicht/(\d+)').findall(html)
+            # currentCrawledOrderNumbers = re.compile(r'/bestellungen/detailansicht/(\d+)').findall(html)
+            # 2020-01-05: Grab orderIDs from here so we do not miss out on buggy orders which are displayed without a 'detailansicht' URL!
+            currentCrawledOrderNumbers = re.compile(r'data-label=\"Bestellnummer\s*:\s*\">\s*(\d+)\s*<').findall(html)
         except:
-            print('Auf dieser Seite konnten keine Bestellnummern gefunden werden')
+            print('RegEx Fehler: Auf dieser Seite konnten keine Bestellnummern gefunden werden')
             break
+        try:
+            # Try to grab extra information
+            currentCrawledOrderStates = re.compile(r'data-label=\"Bestellstatus\s*:\s*\">([^<>]+)<').findall(html)
+            currentCrawledOrderDates = re.compile(r'data-label=\"Bestelldatum\s*:\s*\">\s*(\d{2}\.\d{2}\.\d{4})\s*<').findall(html)
+        except:
+            # A failure of this is rather unimportant
+            print('Fehler: Konnte Zusatzinformationen nicht finden')
+            pass
         found_new_entry = False
+        found_order_status = currentCrawledOrderStates is not None and len(currentCrawledOrderStates) == len(currentCrawledOrderNumbers)
+        found_order_date = currentCrawledOrderDates is not None and len(currentCrawledOrderDates) == len(currentCrawledOrderNumbers)
+        crawled_order_index = -1
         for currCrawledOrderNumber in currentCrawledOrderNumbers:
+            crawled_order_index += 1
             currCrawledOrderNumber = int(currCrawledOrderNumber)
-            if currCrawledOrderNumber not in accountOrdersArray:
+            stored_order_index = findOrderObjectIndexByOrderNumber(orderArray, currCrawledOrderNumber)
+            if stored_order_index > -1:
+                # Update existing order
+                currOrderObject = orderArray[stored_order_index]
+                if found_order_status:
+                    currOrderObject['order_status'] = currentCrawledOrderStates[crawled_order_index]
+                if found_order_date:
+                    currOrderObject['order_date'] = currentCrawledOrderDates[crawled_order_index]
+                orderArray[stored_order_index] = currOrderObject
+            else:
+                # New order
                 found_new_entry = True
                 numberof_new_items += 1
-                accountOrdersArray.append(currCrawledOrderNumber)
+                currOrderObject = {'order_number': currCrawledOrderNumber}
+                if found_order_status:
+                    currOrderObject['order_status'] = currentCrawledOrderStates[crawled_order_index]
+                if found_order_date:
+                    currOrderObject['order_date'] = currentCrawledOrderDates[crawled_order_index]
+                newOrdersArray.append(currOrderObject)
+
         next_page_available = '?page=' + str(page_counter + 1)
         # Stop-conditions and fail-safes
         if next_page_available not in html:
             print('Letzte Seite mit Bestellnummern erreicht')
             break
-        elif len(currentCrawledOrderNumbers) < max_items_per_page:
-            # Double-check
-            print('Vermutlich alle Bestellnummern gefunden --> Aktuelle Seite enthaelt weniger als %d Elemente --> Suche nicht weiter auf naechster Seite' % max_items_per_page)
-            break
         elif not found_new_entry:
             # This improves speed significantly for users who have many orders in their account
             print('Stoppe Suche nach neuen Bestellnummern, da alle Betellnummern der aktuellen Seite bereits vom letzten Crawlvorgang bekannt sind.')
             break
+        # 2020-05-01: Removed this check as it lead to avoidable failures
+        # elif len(currentCrawledOrderNumbers) < max_items_per_page:
+        #     # Double-check
+        #     print(
+        #         'Vermutlich alle Bestellnummern gefunden --> Aktuelle Seite enthaelt weniger als %d Elemente --> Suche nicht weiter auf naechster Seite' % max_items_per_page)
+        #     break
+        # Wait before accessing next page as we do not to attack the Aral servers ;)
         time.sleep(2)
         # Continue
+
     print('Anzahl NEU erfasster Bestellnummern (seit dem letzten Start): %d auf insgesamt %d Seiten' % (numberof_new_items, page_counter))
-    # Save found orders
-    with open(PATH_STORED_ORDERS, 'w') as outfile:
-        json.dump(accountOrdersArray, outfile)
-    return accountOrdersArray
+    orderArray += newOrdersArray
+    return numberof_new_items
 
 
 def activateAutomatic(br, orderArray):
@@ -208,32 +234,29 @@ def activateAutomatic(br, orderArray):
     numberof_failures_in_a_row = 0
     printSeparator()
     # Crawl all OrderNumbers from website
-    accountOrderArray = crawlOrdersFromAccount(br)
-    if len(accountOrderArray) == 0:
+    numberofNewOrders = crawlOrdersFromAccount(br, orderArray)
+    if numberofNewOrders <= 0:
         print('Es konnten keine Bestellnummern im Account gefunden werden')
         return None
 
     # Collect orders which can be activated
-    activatable_orders = []
-    un_activatable_orders = []
-    for account_order_number in accountOrderArray:
-        stored_order = findOrderObjectByOrderNumber(orderArray, account_order_number)
-        if stored_order is None:
-            new_order = {'order_number': account_order_number}
-            orderArray.append(new_order)
-            continue
-        activated = stored_order.get('activated', False)
-        activation_code = stored_order.get('activation_code', None)
+    activatable_order_numbers = []
+    un_activatable_order_numbers = []
+    for orderTmp in orderArray:
+        orderNumberTmp = orderTmp['order_number']
+        activated = orderTmp.get('activated', False)
+        activation_code = orderTmp.get('activation_code', None)
         if not activated and activation_code is not None:
-            activatable_orders.append(account_order_number)
-            continue
-        un_activatable_orders.append(account_order_number)
+            activatable_order_numbers.append(orderNumberTmp)
+        else:
+            un_activatable_order_numbers.append(orderNumberTmp)
+        # continue
 
-    if len(activatable_orders) == 0:
+    if len(activatable_order_numbers) == 0:
         print('Es wurden KEINE aktivierbaren Bestellungen gefunden')
         return
     else:
-        print('%d aktivierbare Bestellungen gefunden' % len(activatable_orders))
+        print('%d potentiell aktivierbare Bestellungen gefunden' % len(activatable_order_numbers))
 
     printSeparator()
 
@@ -242,14 +265,13 @@ def activateAutomatic(br, orderArray):
     successfullyActivatedOrdersCounter = 0
     total_activation_steps = 3
     orderActivationImpossibleArray = []
-    printSeparator()
-    for order_number in activatable_orders:
+    for order_number in activatable_order_numbers:
         try:
             progressCounter += 1
             orderInfo = findOrderObjectByOrderNumber(orderArray, order_number)
             # TODO: I made a mistake in an older version and stored this as a String so let's parse it to int just to make sure it works
             activationCode = int(orderInfo.get('activation_code', None))
-            print('Arbeite an Bestellung %d / %d : Bestellnummer: %d | Aktivierungscode: %d' % (progressCounter, len(activatable_orders), order_number, activationCode))
+            print('Arbeite an Bestellung %d / %d : Bestellnummer: %d | Aktivierungscode: %d' % (progressCounter, len(activatable_order_numbers), order_number, activationCode))
             print('Aktivierung Schritt 1 / %d: [services/bestellungen/detailansicht/] ...' % total_activation_steps)
             response = br.open('https://www.aral-supercard.de/services/bestellungen/detailansicht/' + str(order_number))
             html = getHTML(response)

@@ -1,5 +1,5 @@
 import re, sys, imaplib, os, json
-from Helper import printSeparator
+from Helper import *
 
 list_response_pattern = re.compile(r'\((?P<flags>.*?)\) "(?P<delimiter>.*)" (?P<name>.*)')
 
@@ -9,15 +9,6 @@ def parse_list_response(line):
     flags, delimiter, mailbox_name = list_response_pattern.match(line).groups()
     mailbox_name = mailbox_name.strip('"')
     return flags, delimiter, mailbox_name
-
-# Returns object of orderArray where 'order_number' == orderNumber
-def findOrderObjectByOrderNumber(orderArray, orderNumber):
-    currOrder = None
-    for o in orderArray:
-        if orderNumber == o['order_number']:
-            currOrder = o
-            break
-    return currOrder
 
 # Crawls mails which contain a certain String in their subject
 def crawlMailsBySubject(connection, email_array, subject):
@@ -77,7 +68,7 @@ def crawl_mailsOLD(settings, orderArray):
             if numberof_new_vouchers > 0:
                 print('%d neue Bestellungen gefunden' % numberof_new_vouchers)
             else:
-                print('Deine E-Mails enthielten keine neuen Bestellungen')
+                print('Deine E-Mails enthielten keine neue Bestellungen')
 
 def crawl_mails(settings, orderArray):
     #     print('INBOX Status:')

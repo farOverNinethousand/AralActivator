@@ -30,7 +30,7 @@ def loadSettings():
     return settings
 
 def getVersion():
-    return '0.6.1'
+    return '0.6.2'
 
 
 def getSettingsPath():
@@ -105,6 +105,24 @@ def getFormIndexByActionContains(br, actionPart):
         current_index += 1
     return target_index
 
+# Returns object of orderArray where 'order_number' == orderNumber
+def findOrderObjectByOrderNumber(orderArray, orderNumber):
+    currOrder = None
+    for o in orderArray:
+        if orderNumber == o['order_number']:
+            currOrder = o
+            break
+    return currOrder
+
+# Returns object of orderArray where 'order_number' == orderNumber
+def findOrderObjectIndexByOrderNumber(orderArray, orderNumber):
+    currOrder = None
+    index = 0
+    for o in orderArray:
+        if orderNumber == o['order_number']:
+            return index
+        index += 1
+    return -1
 
 def loginAccount(br, settings):
     cookies = mechanize.LWPCookieJar(getCookiesPath())
