@@ -155,6 +155,8 @@ def crawlOrdersFromAccount(br, orderArray):
     max_items_per_page = 20
     numberof_new_items = 0
     newOrdersArray = []
+    # If enabled, script will always crawl all orders even if it was not able to detect new orders on the first page. This is especially useful to keep the order_status updated!
+    forceCrawlAll = True
     while True:
         page_counter += 1
         print('Lade Bestelldaten von Aral | Seite %d von ?' % page_counter)
@@ -210,7 +212,7 @@ def crawlOrdersFromAccount(br, orderArray):
         if next_page_available not in html:
             print('Letzte Seite mit Bestellnummern erreicht')
             break
-        elif not found_new_entry:
+        elif not found_new_entry and not forceCrawlAll:
             # This improves speed significantly for users who have many orders in their account
             print('Stoppe Suche nach neuen Bestellnummern, da alle Betellnummern der aktuellen Seite bereits vom letzten Crawlvorgang bekannt sind.')
             break
@@ -235,9 +237,7 @@ def activateAutomatic(br, orderArray):
     printSeparator()
     # Crawl all OrderNumbers from website
     numberofNewOrders = crawlOrdersFromAccount(br, orderArray)
-    if numberofNewOrders <= 0:
-        print('Es konnten keine Bestellnummern im Account gefunden werden')
-        return None
+    print('Es wurden %d neue Bestellnummern im Aral Account gefunden' % numberofNewOrders)
 
     # Collect orders which can be activated
     activatable_order_numbers = []
@@ -336,7 +336,7 @@ def activateAutomatic(br, orderArray):
                     {'order_number': order_number, 'failure_reason': 'Aktivierungscode ist falsch(?)'})
                 continue
             elif 'ist erfolgreich bei uns eingegangen' not in html:
-                print('Unbekannter Fehler')
+                print('Unbekannter Fehler :(')
                 orderActivationImpossibleArray.append(
                     {'order_number': order_number, 'failure_reason': 'Unbekannter Fehler'})
                 continue
@@ -346,7 +346,7 @@ def activateAutomatic(br, orderArray):
             successfullyActivatedOrdersCounter += 1
             # Reset 'failure-in-a-row' counter
             numberof_failures_in_a_row = 0
-            print('Bestellung erfolgreich aktiviert: %d' % order_number)
+            print('Erfolgreich aktiviert :)')
             # Cooldown
             time.sleep(2)
             # Continue with the next voucher
@@ -432,8 +432,11 @@ finally:
     with open(getSettingsPath(), 'w') as outfile:
         json.dump(settings, outfile)
 
-    print('Druecke ENTER zum Schließen des Fensters')
+    # TODO: Save output to logfile so user can view it later
+    end_wait = 60
+    print('Dieses Fenster schliesst sich in %d Sekunden' % end_wait)
     # Debug
     # raise
-    input()
+    time.sleep(end_wait)
+    # input()
     sys.exit()

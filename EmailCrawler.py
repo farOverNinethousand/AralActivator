@@ -174,7 +174,7 @@ def crawl_mails(settings, orderArray):
         if numberof_successfully_parsed_mails == 0:
             print('Fehler: Konnte Informationen aus E-Mails nicht extrahieren')
         elif numberof_new_vouchers > 0:
-            print('Deine E-Mails enthielten %d neuen Bestellungen' % numberof_new_vouchers)
+            print('Deine E-Mails enthielten %d neue Bestellungen' % numberof_new_vouchers)
         else:
             print('Deine E-Mails enthielten KEINE neuen Bestellungen')
     #     for aral_mail in aral_mails:
