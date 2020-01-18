@@ -30,7 +30,7 @@ def loadSettings():
     return settings
 
 def getVersion():
-    return '0.6.3'
+    return '0.6.4'
 
 
 def getSettingsPath():
@@ -47,7 +47,7 @@ def getBaseDomain():
 
 # Converts html bytes from response object to String
 def getHTML(response):
-    return response.read().decode('utf-8')
+    return response.read().decode('utf-8', 'ignore')
 
 
 def prepareBrowser():

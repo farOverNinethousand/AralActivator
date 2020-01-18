@@ -5,7 +5,7 @@ list_response_pattern = re.compile(r'\((?P<flags>.*?)\) "(?P<delimiter>.*)" (?P<
 
 # According to docs/example: https://pymotw.com/2/imaplib/
 def parse_list_response(line):
-    line = line.decode('utf-8')
+    line = line.decode('utf-8', 'ignore')
     flags, delimiter, mailbox_name = list_response_pattern.match(line).groups()
     mailbox_name = mailbox_name.strip('"')
     return flags, delimiter, mailbox_name
@@ -23,7 +23,7 @@ def crawlMailsBySubject(connection, email_array, subject):
             # print('Printing response part:')
             if isinstance(response_part, tuple):
                 # print('\n%s:' % msg_id)
-                mail_part = response_part[1].decode('utf-8')
+                mail_part = response_part[1].decode('utf-8', 'ignore')
                 # print(mail_part)
                 complete_mail += mail_part
         email_array.append(complete_mail)
@@ -115,7 +115,7 @@ def crawl_mails(settings, orderArray):
             print('Schritt %d / %d: Sammle Aral Aktivierungs-E-Mails ...' %(1, total_postbox_steps))
             crawlMailsBySubject(connection, aral_mails, 'Aktivierung Ihrer Aral SuperCard')
             # TODO: Solve charset issue 'Bestätigung Ihrer Kartenaktivierung'
-            print('Schritt %d / %d: Sammle Aktivierungs-Bestaetigungs-E-Mails' %(2, total_postbox_steps))
+            print('Schritt %d / %d: Sammle Aktivierungs-Bestaetigungs-E-Mails ...' %(2, total_postbox_steps))
             crawlMailsBySubject(connection, aral_mails_serials, 'Ihrer Kartenaktivierung')
 
         printSeparator()

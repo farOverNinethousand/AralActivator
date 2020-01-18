@@ -157,6 +157,7 @@ def crawlOrdersFromAccount(br, orderArray):
     newOrdersArray = []
     # If enabled, script will always crawl all orders even if it was not able to detect new orders on the first page. This is especially useful to keep the order_status updated!
     forceCrawlAll = True
+    numberof_items_total = 0
     while True:
         page_counter += 1
         print('Lade Bestelldaten von Aral | Seite %d von ?' % page_counter)
@@ -185,6 +186,7 @@ def crawlOrdersFromAccount(br, orderArray):
         found_order_date = currentCrawledOrderDates is not None and len(currentCrawledOrderDates) == len(currentCrawledOrderNumbers)
         crawled_order_index = -1
         for currCrawledOrderNumber in currentCrawledOrderNumbers:
+            numberof_items_total += 1
             crawled_order_index += 1
             currCrawledOrderNumber = int(currCrawledOrderNumber)
             stored_order_index = findOrderObjectIndexByOrderNumber(orderArray, currCrawledOrderNumber)
@@ -226,7 +228,10 @@ def crawlOrdersFromAccount(br, orderArray):
         time.sleep(2)
         # Continue
 
-    print('Anzahl NEU erfasster Bestellnummern (seit dem letzten Start): %d auf insgesamt %d Seiten' % (numberof_new_items, page_counter))
+    # print('Anzahl NEU erfasster Bestellnummern (seit dem letzten Start): %d auf insgesamt %d Seiten' % (numberof_new_items, page_counter))
+    print('%d neue Bestellnummern auf insgesamt %d Seiten gefunden' % (numberof_new_items, page_counter))
+    if forceCrawlAll:
+        print('Anzahl insgesamt gefundener Bestellungen: %d' % numberof_items_total)
     orderArray += newOrdersArray
     return numberof_new_items
 
@@ -237,7 +242,7 @@ def activateAutomatic(br, orderArray):
     printSeparator()
     # Crawl all OrderNumbers from website
     numberofNewOrders = crawlOrdersFromAccount(br, orderArray)
-    print('Es wurden %d neue Bestellnummern im Aral Account gefunden' % numberofNewOrders)
+    printSeparator()
 
     # Collect orders which can be activated
     activatable_order_numbers = []
@@ -268,7 +273,8 @@ def activateAutomatic(br, orderArray):
     for order_number in activatable_order_numbers:
         try:
             progressCounter += 1
-            orderInfo = findOrderObjectByOrderNumber(orderArray, order_number)
+            order_position = findOrderObjectIndexByOrderNumber(orderArray, order_number)
+            orderInfo = orderArray[order_position]
             # TODO: I made a mistake in an older version and stored this as a String so let's parse it to int just to make sure it works
             activationCode = int(orderInfo.get('activation_code', None))
             print('Arbeite an Bestellung %d / %d : Bestellnummer: %d | Aktivierungscode: %d' % (progressCounter, len(activatable_order_numbers), order_number, activationCode))
@@ -292,7 +298,6 @@ def activateAutomatic(br, orderArray):
                 balance = orderInfo.get('balance', None)
                 if balance is None:
                     orderInfo['balance'] = float(voucher_money_valueStr)
-                # E.g. 'Aral SuperCard For You - Ostern - Eier    '
                 orderInfo['voucher_name'] = voucher_name
                 print('Kartenwert gefunden: %s €' % voucher_money_valueStr)
             except:
@@ -304,6 +309,7 @@ def activateAutomatic(br, orderArray):
             if isActivatedAccordingToOrderOverview:
                 print('Bestellung ist laut Bestelluebersicht bereits aktiviert')
                 orderInfo['activated'] = True
+                orderArray[order_position] = orderInfo
                 continue
             print('Aktivierung Schritt 2 / %d: [services/bestellungen/bestellung-aktivieren/] ...' % total_activation_steps)
             time.sleep(2)
@@ -343,6 +349,7 @@ def activateAutomatic(br, orderArray):
             # Activation successful!
             orderInfo['activated'] = True
             orderInfo['activation_date'] = date.today().strftime("%Y-%m-%d")
+            orderArray[order_position] = orderInfo
             successfullyActivatedOrdersCounter += 1
             # Reset 'failure-in-a-row' counter
             numberof_failures_in_a_row = 0
