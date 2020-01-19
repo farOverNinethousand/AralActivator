@@ -31,6 +31,8 @@ Achtung! Deine Zugangsdaten werden unverschlüsselt im Ordner des Scripts gespei
 
 ## Anleitung [Vollautomatische Version - empfohlen]
 1. Starte das Script(AralActivator.py). Es wird dich beim ersten Start nach deinen Aral-Supercard.de Zugangsdaten UND E-Mail IMAP Zugangsdaten fragen.
+
+**GMail Benutzer aufgepasst: Ihr müsst den Zugriff durch weniger Sichere Apps erlauben: https://myaccount.google.com/lesssecureapps**
 2. Das Script wird nun alle Karten aus deiner Aral Bestellübersicht aktivieren zu denen es in deinen Mails die passenden Aktivierungscodes findet.
 Am Ende wird ggf. eine Übersicht der fehlgeschlagenen Aktivierungen angezeigt.
 

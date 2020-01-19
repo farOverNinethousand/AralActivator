@@ -1,13 +1,15 @@
 import re, sys, time, validators
 from Helper import *
 
+
 # Removes all products from the shopping cart
 def dumpShoppingCart(br):
     response = br.open('https://www.aral-supercard.de/shop/warenkorb')
     html = getHTML(response)
     try:
         try:
-            articleDeleteURLs = re.compile(r'\"(https?://www.aral-supercard\.de/shop/warenkorb/artikel-loeschen/[^<>\"]+)\"').findall(html)
+            articleDeleteURLs = re.compile(
+                r'\"(https?://www.aral-supercard\.de/shop/warenkorb/artikel-loeschen/[^<>\"]+)\"').findall(html)
         except:
             print('Warenkorb ist bereits leer')
             return
@@ -23,13 +25,15 @@ def dumpShoppingCart(br):
             except:
                 numberof_article_delete_errors += 1
         if numberof_article_delete_errors > 0:
-            print('Warnung: %d Elemente aus dem Warenkorb konnten eventuell nicht geloescht werden' % numberof_article_delete_errors)
+            print(
+                'Warnung: %d Elemente aus dem Warenkorb konnten eventuell nicht geloescht werden' % numberof_article_delete_errors)
         else:
             print('Warenkorb sollte leer sein')
     except:
         print('Fehler beim Leeren des Warenkorbs oder keine Artikel')
     # print(html)
     return
+
 
 print('Welcome to AralActivator %s' % getVersion())
 print('Gib deine Gutscheine ein und druecke 2x ENTER.')
@@ -46,7 +50,8 @@ br = prepareBrowser()
 
 while total_numberof_vouchers == 0:
     voucherSource = ''
-    print('Gib deine Gutscheincodes oder den kompletten Inhalt der Groupon PDF ein (druecke dann 2x ENTER dann geht\'s weiter):')
+    print(
+        'Gib deine Gutscheincodes oder den kompletten Inhalt der Groupon PDF ein (druecke dann 2x ENTER dann geht\'s weiter):')
     # Improvised multi line input: https://stackoverflow.com/questions/30239092/how-to-get-multiline-input-from-user
     counter_lines_of_input = 0
     currInput = '_TEST_'
@@ -77,7 +82,8 @@ user_input_article_url = None
 url_article_30euro = 'https://www.aral-supercard.de/shop/produkt/aral-supercard-einkaufen-tanken-30-2123'
 url_article_40eurojp = 'https://www.aral-supercard.de/shop/produkt/jp-performance-einkaufen-tanken-individueller-wert-sondermotiv-motor-show-2124'
 while True:
-    print('Achtung! Alle Gutscheine werden auf deine bevorzugte Adresse bestellt! Pruefe deine Adresse bevor du die Einloesung startest!')
+    print(
+        'Achtung! Alle Gutscheine werden auf deine bevorzugte Adresse bestellt! Pruefe deine Adresse bevor du die Einloesung startest!')
     print('Waehle, aus welcher Aktion deine Gutscheine kommen:')
     print('1 = 30+5Euro --> Aktionsurl: %s' % url_article_30euro)
     print('2 = 40+6Euro_JP --> Aktionsurl: %s' % url_article_40eurojp)
@@ -146,11 +152,12 @@ try:
                 response = br.open('https://www.aral-supercard.de/shop/abschluss')
                 html = getHTML(response)
                 # Next step - only display this once so output looks nicer!
-                print('Schritt 4 / %d | Versuch %d / %d : Fuege Gutschein ein und pruefe Gueltigkeit' % (numberof_steps, try_counter, max_tries))
+                print('Schritt 4 / %d | Versuch %d / %d : Fuege Gutschein ein und pruefe Gueltigkeit' % (
+                numberof_steps, try_counter, max_tries))
                 form_index = getFormIndexBySubmitKey(br, 'voucher_1')
                 if form_index == -1:
                     print('Konnte GutscheinForm nicht finden')
-                    sys.exit()
+                    smoothExit()
                 br.select_form(nr=form_index)
                 voucherElements = currentVoucher.split('-')
                 br['voucher_1'] = voucherElements[0]
@@ -179,7 +186,9 @@ try:
                 continue
             # Important errorhandling! We do not want to order random stuff or random amounts of cards ;)
             try:
-                cart_amountStr = re.compile(r'<th>Summe<br/>\s*<small>inkl\. MwSt\.</small>\s*</th>\s*<th>([0-9]+,[0-9]+)').search(html).group(1)
+                cart_amountStr = re.compile(
+                    r'<th>Summe<br/>\s*<small>inkl\. MwSt\.</small>\s*</th>\s*<th>([0-9]+,[0-9]+)').search(html).group(
+                    1)
                 cart_amountStr = cart_amountStr.replace(',', '.')
                 cart_amount = float(cart_amountStr)
                 # With our voucher we should always 'pay' 0€

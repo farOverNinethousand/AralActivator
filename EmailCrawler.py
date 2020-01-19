@@ -3,12 +3,14 @@ from Helper import *
 
 list_response_pattern = re.compile(r'\((?P<flags>.*?)\) "(?P<delimiter>.*)" (?P<name>.*)')
 
+
 # According to docs/example: https://pymotw.com/2/imaplib/
 def parse_list_response(line):
     line = line.decode('utf-8', 'ignore')
     flags, delimiter, mailbox_name = list_response_pattern.match(line).groups()
     mailbox_name = mailbox_name.strip('"')
     return flags, delimiter, mailbox_name
+
 
 # Crawls mails which contain a certain String in their subject
 def crawlMailsBySubject(connection, email_array, subject):
@@ -27,6 +29,7 @@ def crawlMailsBySubject(connection, email_array, subject):
                 # print(mail_part)
                 complete_mail += mail_part
         email_array.append(complete_mail)
+
 
 def crawl_mailsOLD(settings, orderArray):
     PATH_INPUT_MAILS = os.path.join('mails.txt')
@@ -70,6 +73,7 @@ def crawl_mailsOLD(settings, orderArray):
             else:
                 print('Deine E-Mails enthielten keine neue Bestellungen')
 
+
 def crawl_mails(settings, orderArray):
     #     print('INBOX Status:')
     #     print(connection.status('INBOX', '(MESSAGES RECENT UIDNEXT UIDVALIDITY UNSEEN)'))
@@ -112,10 +116,10 @@ def crawl_mails(settings, orderArray):
             # num_msgs = int(data[0])
             # print('There are %d messages in INBOX' % num_msgs)
             # Search for specific messages by subject
-            print('Schritt %d / %d: Sammle Aral Aktivierungs-E-Mails ...' %(1, total_postbox_steps))
+            print('Schritt %d / %d: Sammle Aral Aktivierungs-E-Mails ...' % (1, total_postbox_steps))
             crawlMailsBySubject(connection, aral_mails, 'Aktivierung Ihrer Aral SuperCard')
             # TODO: Solve charset issue 'Bestätigung Ihrer Kartenaktivierung'
-            print('Schritt %d / %d: Sammle Aktivierungs-Bestaetigungs-E-Mails ...' %(2, total_postbox_steps))
+            print('Schritt %d / %d: Sammle Aktivierungs-Bestaetigungs-E-Mails ...' % (2, total_postbox_steps))
             crawlMailsBySubject(connection, aral_mails_serials, 'Ihrer Kartenaktivierung')
 
         printSeparator()
@@ -127,7 +131,8 @@ def crawl_mails(settings, orderArray):
         numberof_possible_fatal_errors = 0
         for aral_mail in aral_mails:
             try:
-                order_infoMatchObject = re.compile(r'Ihre Aral SuperCard Bestellung\s*(\d+)\s*vom\s*(\d{2}\.\d{2}\.\d{4})').search(aral_mail)
+                order_infoMatchObject = re.compile(
+                    r'Ihre Aral SuperCard Bestellung\s*(\d+)\s*vom\s*(\d{2}\.\d{2}\.\d{4})').search(aral_mail)
                 orderNumber = int(order_infoMatchObject.group(1))
                 orderDate = order_infoMatchObject.group(2)
                 activationCode = int(re.compile(r'Aktivierungscode lautet\s*:\s*(\d+)').search(aral_mail).group(1))
@@ -143,7 +148,8 @@ def crawl_mails(settings, orderArray):
                 currOrder['order_date'] = orderDate
                 orderArray.append(currOrder)
                 numberof_new_vouchers += 1
-                print('Neue Bestellung gefunden: Bestellnummer: %s | Bestelldatum: %s | Aktivierungscode: %s' % (orderNumber, orderDate, activationCode))
+                print('Neue Bestellung gefunden: Bestellnummer: %s | Bestelldatum: %s | Aktivierungscode: %s' % (
+                orderNumber, orderDate, activationCode))
             except:
                 numberof_possible_fatal_errors += 1
                 print('Fehler: Aktivierungscode konnte nicht aus E-Mail geparsed werden')
@@ -170,7 +176,8 @@ def crawl_mails(settings, orderArray):
                 continue
 
         if numberof_possible_fatal_errors > 0:
-            print('Warnung: Informationen aus %d E-Mails konnten nicht extrahiert werden! Falls du (neue) E-Mails mit Aktivierungscodes hast, die nicht erfasst wurden wurde die E-Mail Struktur von Aral evtl. geaendert und das Script braucht ein Update. Falls nicht, kannst du diese Information ignorieren.' % numberof_possible_fatal_errors)
+            print(
+                'Warnung: Informationen aus %d E-Mails konnten nicht extrahiert werden! Falls du (neue) E-Mails mit Aktivierungscodes hast, die nicht erfasst wurden wurde die E-Mail Struktur von Aral evtl. geaendert und das Script braucht ein Update. Falls nicht, kannst du diese Information ignorieren.' % numberof_possible_fatal_errors)
         if numberof_successfully_parsed_mails == 0:
             print('Fehler: Konnte Informationen aus E-Mails nicht extrahieren')
         elif numberof_new_vouchers > 0:
@@ -181,16 +188,22 @@ def crawl_mails(settings, orderArray):
     #         print(aral_mail)
     finally:
         try:
-            connection.close()
+            # Only try to logout if we're logged in
+            if connection is not None:
+                connection.close()
+                connection.logout()
         except:
+            print('Fehler beim Ausloggen')
             pass
-        connection.logout()
+
     return
 
 
 # Logs into IMAP mailbox
 def login_mail(settings):
-    if settings.get('login_email_username', None) is None or settings.get('login_email_password', None) is None or settings.get('login_email_imap', None) is None:
+    if settings.get('login_email_username', None) is None or settings.get('login_email_password',
+                                                                          None) is None or settings.get(
+            'login_email_imap', None) is None:
         print('Gib deine E-Mail Zugangsdaten ein')
         print(
             'Gehe sicher, dass die Mails deiner Bestellungen des eingegebenen Aral Accounts an diese E-Mail Adresse verschickt werden!')
@@ -203,26 +216,28 @@ def login_mail(settings):
         print('''Gib deine E-Mail IMAP URL ein z.B.'imap-mail.outlook.com' oder 'imap.gmail.com':''')
         settings['login_email_imap'] = input()
     else:
+        # Logindata is already given
         pass
     #         print('Gespeicherte E-Mail Zugangsdaten wurden erfolgreich geladen')
     #         print('Verwende E-Mail Username: ' + settings['login_email_username'])
     print('Login E-Mail | %s' % settings['login_email_username'])
-    connection = imaplib.IMAP4_SSL(settings['login_email_imap'])
+    connection = None
     try:
+        connection = imaplib.IMAP4_SSL(settings['login_email_imap'])
         connection.login(settings['login_email_username'], settings['login_email_password'])
-    except imaplib.IMAP4.error:
-        print("E-Mail Login fehlgeschlagen!")
-        sys.exit(1)
-
+        print('E-Mail Login erfolgreich')
+    except:
+        print('E-Mail Login fehlgeschlagen!')
+        print('Falls du GMail Benutzer bist aktiviere den Zugriff durch weniger sichere Apps: https://myaccount.google.com/lesssecureapps')
+        smoothExit()
     # rv, mailboxes = connection.list(directory='INBOX')
     return connection
 
-
 # Testing space
-#PATH_STORED_SETTINGS = os.path.join('settings.json')
-#readFile = open(PATH_STORED_SETTINGS, 'r')
-#settingsJson = readFile.read()
-#settings = json.loads(settingsJson)
-#readFile.close
-#crawl_mails(settings, [])
-#sys.exit()
+# PATH_STORED_SETTINGS = os.path.join('settings.json')
+# readFile = open(PATH_STORED_SETTINGS, 'r')
+# settingsJson = readFile.read()
+# settings = json.loads(settingsJson)
+# readFile.close
+# crawl_mails(settings, [])
+# sys.exit()

@@ -1,4 +1,4 @@
-import mechanize, json, os
+import mechanize, json, os, time, sys
 
 # Returns user input with defined number of digits
 def userInputDefinedLengthNumber(numberof_digits):
@@ -30,7 +30,7 @@ def loadSettings():
     return settings
 
 def getVersion():
-    return '0.6.4'
+    return '0.6.5'
 
 
 def getSettingsPath():
@@ -191,3 +191,12 @@ def isLoggedIN(html):
 
 def printSeparator():
     print('*******************************************************************')
+
+def smoothExit():
+    end_wait = 600
+    print('Dieses Fenster schliesst sich in %d Sekunden von selbst' % end_wait)
+    # Debug
+    # raise
+    time.sleep(end_wait)
+    # input()
+    sys.exit()

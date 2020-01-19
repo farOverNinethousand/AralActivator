@@ -418,11 +418,11 @@ crawlOrderNumbersFromMail(settings, orderArray)
 if orderArray is None:
     # There is nothing we can do --> Exit
     print('Es konnten keine Bestellungen gefunden werden --> Abbruch')
-    sys.exit()
+    smoothExit()
 
 if not logged_in and requires_account:
     print('Anmeldung fehlgeschlagen und manuelles Aktivieren deaktiviert --> Abbruch')
-    sys.exit()
+    smoothExit()
 
 try:
     if not requires_account:
@@ -440,10 +440,7 @@ finally:
         json.dump(settings, outfile)
 
     # TODO: Save output to logfile so user can view it later
-    end_wait = 60
-    print('Dieses Fenster schliesst sich in %d Sekunden' % end_wait)
     # Debug
     # raise
-    time.sleep(end_wait)
     # input()
-    sys.exit()
+    smoothExit()
