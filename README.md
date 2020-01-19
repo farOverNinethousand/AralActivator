@@ -32,7 +32,7 @@ Achtung! Deine Zugangsdaten werden unverschlüsselt im Ordner des Scripts gespei
 ## Anleitung [Vollautomatische Version - empfohlen]
 1. Starte das Script(AralActivator.py). Es wird dich beim ersten Start nach deinen Aral-Supercard.de Zugangsdaten UND E-Mail IMAP Zugangsdaten fragen.
 
-**GMail Benutzer aufgepasst: Ihr müsst den Zugriff durch weniger Sichere Apps erlauben: https://myaccount.google.com/lesssecureapps**
+**GMail Benutzer aufgepasst: Ihr müsst den Zugriff durch weniger sichere Apps erlauben: https://myaccount.google.com/lesssecureapps**
 2. Das Script wird nun alle Karten aus deiner Aral Bestellübersicht aktivieren zu denen es in deinen Mails die passenden Aktivierungscodes findet.
 Am Ende wird ggf. eine Übersicht der fehlgeschlagenen Aktivierungen angezeigt.
 
@@ -64,7 +64,7 @@ https://www.aral-supercard.de/services/bestellungen/
 Vermutlich hat Aral die Textbausteine der Aktivierungs-Mails geändert. Bitte lass' mir eine (zensierte) Fassung deiner Mails zukommen, damit ich das aktualisieren kann.
 2. "Fehler: Konnte Informationen aus E-Mails nicht extrahieren" --> Eventuell hat sich der Inhalt der Aral E-Mails geändert und das Script benoetigt ein Update
 
-## Wie kann ich die Aktivierung bestimmter Bestellnummern vermeiden?
+#### Wie kann ich die Aktivierung bestimmter Bestellnummern vermeiden?
 Falls du manche Bestellungen aus irgewndwelchen Gründen noch nicht aktivieren möchtest (z.B. Aktivierungscode kam bereits an, Karte aber noch nicht) gibt es zwei Möglichkeiten:
 1. Einfachste Möglichkeit: Lösche die E-Mail mit dem Aktivierungscode dieser Bestellnummer endgültig (inhalt davor sichern).
 2. Kompliziertere Möglichkeit: Ändere im Script die Zeile 'use_old_mail_crawler = False' auf 'use_old_mail_crawler = True'.
@@ -120,6 +120,9 @@ Per E-Mail bekommt man dann einen Aktivierungscode, der für die gesamte Bestell
 - Manche der gratis Karten werden erst zu einem bestimmten Datum automatisch von Aral aktiviert
 - SuperCards sind idR. erst ab dem nächsten Tag nach Aktivierung gültig
 - [03.01.2020] Man kann an der Tankstellen-Kasse beliebig viele Karten verwenden; es gab mal eine angebliche Maximalsumme von 100€, die aber nicht mehr zu existieren scheint: https://www.mydealz.de/comments/permalink/24512889
+
+# Das große Aral FAQ - alles rund um Kauf- und Aktivierung von SuperCards, Cashback usw.
+[INHALT FOLGT]
 
 ### Sonstiges zu Aral
 - Ab dem 01.01.2020 darf man angeblich maximal 100€ Aral SuperCards in Aral Filialen kaufen (neues Geldwäschegesetz)
