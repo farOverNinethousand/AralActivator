@@ -116,16 +116,135 @@ Zudem stehen auf jeder Aral Karte Folgende Infos:
 Per E-Mail bekommt man dann einen Aktivierungscode, der für die gesamte Bestellung(?) gilt - meistens muss man sowieso nur eine Karte aktivieren.
 
 ### Haltbarkeit und Einlösebedingungen
-- SuperCards sind ab Aktivierungsdatum 3 Jahre lang' gültig
+- SuperCards sind ab Aktivierungsdatum 36 Monate lang' gültig
 - Manche der gratis Karten werden erst zu einem bestimmten Datum automatisch von Aral aktiviert
 - SuperCards sind idR. erst ab dem nächsten Tag nach Aktivierung gültig
 - [03.01.2020] Man kann an der Tankstellen-Kasse beliebig viele Karten verwenden; es gab mal eine angebliche Maximalsumme von 100€, die aber nicht mehr zu existieren scheint: https://www.mydealz.de/comments/permalink/24512889
 
 # Das große Aral FAQ - alles rund um Kauf- und Aktivierung von SuperCards, Cashback usw.
-[INHALT FOLGT]
+## Aral FAQ
+####  Weiter unten findet ihr noch ein Cashback FAQ
+**Wie kommen die SuperCards an?**
 
-### Sonstiges zu Aral
-- Ab dem 01.01.2020 darf man angeblich maximal 100€ Aral SuperCards in Aral Filialen kaufen (neues Geldwäschegesetz)
+Per Brief - jede Bestellung in einem Brief also idR. 2 Karten pro Brief.
+
+**Wie kann ich die höherwertigen 30/40€ Karten von den 4/6€ vor-aktivierten 'gratis' Karten unterscheiden? / Woran erkenne ich die bereits aktivierten Karten?**
+
+Über die Seriennummer auf dem Lieferschein im Brief.
+Die aufgelistete Seriennummer ist immer die 30/40€ Karte - die andere die 4/6€ Karte.
+Falls du bei der JP Aktion mitgemacht hast:
+Die 'schicke' JP Karte ist immer die höherwertige.
+Man sollte trotzdem die Seriennummer abgleichen um sicherzugehen, dass man die Karte mit der auf dem Lieferschein aufgeführten Seriennummer erhalten hat!
+Tipp: Markiere die Karten mit einem Permanentmarker
+
+**Kommen die Aktivierungscodes per Post oder E-Mail?**
+
+Per E-Mail.
+
+**Was kommt sonst noch per Mail?**
+
+Wenn du z.B. 10 einzelne Bestellungen bei Aral aufgegeben hast wirst du folgende E-Mails von Aral bekommen:
+1. 10x Bestellbestätigung
+2. 10x Rechnung
+3. 10x Aktivierungscodes
+--> Letztlich 10x Briefe mit den SuperCards (jeweils zwei Karten pro Brief [Stand: Aktion Dezember 2019])
+
+**Wann kommen die Aktivierungscodes?**
+
+Nachdem die SuperCards verschickt wurden. Es kann auch passieren, dass die Karten noch auf dem Weg sind und die Aktivierungscodes bereits da sind.
+Es empfielt sich, SuperCards erst zu aktivieren wenn sie angekommen sind.
+
+**Muss ich die 5/6€ Karten auch aktivieren?**
+
+Nein diese sind bereits bei Ankunft aktiviert.
+
+**Wie/Wo kann ich die SuperCards aktivieren?**
+
+Es gibt mehrere Möglichkeiten:
+1. Schnellste Möglichkeit: Über dieses Script (nach oben Scrollen, siehe Anleitung).
+2. Über aral-supercard.de/services/bestellungen/ --> Bei jeder Bestellung auf "Detailansicht" klicken --> Zur Kartenaktivierung
+Dann jeweils in den E-Mails nach der Bestellnummer suchen um den dazugehörigen Aktivierungscode zu finden.
+3. Umständlichster Weg:
+https://www.aral-supercard.de/services/karte-aktivieren/
+
+Kann man mit den SuperCards alles\* (auch Zigaretten) kaufen?
+Ja.
+
+\* Außer Gutscheine/Geschenkkarten/Prepaid Aufladekarten/Paysafecards
+
+**Kann man mit den SuperCards andere Gutscheine/Geschenkkarten/Prepaid Aufladekarten/Paysafecards kaufen?**
+
+Nein, nicht mehr.
+
+**Wie viele SuperCards kann man pro Einkauf in einer Aral Tankstelle einlösen?**
+
+Maximal 10. Manche Filialen erlauben das Einlösen von mehr Karten, aber um Probleme zu vermeiden sollte man maximal 10 pro Einkauf verwenden.
+
+**Wie kann ich herausfinden, wie viel Guthaben/Restguthaben auf meinen SuperCards ist?**
+
+Wenn du gerade eingekauft hast steht das Restguthaben aller verwendeten Karten auf dem Kassenbon.
+Wenn du das Guthaben separat abfragen willst geht das hier:
+https://www.aral-supercard.de/services/kartenguthaben-abrufen/
+Falls du deine SuperCards registriert hast kannst du das Guthaben ohne die Eingabe der Sicherheitscodes hier einsehen:
+https://www.aral-supercard.de/services/kartenverwaltung/
+(Eine Registrierung der SuperCards ist nicht notwendig und zeitaufwändig)
+
+**Auf meiner neu erhaltenen Karte sind angeblich 0€ drauf was soll ich tun?**
+
+Karten, die bereits vor-aktiviert werden sollten werden von Aral manchmal etwas verspätet aktiviert.
+Prüfe das Guthaben in 1-2 Tagen erneut und wende dich erst an den Aral Support, falls das Guthaben dann noch immer nicht vorhanden ist.
+
+**Werden die 5/6€ gratis SuperCards irgendwo im Bestellverlauf oder Warenkorb angezeigt?**
+
+Nein. Im Bestellverlauf sollte ein Hinweis angezeigt werden, aber kein extra "5€ SuperCard gratis" Artikel.
+Anhand der E-Mails oder auch des Namens der Aktion auf der Detailseite einer Bestellung kann man herausfinden, ob/welche Gratis-SuperCards dazu gehören: aral-supercard.de/services/bestellungen/detailansicht/<Bestellnummer>
+
+**Wie lange sind die SuperCards gültig?**
+
+Laut offiziellem Aral FAQ (unten verlinkt) ab Aktivierung 36 Monate.
+
+**Wie lange habe ich Zeit, die Karten zu aktivieren?**
+TODO
+
+**Kann ich Karten automatsich zu einem bestimmten Datum in der Zukunft aktivieren lassen?**
+
+Ja über die Aktivierung in der Bestellübersicht kannst du z.B. heute schon festlegen, dass deine Karten in 2 Jahren erst aktiviert werden sollen.
+
+**Meine Frage taucht hier nicht auf wo finde ich eine Antwort?**
+Schau ins offizielle Aral FAQ: https://www.aral-supercard.de/uebersicht/fragen-und-antworten/
+
+## Cashback Aral / Groupon FAQ
+
+**Wo gibt es Cashback beim kauf von Aral Gutscheinen per Groupon?**
+
+PayBack, Shopbuddies, Aklamio, iGraal, Shoop, uvm.
+Es gibt unterschiedliche Erfahrungen was die Zuverlässigkeit dieser Anbieter angeht.
+
+**Mein Cashback / PayBack Punkte wurde nicht oder nicht korrekt erfasst was kann ich tun?**
+
+Warte 1-2 Tage ab und kontaktiere dann den Support des jeweiligen Cashback Anbieters.
+PayBack kann hartnäckig sein und man muss das Kontaktformular ggf. mehrmals mit denselben Daten ausfüllen um die Punkte nachträglich zu bekommen.
+
+**Wo kann ich bei PayBack eine Nachbuchungsanfrage stellen?**
+
+https://www.payback.de/pb/kontakt_call_center/
+Es gibt keine anderen Kontaktmöglichkeiten. Falls man eine Anfrage stellt und weitere Daten nachliefern muss muss man nochmal über diesen Weg gehen - auf E-Mails von PayBack kann man nicht einfach per E-Mail antworten!
+
+**Wo finde ich meine Groupon Kundennummer/User-ID [oft für Cashback Nachbuchungsanfragen benötigt]?**
+
+Navigiere auf Groupon oben rechts zu "Meine Bestellungen" und klicke rechts bei einem beliebigen Gutschein auf "Details anzeigen".
+Eine PDF öffnet sich und in der Adresszeile deines Browsers findest du deine Kundennummer:
+
+groupon.de/users/<DEINE_KUNDENNUMMER>/groupons/vouchers/<VOUCHER_ID>
+
+Die Kundennummer besteht aus 31 Stellen und enthält Bindestriche z.B.:
+dddd1234-9ab8-12e9-b89a-0cad4d1234c0
+
+Falls du die Kundennummer im PayBack Kontaktformular eingeben willst: Sie ist zu lang für das vorgesehene Feld. Trage sie unten als Kommentar ein!
+
+**Wo finde ich immer aktuelle Aral PayBack X-fach Coupons?**
+
+Siehe unten bei den Links.
 
 ## Links
 Karten hier 'manuell' bzw. ohne sich einzuloggen aktivieren:
@@ -140,5 +259,7 @@ https://www.aral-supercard.de/services/kartenguthaben-abrufen/
 Warum man bei Aral tanken sollte bzw. wie man dort günstiger tanken kann [von mydealz.de/profile/Remy_Scherer]:
 https://docs.google.com/document/d/1qPv0Z4vss3M9wdyS4efymtHG_wVNo0bCACLaEnb6Iv0
 
-Auflistung aktueller PayBack (Aral) Coupons [oben die Tabelle 'Aral' auswählen; Autor unbekannt]:
+Aktuelle PayBack (Aral) Coupons [oben die Tabelle 'Aral' auswählen]:
 https://docs.google.com/spreadsheets/d/e/2PACX-1vTJuNdXygioH8a3ti_8kWlFsBcVyEOsF3NE2ze2f5tuIfx6RS94-kZWcC4-UoVU0x6nc0u01hlRrNIk/pubhtml?sfns=mo#
+
+Quelle: Ist in der Tabelle verlinkt

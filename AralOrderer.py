@@ -60,6 +60,7 @@ while total_numberof_vouchers == 0:
         voucherSource += currInput + '\n'
         counter_lines_of_input += 1
         # End of user input handling
+    # Use set to prevent duplicated entries
     crawledVouchers = set(re.compile(r'([A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4})').findall(voucherSource))
     total_numberof_vouchers = len(crawledVouchers)
 
