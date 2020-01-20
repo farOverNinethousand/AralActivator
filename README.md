@@ -31,8 +31,9 @@ Achtung! Deine Zugangsdaten werden unverschlüsselt im Ordner des Scripts gespei
 
 ## Anleitung [Vollautomatische Version - empfohlen]
 1. Starte das Script(AralActivator.py). Es wird dich beim ersten Start nach deinen Aral-Supercard.de Zugangsdaten UND E-Mail IMAP Zugangsdaten fragen.
+**GMail Benutzer aufgepasst: Ihr müsst den Zugriff durch weniger sichere Apps erlauben:
+https://myaccount.google.com/lesssecureapps**
 
-**GMail Benutzer aufgepasst: Ihr müsst den Zugriff durch weniger sichere Apps erlauben: https://myaccount.google.com/lesssecureapps**
 2. Das Script wird nun alle Karten aus deiner Aral Bestellübersicht aktivieren zu denen es in deinen Mails die passenden Aktivierungscodes findet.
 Am Ende wird ggf. eine Übersicht der fehlgeschlagenen Aktivierungen angezeigt.
 
@@ -121,10 +122,10 @@ Per E-Mail bekommt man dann einen Aktivierungscode, der für die gesamte Bestell
 
 Per Brief - jede Bestellung in einem Brief also idR. 2 Karten pro Brief.
 
-**Wie kann ich die höherwertigen 30/40€ Karten von den 4/6€ vor-aktivierten 'gratis' Karten unterscheiden? / Woran erkenne ich die bereits aktivierten Karten?**
+**Wie kann ich die höherwertigen 30/40€ Karten von den 4/5/6€ vor-aktivierten 'gratis' Karten unterscheiden? / Woran erkenne ich die bereits aktivierten Karten?**
 
 Über die Seriennummer auf dem Lieferschein im Brief.
-Die aufgelistete Seriennummer ist immer die 30/40€ Karte - die andere die 4/6€ Karte.
+Die aufgelistete Seriennummer ist immer die 30/40€ Karte - die andere die 4/5/6€ Karte.
 Falls du bei der JP Aktion mitgemacht hast:
 Die 'schicke' JP Karte ist immer die höherwertige.
 Man sollte trotzdem die Seriennummer abgleichen um sicherzugehen, dass man die Karte mit der auf dem Lieferschein aufgeführten Seriennummer erhalten hat!
@@ -147,7 +148,7 @@ Wenn du z.B. 10 einzelne Bestellungen bei Aral aufgegeben hast wirst du folgende
 Nachdem die SuperCards verschickt wurden. Es kann auch passieren, dass die Karten noch auf dem Weg sind und die Aktivierungscodes bereits da sind.
 Es empfielt sich, SuperCards erst zu aktivieren wenn sie angekommen sind.
 
-**Muss ich die 5/6€ Karten auch aktivieren?**
+**Muss ich die 4/5/6€ Karten auch aktivieren?**
 
 Nein diese sind bereits bei Ankunft aktiviert.
 
@@ -202,7 +203,7 @@ https://www.aral-supercard.de/services/kartenverwaltung/
 Karten, die bereits vor-aktiviert werden sollten werden von Aral manchmal etwas verspätet aktiviert.
 Prüfe das Guthaben in 1-2 Tagen erneut und wende dich erst an den Aral Support, falls das Guthaben dann noch immer nicht vorhanden ist.
 
-**Werden die 5/6€ gratis SuperCards irgendwo im Bestellverlauf oder Warenkorb angezeigt?**
+**Werden die 4/5/6€ gratis SuperCards irgendwo im Bestellverlauf oder Warenkorb angezeigt?**
 
 Nein. Im Bestellverlauf sollte ein Hinweis angezeigt werden, aber kein extra "5€ SuperCard gratis" Artikel.
 Anhand der E-Mails oder auch des Namens der Aktion auf der Detailseite einer Bestellung kann man herausfinden, ob/welche Gratis-SuperCards dazu gehören: aral-supercard.de/services/bestellungen/detailansicht/<Bestellnummer>
