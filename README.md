@@ -245,6 +245,7 @@ Warte 1-2 Tage ab und kontaktiere dann den Support des jeweiligen Cashback Anbie
 PayBack kann hartnäckig sein und man muss das Kontaktformular ggf. mehrmals mit denselben Daten ausfüllen um die Punkte nachträglich zu bekommen.
 
 **Wo kann ich bei PayBack eine Nachbuchungsanfrage stellen?**
+
 https://www.payback.de/pb/kontakt_call_center/
 
 Es gibt keine anderen Kontaktmöglichkeiten. Falls man eine Anfrage stellt und weitere Daten nachliefern muss muss man nochmal über diesen Weg gehen - auf E-Mails von PayBack kann man nicht einfach per E-Mail antworten!
