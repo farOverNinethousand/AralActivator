@@ -47,8 +47,6 @@ Tipp: Im GMail Webmailer findest du die Mails z.B. so:
 4. Solltest du keine Lust mehr auf weitere Aktivierungsvorgänge hast, beende das Programm übers Menü und nicht über das "X", sodass der status gespeichert werden kann.
 
 Du kannst bei jedem Start neue mails in die mails.txt legen - es macht nichts, wenn bereits hinzugefügte Mails in der Datei verbleiben.
-Tipps für die halbautomatische Version:
-Füge maximal 10 zu aktivierende Karten/EMails gleichzeitig ein es sei denn du bist sehr gut organisiert, hast gute Augen und eine große Fläche zum Ausbreiten von Karten samt Lieferscheinen.
 
 ## Anleitung [AralOrderer - erworbene Aral Gutscheincodes automatisch bestellen]
 1. Starte das Script AralOrderer.py.
@@ -167,6 +165,8 @@ Dann jeweils in den E-Mails nach der Bestellnummer suchen um den dazugehörigen 
 3. Umständlichster Weg:
 https://www.aral-supercard.de/services/karte-aktivieren/
 
+**Achtung: Aktivierte Karten sind nie sofort einsetzbar! Immer erst am nächsten Tag / 24H später!**
+
 Kann man mit den SuperCards alles\* (auch Zigaretten) kaufen?
 Ja.
 
@@ -180,13 +180,26 @@ Nein, nicht mehr.
 
 Maximal 10. Manche Filialen erlauben das Einlösen von mehr Karten, aber um Probleme zu vermeiden sollte man maximal 10 pro Einkauf verwenden.
 
+Achtung: Solltest du genau 10 SuperCards verwenden und deren Guthaben nicht ausreichen um die Rechnung vollständig zu bezahlen kann es passieren, dass du diesen nur in Bar zahlen kannst (hört sich komisch an, ist aber meine eigene Erfahrung)!
+
+Auch MyDealz User können dies bestätigen: https://www.mydealz.de/comments/permalink/24384188
+
+**Gibt es einen Maximalbetrag, den man an AralTankstellen mit SuperCards bezahlen kann?**
+
+Nein. Auf MyDealz finden sich Gerüchte bzlg. einer Grenze von 100€ aber dies bezieht sich auf den Maximalbetrag an Tankkarten, die ein Kunde erwerben darf.
+Das hat somit nichts mit dem Bezahlvorgang mit SuperCards zu tun! 
+
 **Wie kann ich herausfinden, wie viel Guthaben/Restguthaben auf meinen SuperCards ist?**
 
 Wenn du gerade eingekauft hast steht das Restguthaben aller verwendeten Karten auf dem Kassenbon.
 Wenn du das Guthaben separat abfragen willst geht das hier:
+
 https://www.aral-supercard.de/services/kartenguthaben-abrufen/
+
 Falls du deine SuperCards registriert hast kannst du das Guthaben ohne die Eingabe der Sicherheitscodes hier einsehen:
+
 https://www.aral-supercard.de/services/kartenverwaltung/
+
 (Eine Registrierung der SuperCards ist nicht notwendig und zeitaufwändig)
 
 **Auf meiner neu erhaltenen Karte sind angeblich 0€ drauf was soll ich tun?**
@@ -204,14 +217,24 @@ Anhand der E-Mails oder auch des Namens der Aktion auf der Detailseite einer Bes
 Laut offiziellem Aral FAQ (unten verlinkt) ab Aktivierung 36 Monate.
 
 **Wie lange habe ich Zeit, die Karten zu aktivieren?**
-TODO
+
+Bis Dezember 2049.
+
+Quelle: https://www.mydealz.de/comments/permalink/24098442
 
 **Kann ich Karten automatsich zu einem bestimmten Datum in der Zukunft aktivieren lassen?**
 
 Ja über die Aktivierung in der Bestellübersicht kannst du z.B. heute schon festlegen, dass deine Karten in 2 Jahren erst aktiviert werden sollen.
 
 **Meine Frage taucht hier nicht auf wo finde ich eine Antwort?**
-Schau ins offizielle Aral FAQ: https://www.aral-supercard.de/uebersicht/fragen-und-antworten/
+
+Schau ins offizielle Aral FAQ:
+https://www.aral-supercard.de/uebersicht/fragen-und-antworten/
+
+**Wie lautet die Support E-Mail Adresse von Aral?**
+
+service@aral-supercard.de
+
 
 ## Cashback Aral / Groupon FAQ
 
@@ -226,8 +249,8 @@ Warte 1-2 Tage ab und kontaktiere dann den Support des jeweiligen Cashback Anbie
 PayBack kann hartnäckig sein und man muss das Kontaktformular ggf. mehrmals mit denselben Daten ausfüllen um die Punkte nachträglich zu bekommen.
 
 **Wo kann ich bei PayBack eine Nachbuchungsanfrage stellen?**
-
 https://www.payback.de/pb/kontakt_call_center/
+
 Es gibt keine anderen Kontaktmöglichkeiten. Falls man eine Anfrage stellt und weitere Daten nachliefern muss muss man nochmal über diesen Weg gehen - auf E-Mails von PayBack kann man nicht einfach per E-Mail antworten!
 
 **Wo finde ich meine Groupon Kundennummer/User-ID [oft für Cashback Nachbuchungsanfragen benötigt]?**
@@ -235,9 +258,9 @@ Es gibt keine anderen Kontaktmöglichkeiten. Falls man eine Anfrage stellt und w
 Navigiere auf Groupon oben rechts zu "Meine Bestellungen" und klicke rechts bei einem beliebigen Gutschein auf "Details anzeigen".
 Eine PDF öffnet sich und in der Adresszeile deines Browsers findest du deine Kundennummer:
 
-groupon.de/users/<DEINE_KUNDENNUMMER>/groupons/vouchers/<VOUCHER_ID>
+groupon.de/users/**<DEINE_KUNDENNUMMER>**/groupons/vouchers/<VOUCHER_ID>
 
-Die Kundennummer besteht aus 31 Stellen und enthält Bindestriche z.B.:
+Die Kundennummer besteht aus 32 Stellen und enthält Bindestriche z.B.:
 dddd1234-9ab8-12e9-b89a-0cad4d1234c0
 
 Falls du die Kundennummer im PayBack Kontaktformular eingeben willst: Sie ist zu lang für das vorgesehene Feld. Trage sie unten als Kommentar ein!
