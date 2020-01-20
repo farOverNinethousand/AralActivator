@@ -87,11 +87,6 @@ settings.json:
 Enthält alle Zugangsdaten und sonstige Einstellungsmöglichkeiten.
 requires_account --> Falls deaktiviert lassen sich Codes auch manuell und ohne aral-supercard.de Account aktivieren (nicht empfohlen).
 
-## Bekannte Fehler auf der Aral Webseite
-Wenn man eine komplette Bestellung aus Versehen mehrfach aktiviert, enthält die Detailansicht (/services/bestellungen/detailansicht/<Bestellnummer>) mehrere Einträge, obwohl eigentlich nur eine Karte aktiviert wird.
-Screenshot:
-![alt text](https://raw.githubusercontent.com/farOverNinethousand/AralActivator/master/testing/Screenshots/2019_12_05_Bug_eine_Bestellung_mehrmals_aktivieren.png "Veranschaulichung Zugangsdaten in Script eintragen")
-
 ## TODOs (Geordnet nach Prioritäten)
 - Mehr Fehlertoleranz
 - Testen
