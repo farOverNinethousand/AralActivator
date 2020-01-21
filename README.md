@@ -89,10 +89,7 @@ Enthält alle Zugangsdaten und sonstige Einstellungsmöglichkeiten.
 requires_account --> Falls deaktiviert lassen sich Codes auch manuell und ohne aral-supercard.de Account aktivieren (nicht empfohlen).
 
 ## TODOs (Geordnet nach Prioritäten)
-- Mehr Fehlertoleranz
-- Testen
-- Schönere Ausgaben
-- Kleinere Fehlerbehebungen
+- Bugfixing beim nächsten Aral Deal
 
 
 ## Unnützes Wissen über Aral-Supercards
@@ -206,7 +203,7 @@ Prüfe das Guthaben in 1-2 Tagen erneut und wende dich erst an den Aral Support,
 **Werden die 4/5/6€ gratis SuperCards irgendwo im Bestellverlauf oder Warenkorb angezeigt?**
 
 Nein. Im Bestellverlauf sollte ein Hinweis angezeigt werden, aber kein extra "5€ SuperCard gratis" Artikel.
-Anhand der E-Mails oder auch des Namens der Aktion auf der Detailseite einer Bestellung kann man herausfinden, ob/welche Gratis-SuperCards dazu gehören: aral-supercard.de/services/bestellungen/detailansicht/<Bestellnummer>
+Anhand der E-Mails oder auch des Namens der Aktion auf der Detailseite einer Bestellung kann man herausfinden, ob/welche Gratis-SuperCards dazu gehören: aral-supercard.de/services/bestellungen/detailansicht/**Bestellnummer**
 
 **Wie lange sind die SuperCards gültig?**
 
@@ -216,7 +213,7 @@ Laut offiziellem Aral FAQ (unten verlinkt) ab Aktivierung 36 Monate.
 
 Bis Dezember 2049.
 
-Quelle: https://www.mydealz.de/comments/permalink/24098442
+[Quelle](https://www.mydealz.de/comments/permalink/24098442)
 
 **Kann ich Karten automatsich zu einem bestimmten Datum in der Zukunft aktivieren lassen?**
 
@@ -224,8 +221,7 @@ Ja über die Aktivierung in der Bestellübersicht kannst du z.B. heute schon fes
 
 **Meine Frage taucht hier nicht auf wo finde ich eine Antwort?**
 
-Schau ins offizielle Aral FAQ:
-https://www.aral-supercard.de/uebersicht/fragen-und-antworten/
+Schau ins [offizielle Aral FAQ](https://www.aral-supercard.de/uebersicht/fragen-und-antworten/)
 
 **Wie lautet die Support E-Mail Adresse von Aral?**
 
@@ -236,8 +232,12 @@ service@aral-supercard.de
 
 **Wo gibt es Cashback beim kauf von Aral Gutscheinen per Groupon?**
 
-PayBack, Shopbuddies, Aklamio, iGraal, Shoop, uvm.
+PayBack, Shopbuddies, ~~Aklamio~~, iGraal, Shoop, uvm.
+
 Es gibt unterschiedliche Erfahrungen was die Zuverlässigkeit dieser Anbieter angeht.
+Aklamio hat am 20.01.2020 die Bedingungen aktualisiert und bietet kein Cashback mehr für Groupon Aral Käufe.
+
+[Quelle1](https://www.aklamio.com/de/shops/groupon_de) | [Quelle2](https://www.mydealz.de/comments/permalink/24747098)
 
 **Mein Cashback / PayBack Punkte wurde nicht oder nicht korrekt erfasst was kann ich tun?**
 
@@ -246,7 +246,7 @@ PayBack kann hartnäckig sein und man muss das Kontaktformular ggf. mehrmals mit
 
 **Wo kann ich bei PayBack eine Nachbuchungsanfrage stellen?**
 
-https://www.payback.de/pb/kontakt_call_center/
+[Über das PayBack Kontaktformular](https://www.payback.de/pb/kontakt_call_center/)
 
 Es gibt keine anderen Kontaktmöglichkeiten. Falls man eine Anfrage stellt und weitere Daten nachliefern muss muss man nochmal über diesen Weg gehen - auf E-Mails von PayBack kann man nicht einfach per E-Mail antworten!
 
