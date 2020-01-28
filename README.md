@@ -78,7 +78,6 @@ vouchers.json:
 Enthält alle vom Script gesammelten Infos zu deinen Karten.
 Du solltest diese Datei nicht löschen - nur dann kann der Activator auch in Zukunft zuverlässig funktionieren (z.B. bereits hinzugefügte Bestellungen/Karten überspringen).
 Enthält ausschließlich Bestellungen, zu denen Aktivierungscodes in den E-Mails gefunden wurden.
-TODO: Auch alte Bestellungen aus dem Aral Account hinzufügen, die bereits älter sind und händisch aktiviert wurden.
 
 orders.json:
 Enthält die aus dem Aral Account gesammelten Infos zu deinen Bestellungen.
@@ -90,6 +89,7 @@ requires_account --> Falls deaktiviert lassen sich Codes auch manuell und ohne a
 
 ## TODOs (Geordnet nach Prioritäten)
 - Bugfixing beim nächsten Aral Deal
+- Möglichkeit, ein Aktivierungsdatum einzutragen --> Aral würde die Karten nach dem Activator Durchlauf dann automatisch zu diesem Datum aktivieren [Anfrage eines MyDealz Users]
 
 
 ## Unnützes Wissen über Aral-Supercards
