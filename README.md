@@ -173,7 +173,7 @@ Nein, nicht mehr.
 
 Maximal 10. Manche Filialen erlauben das Einlösen von mehr Karten, aber um Probleme zu vermeiden sollte man maximal 10 pro Einkauf verwenden.
 
-Achtung: Solltest du genau 10 SuperCards verwenden und deren Guthaben nicht ausreichen um die Rechnung vollständig zu bezahlen kann es passieren, dass du diesen nur in Bar zahlen kannst (hört sich komisch an, ist aber meine eigene Erfahrung)!
+**Achtung:** Solltest du genau 10 SuperCards verwenden und deren Guthaben nicht ausreichen um die Rechnung vollständig zu bezahlen kann es passieren, dass du diesen nur in Bar zahlen kannst (hört sich komisch an, ist aber meine eigene Erfahrung)! Achtest du nicht drauf, können z.B. [Situationen wie diese](https://www.mydealz.de/comments/permalink/24913895) auftreten ;)
 
 Auch MyDealz User können dies bestätigen: https://www.mydealz.de/comments/permalink/24384188
 
