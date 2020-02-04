@@ -195,6 +195,10 @@ https://www.aral-supercard.de/services/kartenverwaltung/
 
 (Eine Registrierung der SuperCards ist nicht notwendig und zeitaufwändig)
 
+**Was bringt mir die Registrierung von AralSupercards?**
+
+Du bekommst Ersatz bei Verlust und kannst das verbleibende Guthaben einfacher einsehen.
+
 **Auf meiner neu erhaltenen Karte sind angeblich 0€ drauf was soll ich tun?**
 
 Karten, die bereits vor-aktiviert werden sollten werden von Aral manchmal etwas verspätet aktiviert.
