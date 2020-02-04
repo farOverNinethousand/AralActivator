@@ -169,7 +169,7 @@ Ja.
 
 Nein, nicht mehr.
 
-**Wie viele SuperCards kann man pro Einkauf in einer Aral Tankstelle einlösen?**
+**Wie viele SuperCards kann man pro Einkauf in einer Aral Tankstelle einlösen? Gibt es ein Limit?**
 
 Maximal 10. Manche Filialen erlauben das Einlösen von mehr Karten, aber um Probleme zu vermeiden sollte man maximal 10 pro Einkauf verwenden.
 
