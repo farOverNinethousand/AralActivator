@@ -17,12 +17,14 @@ https://www.mydealz.de/deals/aral-supercard-einkaufen-und-tanken-fur-30-kaufen-5
 https://www.aral-supercard.de/services/bestellungen/
 
 ## Installation (Windows)
-1. Installiere Python 3
-2. Installiere folgende python Module per Kommandozeile (pip install <modulname>)
-mechanize und validators
+1. Installiere Python 3 und gehe sicher, dass die Umgebungsvariable dafür während der Installation gesetzt wurde: [Klick](https://praxistipps.chip.de/python-in-cmd-nutzen-so-gehts_96172)
+2. Gehe sicher, dass pip installiert ist: Starte die Kommandozeile **als Admin** und gib folgenden Befehl ein: ``python -m ensurepip``
+3. Installiere folgende Python Pakete/Module per Kommandozeile [Kommandozeile als Admin starten] (pip install <modulname>)
+`` mechanize ``
+und``validators``
 Siehe auch:
 https://riptutorial.com/de/python/example/15322/installation-externer-module-mit-pip
-3. Starte AralActivator.py per Doppelklick.
+4. Starte AralActivator.py per Doppelklick.
 
 ## Vorbereitung
 Du solltest wissen, wie viele Karten noch aktiviert werden müssen um das Ergebnis gegenprüfen zu können.
