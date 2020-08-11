@@ -59,6 +59,9 @@ Du kannst das prüfen, indem du danach in [deiner Bestellübersicht](https://www
 Vermutlich hat Aral die Textbausteine der Aktivierungs-Mails geändert. Bitte lass' mir eine (zensierte) Fassung deiner Mails zukommen, damit ich das aktualisieren kann.
 2. "Fehler: Konnte Informationen aus E-Mails nicht extrahieren":  Eventuell hat sich der Inhalt der Aral E-Mails geändert und das Script benoetigt ein Update
 
+## Bekannte Bugs
+* Das Script kann keine Pagination: Bei manchen Mail-Anbietern (z.B. Yandex) werden max. 50 E-Mails mit Aktivierungscodes gefunden, auch wenn mehr vorhanden sind. Workaround: E-Mails zu einem anderen Anbieter schicken z.B. GMail
+
 #### Wie kann ich die Aktivierung bestimmter Bestellnummern vermeiden?
 Falls du manche Bestellungen aus irgewndwelchen Gründen noch nicht aktivieren möchtest (z.B. Aktivierungscode kam bereits an, Karte aber noch nicht) gibt es zwei Möglichkeiten:
 1. Einfachste Möglichkeit: Lösche die E-Mail mit dem Aktivierungscode dieser Bestellnummer endgültig (inhalt davor sichern).
