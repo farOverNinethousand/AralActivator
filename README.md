@@ -236,4 +236,5 @@ Warum man bei Aral tanken sollte bzw. wie man dort günstiger tanken kann [von m
 https://docs.google.com/document/d/1qPv0Z4vss3M9wdyS4efymtHG_wVNo0bCACLaEnb6Iv0
 
 Aktuelle PayBack (Aral) Coupons:  
-https://www.mydealz.de/search?q=aral+payback
+* https://www.mydealz.de/search?q=aral+payback
+* Alte Google Tabelle (ist nun eine geschlossene FB Gruppe): https://docs.google.com/spreadsheets/d/e/2PACX-1vTJuNdXygioH8a3ti_8kWlFsBcVyEOsF3NE2ze2f5tuIfx6RS94-kZWcC4-UoVU0x6nc0u01hlRrNIk/pubhtml?sfns=mo#
