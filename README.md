@@ -4,9 +4,10 @@ Script zum automatischen Aktivieren von gekauften Aral Karten (Aral "SuperCard")
 ## Problemstellung
 Aral Karten können ohne Aktivierung nicht verwendet werden.
 Das händische Aktivieren vieler Aral Karten kostet Zeit - diese wollen wir uns sparen.
-Aral Karten kauft man idR nur, wenn es Rabatte gibt wie z.B. hier (Nov. 2019):
+Aral Karten kauft man idR.nur, wenn es Rabatte und/oder Cashback - Beispiele:
 - https://www.mydealz.de/deals/aral-supercard-fur-50-kaufen-5-geschenkt-1465573
 - https://www.mydealz.de/deals/aral-supercard-einkaufen-und-tanken-fur-30-kaufen-5-supercard-einkaufen-und-tanken-geschenkt-jeweils-36-monate-gultig-1477242
+- https://www.mydealz.de/deals/42eur-aral-supercard-fur-40eur-einlosbar-ab-1801-groupon-1719400
 
 ## Was das Script tut
 - Aral E-Mails mit Bestellnummern + Aktivierungscode abgreifen
@@ -44,10 +45,10 @@ Tipp: Im GMail Webmailer findest du die Mails z.B. so:
 3. Starte das Script(AralActivator.py). Es sollte alle Bestellnummern samt Aktivierungscodes automatisch erfassen und dich nach den restlichen Informationen fragen.
 4. Solltest du keine Lust mehr auf weitere Aktivierungsvorgänge hast, beende das Programm übers Menü und nicht über das "X", sodass der status gespeichert werden kann.
 
-Du kannst bei jedem Start neue mails in die mails.txt legen - es macht nichts, wenn bereits hinzugefügte Mails in der Datei verbleiben.
+Du kannst bei jedem Start neue Mails in die mails.txt legen - es macht nichts, wenn bereits hinzugefügte Mails in der Datei verbleiben.
 
 ## Anleitung [AralOrderer - erworbene Aral Gutscheincodes automatisch bestellen]
-1. Starte das Script AralOrderer.py.
+1. Starte das Script `AralOrderer.py`.
 2. Gib die z.B. bei Groupon erworbenen Gutscheincodes ein. Du kannst auch den kompletten Inhalt der PDF, die die gutscheincodes enthält einfügen.
 2. Das Script wird dich ggf. nach deinen aral-supercard.de Zugangsdaten fragen.
 3. Gib die URL zum Aktionsartikel an.
@@ -55,9 +56,10 @@ Du kannst bei jedem Start neue mails in die mails.txt legen - es macht nichts, w
 Du kannst das prüfen, indem du danach in [deiner Bestellübersicht](https://www.aral-supercard.de/services/bestellungen/) schaust.
 
 ## Fehler und deren Bedeutung
-1. "Email crawler failed: Length mismatch":  
+1. `"Email crawler failed: Length mismatch"`:  
 Vermutlich hat Aral die Textbausteine der Aktivierungs-Mails geändert. Bitte lass' mir eine (zensierte) Fassung deiner Mails zukommen, damit ich das aktualisieren kann.
-2. "Fehler: Konnte Informationen aus E-Mails nicht extrahieren":  Eventuell hat sich der Inhalt der Aral E-Mails geändert und das Script benoetigt ein Update
+2. `"Fehler: Konnte Informationen aus E-Mails nicht extrahieren"`:  
+   Eventuell hat sich der Inhalt der Aral E-Mails geändert und das Script benoetigt ein Update
 
 ## Bekannte Bugs
 * Das Script kann keine Pagination: Bei manchen Mail-Anbietern (z.B. Yandex) werden max. 50 E-Mails mit Aktivierungscodes gefunden, auch wenn mehr vorhanden sind. Workaround: E-Mails zu einem anderen Anbieter schicken z.B. GMail
@@ -87,7 +89,7 @@ Enthält alle Zugangsdaten und sonstige Einstellungsmöglichkeiten.
 requires_account --> Falls deaktiviert lassen sich Codes auch manuell und ohne aral-supercard.de Account aktivieren (nicht empfohlen).
 
 ## TODOs (Geordnet nach Prioritäten)
-- Bugfixing beim nächsten Aral Deal
+- Bugfixing beim nächsten Aral Deal bei dem die Karten manuell aktiviert werden müssen
 - Möglichkeit, ein Aktivierungsdatum einzutragen --> Aral würde die Karten nach dem Activator Durchlauf dann automatisch zu diesem Datum aktivieren [Anfrage eines MyDealz Users]
 
 
@@ -117,13 +119,8 @@ Per E-Mail bekommt man dann einen Aktivierungscode, der für die gesamte Bestell
 **Wie kommen die SuperCards an?**  
 Per Brief - jede Bestellung in einem Brief also idR. 2 Karten pro Brief.
 
-**Wie kann ich die höherwertigen 30/40€ Karten von den 4/5/6€ vor-aktivierten 'gratis' Karten unterscheiden? / Woran erkenne ich die bereits aktivierten Karten?**  
-Über die Seriennummer auf dem Lieferschein im Brief.
-Die aufgelistete Seriennummer ist immer die 30/40€ Karte - die andere die 4/5/6€ Karte.
-Falls du bei der JP Aktion mitgemacht hast:
-Die 'schicke' JP Karte ist immer die höherwertige.
-Man sollte trotzdem die Seriennummer abgleichen um sicherzugehen, dass man die Karte mit der auf dem Lieferschein aufgeführten Seriennummer erhalten hat!
-Tipp: Markiere die Karten mit einem Permanentmarker
+**Muss ich die Karten überhaupt aktivieren, wenn sie ankommen?**  
+Das variiert von Aktion zu Aktion. Bei [dieser](https://www.mydealz.de/deals/aral-supercard-einkaufen-und-tanken-fur-30-kaufen-5-supercard-einkaufen-und-tanken-geschenkt-jeweils-36-monate-gultig-1477242) im November 2019 musste man sie aktivieren und bei [dieser](https://www.mydealz.de/deals/42eur-aral-supercard-fur-40eur-einlosbar-ab-1801-groupon-1719400) im Dezember 2020 nicht.
 
 **Kommen die Aktivierungscodes per Post oder E-Mail?**  
 Per E-Mail.
@@ -138,9 +135,6 @@ Wenn du z.B. 10 einzelne Bestellungen bei Aral aufgegeben hast wirst du folgende
 **Wann kommen die Aktivierungscodes?**  
 Nachdem die SuperCards verschickt wurden. Es kann auch passieren, dass die Karten noch auf dem Weg sind und die Aktivierungscodes bereits da sind.
 Es empfielt sich, SuperCards erst zu aktivieren wenn sie angekommen sind.
-
-**Muss ich die 4/5/6€ Karten auch aktivieren?**  
-Nein diese sind bereits bei Ankunft aktiviert.
 
 **Wie/Wo kann ich die SuperCards aktivieren?**  
 Es gibt mehrere Möglichkeiten:
@@ -212,11 +206,10 @@ Aklamio hat am 20.01.2020 die Bedingungen aktualisiert und bietet kein Cashback 
 
 **Mein Cashback / PayBack Punkte wurde nicht oder nicht korrekt erfasst was kann ich tun?**  
 Warte 1-2 Tage ab und kontaktiere dann den Support des jeweiligen Cashback Anbieters.
-PayBack kann hartnäckig sein und man muss das Kontaktformular ggf. mehrmals mit denselben Daten ausfüllen um die Punkte nachträglich zu bekommen.
 
-**Wo kann ich bei PayBack eine Nachbuchungsanfrage stellen?**  
-[Über das PayBack Kontaktformular](https://www.payback.de/pb/kontakt_call_center/)  
-Es gibt keine anderen Kontaktmöglichkeiten. Falls man eine Anfrage stellt und weitere Daten nachliefern muss muss man nochmal über diesen Weg gehen - auf E-Mails von PayBack kann man nicht einfach per E-Mail antworten!
+**Wo kann ich bei PayBack eine Nachbuchungsanfrage stellen?**
+Du kannst PayBack über [das Kontaktformular](https://www.payback.de/pb/kontakt_call_center/)  und den [WhatsApp Support](https://www.payback.de/info/whatsapp1) erreichen.  
+PayBack E-Mails, die man als Antwort auf eine Anfrage über's Kontaktformular bekommt kann man nicht einfach per E-Mail beantworten - Antworten geht nur, indem man das Kontaktformular mitsamt aller Informationen erneut ausfüllt!
 
 **Wo finde ich meine Groupon Kundennummer/User-ID [oft für Cashback Nachbuchungsanfragen benötigt]?**  
 Navigiere auf Groupon oben rechts zu "Meine Bestellungen" und klicke rechts bei einem beliebigen Gutschein auf "Details anzeigen".
@@ -230,19 +223,17 @@ Falls du deine Groupon Kundennummer in das PayBack Kontaktformular eingeben will
 Siehe unten bei den Links.
 
 ## Links
-Karten hier 'manuell' bzw. ohne sich einzuloggen aktivieren:
+Karten hier 'manuell' bzw. ohne sich einzuloggen aktivieren:  
 https://www.aral-supercard.de/services/karte-aktivieren/
 
-Mehrere Karten/Bestellungen hier (einfacher) aktivieren, wenn man eingeloggt ist:
+Mehrere Karten/Bestellungen hier (einfacher) aktivieren, wenn man eingeloggt ist:  
 https://www.aral-supercard.de/services/bestellungen/
 
-Hier Guthaben abfragen (Captcha notwendig!):
+Hier Guthaben abfragen (Captcha notwendig!):  
 https://www.aral-supercard.de/services/kartenguthaben-abrufen/
 
-Warum man bei Aral tanken sollte bzw. wie man dort günstiger tanken kann [von mydealz.de/profile/Remy_Scherer]:
+Warum man bei Aral tanken sollte bzw. wie man dort günstiger tanken kann [von mydealz.de/profile/Remy_Scherer]:  
 https://docs.google.com/document/d/1qPv0Z4vss3M9wdyS4efymtHG_wVNo0bCACLaEnb6Iv0
 
-Aktuelle PayBack (Aral) Coupons [oben die Tabelle 'Aral' auswählen]:
-https://docs.google.com/spreadsheets/d/e/2PACX-1vTJuNdXygioH8a3ti_8kWlFsBcVyEOsF3NE2ze2f5tuIfx6RS94-kZWcC4-UoVU0x6nc0u01hlRrNIk/pubhtml?sfns=mo#
-
-Quelle: Ist in der Tabelle verlinkt
+Aktuelle PayBack (Aral) Coupons:  
+https://www.mydealz.de/search?q=aral+payback
