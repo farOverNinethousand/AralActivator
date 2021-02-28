@@ -118,9 +118,9 @@ allFoundSerialNumbers = []
 try:
     foundCards = loadJson("found_cards.json")
     print("Fahre fort mit vorigem Stand gescannter Karten - Anzahl bisher: " + str(len(foundCards)))
-    for scannedCard in foundCards:
-        if "serial_number" in scannedCard:
-            allFoundSerialNumbers.append(scannedCard["serial_number"])
+    for foundCard in foundCards:
+        if "serial_number" in foundCard:
+            allFoundSerialNumbers.append(foundCard["serial_number"])
 except:
     """ No history data available """
     foundCards = []

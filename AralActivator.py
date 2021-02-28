@@ -140,8 +140,8 @@ def activateSemiAutomatic(br, orderArray):
         print('Es wurden %d neue Karten aktiviert' % successfullyActivatedOrdersCounter)
     return
 
-# Old function for manual mode
 def crawlOrderNumbersFromMail(settings, orderArray):
+    """ Old function for manual mode """
     use_old_mail_crawler = False
     if use_old_mail_crawler is True:
         crawl_mailsOLD(settings, orderArray)
@@ -155,7 +155,7 @@ def crawlOrdersFromAccount(br, orderArray):
     max_items_per_page = 20
     numberof_new_items = 0
     newOrdersArray = []
-    # If enabled, script will always crawl all orders even if it was not able to detect new orders on the first page. This is especially useful to keep the order_status updated!
+    """ If enabled, script will always crawl all orders even if it was not able to detect new orders on the first page. This is especially useful to keep the order_status updated! """
     forceCrawlAll = True
     numberof_items_total = 0
     while True:
@@ -240,11 +240,11 @@ def activateAutomatic(br, orderArray):
     max_numberof_failures_in_a_row = 3
     numberof_failures_in_a_row = 0
     printSeparator()
-    # Crawl all OrderNumbers from website
+    """ Crawl all OrderNumbers from website """
     numberofNewOrders = crawlOrdersFromAccount(br, orderArray)
     printSeparator()
 
-    # Collect orders which can be activated
+    """ Collect orders which can be activated """
     activatable_order_numbers = []
     un_activatable_order_numbers = []
     for orderTmp in orderArray:
@@ -354,9 +354,9 @@ def activateAutomatic(br, orderArray):
             # Reset 'failure-in-a-row' counter
             numberof_failures_in_a_row = 0
             print('Erfolgreich aktiviert :)')
-            # Cooldown
+            """ Cooldown - we don't want Aral to block us """
             time.sleep(2)
-            # Continue with the next voucher
+            """ Continue with the next item """
         finally:
             if numberof_failures_in_a_row >= max_numberof_failures_in_a_row:
                 print('Mehr als %d unbekannte Fehler hintereinander --> Abbruch')
@@ -379,7 +379,6 @@ def activateAutomatic(br, orderArray):
     return
 
 
-# Main script START
 print('Welcome to AralActivator %s' % getVersion())
 
 print(
@@ -387,12 +386,12 @@ print(
 
 printSeparator()
 
-# Load settings
 settings = loadSettings()
 requires_account = settings['requires_aral_account']
 
 br = prepareBrowser()
 
+logged_in = False
 if requires_account is False:
     # Continue without loggin in
     print('Fahre ohne login fort')
@@ -419,8 +418,7 @@ if orderArray is None:
     # There is nothing we can do --> Exit
     print('Es konnten keine Bestellungen gefunden werden --> Abbruch')
     smoothExit()
-
-if not logged_in and requires_account:
+elif not logged_in and requires_account:
     print('Anmeldung fehlgeschlagen und manuelles Aktivieren deaktiviert --> Abbruch')
     smoothExit()
 
