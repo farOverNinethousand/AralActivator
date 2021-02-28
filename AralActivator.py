@@ -407,7 +407,7 @@ emailSource = None
 try:
     readFile = open(PATH_STORED_VOUCHERS, 'r')
     settingsJson = readFile.read()
-    readFile.close
+    readFile.close()
     orderArray = json.loads(settingsJson)
 except:
     # print('Failed to load ' + PATH_STORED_VOUCHERS)
