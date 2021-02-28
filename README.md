@@ -35,7 +35,7 @@ Achtung! Deine Zugangsdaten werden unverschlüsselt im Ordner des Scripts gespei
 2. Das Script wird nun alle Karten aus deiner Aral Bestellübersicht aktivieren zu denen es in deinen Mails die passenden Aktivierungscodes findet.
 Am Ende wird ggf. eine Übersicht der fehlgeschlagenen Aktivierungen angezeigt.
 
-##### Anleitung [Halbautomatische Version - veraltet nicht empfohlen!]
+##### Anleitung 1 [Halbautomatische Version - veraltet nicht empfohlen!]
 Um diesen Modus verwenden zu können, musst den in der settings.json Datei den Wert "requires_aral_account" auf "false" setzen.
 1. Lege alle zu aktivierenden Aral Karten samt Lieferschein auf eine Oberfläche in der Nähe deines Computers.
 2. Sammle die Inhalte aller Aral Aktivierungs-Mails und kopiere sie in eine Textdatei mit dem Namen 'mails.txt'.
@@ -47,16 +47,25 @@ Tipp: Im GMail Webmailer findest du die Mails z.B. so:
 
 Du kannst bei jedem Start neue Mails in die mails.txt legen - es macht nichts, wenn bereits hinzugefügte Mails in der Datei verbleiben.
 
-## Anleitung [AralOrderer - erworbene Aral Gutscheincodes automatisch bestellen]
+## Anleitung 2 [AralOrderer - erworbene Aral Gutscheincodes automatisch bestellen]
 1. Starte das Script `AralOrderer.py`.
 2. Gib die z.B. bei Groupon erworbenen Gutscheincodes ein. Du kannst auch den kompletten Inhalt der PDF, die die gutscheincodes enthält einfügen.
 2. Das Script wird dich ggf. nach deinen aral-supercard.de Zugangsdaten fragen.
 3. Gib die URL zum Aktionsartikel an.
 4. Nun sollten alle Gutscheincodes automatisch eingeloest/bestellt werden.
 Du kannst das prüfen, indem du danach in [deiner Bestellübersicht](https://www.aral-supercard.de/services/bestellungen/) schaust.
+   
+## Anleitung 3 [AralCardChecker - Seriennummern von Karten mit Datenbestand des AralOrderers abgleichen]
+Hast du viele Karten gekauft und suchst eine Möglichkeit, möglichst schnell und ohne viel zu tippen den Satensatz einzelner Karten zu finden z.B. um voraktivierte Karten von selbst aktivierten Karten zu unterscheiden?
+1. Starte das Script `AralCardChecker.py`.
+2. Gib den Wert ein, der genommen werden soll, falls eine Seriennummer nicht zugeordnet werden kann.
+3. Gib Seriennummern von Karten ein.
+Vor-aktivierte Karten werden nicht gefunden somit kannst du diese identifizieren.
+   Alle Ergebnisse werden in den Dateien `found_cards.json` und `found_cards.csv` gespeichert.
+4. Falls du die Eingabe beendest und später erneut startest, wird mit dem vorherigen Stand fortgefahren, sofern die letzte `found_cards.json` noch existiert.
 
 ## Fehler und deren Bedeutung
-1. `"Email crawler failed: Length mismatch"`:  
+1. `"Email crawler failed: Length mismatch"`:
 Vermutlich hat Aral die Textbausteine der Aktivierungs-Mails geändert. Bitte lass' mir eine (zensierte) Fassung deiner Mails zukommen, damit ich das aktualisieren kann.
 2. `"Fehler: Konnte Informationen aus E-Mails nicht extrahieren"`:  
    Eventuell hat sich der Inhalt der Aral E-Mails geändert und das Script benoetigt ein Update
