@@ -64,7 +64,6 @@ if not os.path.exists("vouchers.json"):
 try:
     allOrders = loadJson("vouchers.json")
 except:
-    # print('Failed to load ' + PATH_STORED_VOUCHERS)
     print("Fehler beim Laden der Stammdaten -> Tschau")
     sys.exit()
 
@@ -134,8 +133,8 @@ while True:
             print("Seriennummer bereits eingegeben")
             continue
         targetOrder = None
-        for orderTmp in allOrders:
-            if orderTmp.get("serial_number") == userInputSerialNumber:
+        for orderTmp in allOrdersWithSerialNumbers:
+            if orderTmp["serial_number"] == userInputSerialNumber:
                 targetOrder = orderTmp
                 break
         if targetOrder is not None:
