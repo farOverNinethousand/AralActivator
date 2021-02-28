@@ -1,0 +1,2 @@
+mechanize~=0.4.4
+validators~=0.18.1
