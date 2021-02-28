@@ -100,6 +100,8 @@ requires_account --> Falls deaktiviert lassen sich Codes auch manuell und ohne a
 ## TODOs (Geordnet nach Prioritäten)
 - Bugfixing beim nächsten Aral Deal bei dem die Karten manuell aktiviert werden müssen
 - Möglichkeit, ein Aktivierungsdatum einzutragen --> Aral würde die Karten nach dem Activator Durchlauf dann automatisch zu diesem Datum aktivieren [Anfrage eines MyDealz Users]
+- Mithilfe von OCR alle fehlenden Infos von Karten auslesen
+- Karten (optional) automatisch registrieren und Wunsch-PIN setzen
 
 
 ## Unnützes Wissen über Aral-Supercards
