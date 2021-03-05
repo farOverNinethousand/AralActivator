@@ -46,7 +46,7 @@ voucher_input_loop_counter = 0
 crawledVouchers = None
 
 settings = loadSettings()
-br = prepareBrowser()
+br = getNewBrowser()
 
 while total_numberof_vouchers == 0:
     voucherSource = ''

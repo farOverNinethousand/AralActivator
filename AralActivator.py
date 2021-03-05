@@ -7,6 +7,7 @@ from datetime import date
 # Global variables
 PATH_STORED_VOUCHERS = os.path.join('vouchers.json')
 PATH_STORED_ORDERS = os.path.join('orders.json')
+ARAL_BASE_URL = "https://www.aral-supercard.de"
 
 
 # Returns user input Integer
@@ -34,7 +35,7 @@ def getSerialNumber():
     # Function END
 
 
-def getSupercardNumber(supercard_hint):
+def userInputGetSupercardNumber(supercard_hint):
     # According to their website, their card numbers are really 19 digits lol
     exact_length = 19
     if supercard_hint is not None or len(supercard_hint) >= 19 or not supercard_hint.isdecimal():
@@ -91,14 +92,14 @@ def activateSemiAutomatic(br, orderArray):
             # Not needed anymore
             # print('Aktiviere Bestellung: %d' % currOrder['order_number'])
 
-            response = br.open('https://www.aral-supercard.de/services/karte-aktivieren/')
+            response = br.open(ARAL_BASE_URL + '/services/karte-aktivieren/')
             html = getHTML(response)
             form_index = getFormIndexBySubmitKey(br, 'supercardnumber')
             if form_index == -1:
                 print('SuperCardForm konnte nicht gefunden werden')
                 return
             br.select_form(nr=form_index)
-            currOrder['card_number'] = getSupercardNumber(card_number_hint)
+            currOrder['card_number'] = userInputGetSupercardNumber(card_number_hint)
             # We do not need this information
             # currVoucher['serial_number'] = getSerialNumber()
             currOrder['registration_code'] = getRegistrationCode()
@@ -161,7 +162,7 @@ def crawlOrdersFromAccount(br, orderArray):
     while True:
         page_counter += 1
         print('Lade Bestelldaten von Aral | Seite %d von ?' % page_counter)
-        response = br.open('https://www.aral-supercard.de/services/bestellungen?page=' + str(page_counter))
+        response = br.open(ARAL_BASE_URL + '/services/bestellungen?page=' + str(page_counter))
         html = getHTML(response)
         currentCrawledOrderNumbers = None
         currentCrawledOrderStates = None
@@ -218,15 +219,9 @@ def crawlOrdersFromAccount(br, orderArray):
             # This improves speed significantly for users who have many orders in their account
             print('Stoppe Suche nach neuen Bestellnummern, da alle Betellnummern der aktuellen Seite bereits vom letzten Crawlvorgang bekannt sind.')
             break
-        # 2020-05-01: Removed this check as it lead to avoidable failures
-        # elif len(currentCrawledOrderNumbers) < max_items_per_page:
-        #     # Double-check
-        #     print(
-        #         'Vermutlich alle Bestellnummern gefunden --> Aktuelle Seite enthaelt weniger als %d Elemente --> Suche nicht weiter auf naechster Seite' % max_items_per_page)
-        #     break
-        # Wait before accessing next page as we do not to attack the Aral servers ;)
-        time.sleep(2)
-        # Continue
+        else:
+            # Wait before accessing next page as we do not to attack the Aral servers ;)
+            time.sleep(2)
 
     # print('Anzahl NEU erfasster Bestellnummern (seit dem letzten Start): %d auf insgesamt %d Seiten' % (numberof_new_items, page_counter))
     print('%d neue Bestellnummern auf insgesamt %d Seiten gefunden' % (numberof_new_items, page_counter))
@@ -275,11 +270,11 @@ def activateAutomatic(br, orderArray):
             progressCounter += 1
             order_position = findOrderObjectIndexByOrderNumber(orderArray, order_number)
             orderInfo = orderArray[order_position]
-            # TODO: I made a mistake in an older version and stored this as a String so let's parse it to int just to make sure it works
+            # TODO: I made a mistake in an earlier version and stored this as a String so let's parse it to int just to make sure it works
             activationCode = int(orderInfo.get('activation_code', None))
             print('Arbeite an Bestellung %d / %d : Bestellnummer: %d | Aktivierungscode: %d' % (progressCounter, len(activatable_order_numbers), order_number, activationCode))
             print('Aktivierung Schritt 1 / %d: [services/bestellungen/detailansicht/] ...' % total_activation_steps)
-            response = br.open('https://www.aral-supercard.de/services/bestellungen/detailansicht/' + str(order_number))
+            response = br.open(ARAL_BASE_URL + '/services/bestellungen/detailansicht/' + str(order_number))
             html = getHTML(response)
             if 'Diese Bestellung konnte nicht angezeigt werden' in html:
                 # This should never happen
@@ -313,9 +308,7 @@ def activateAutomatic(br, orderArray):
                 continue
             print('Aktivierung Schritt 2 / %d: [services/bestellungen/bestellung-aktivieren/] ...' % total_activation_steps)
             time.sleep(2)
-            response = br.open(
-                'https://www.aral-supercard.de/services/bestellungen/bestellung-aktivieren/' + str(order_number))
-            html = getHTML(response)
+            br.open(ARAL_BASE_URL + '/services/bestellungen/bestellung-aktivieren/' + str(order_number))
             form_index = getFormIndexBySubmitKey(br, 'activationCode')
             if form_index == -1:
                 print('Konnte AktivierungsForm nicht finden --> Abbruch')
@@ -325,7 +318,6 @@ def activateAutomatic(br, orderArray):
             # We want to activate all cards of this order at once although most users who will use this script will only have one card per order!
             br.form['order'] = ['1']
             response = br.submit()
-            html = getHTML(response)
             print('Aktivierung Schritt 3 / %d [Aktivierung bestaetigen] ...' % total_activation_steps)
             form_index = getFormIndexByActionContains(br, 'aktivierung-bestaetigen')
             if form_index == -1:
@@ -354,9 +346,8 @@ def activateAutomatic(br, orderArray):
             # Reset 'failure-in-a-row' counter
             numberof_failures_in_a_row = 0
             print('Erfolgreich aktiviert :)')
-            """ Cooldown - we don't want Aral to block us """
+            # Cooldown - we don't want Aral to block us
             time.sleep(2)
-            """ Continue with the next item """
         finally:
             if numberof_failures_in_a_row >= max_numberof_failures_in_a_row:
                 print('Mehr als %d unbekannte Fehler hintereinander --> Abbruch')
@@ -378,6 +369,27 @@ def activateAutomatic(br, orderArray):
             'Es wurden keine neuen Karten aktiviert --> Entweder es wurden bereits alle Karten aktiviert oder fuer manche Karten/Bestellungen existieren noch keine Aktivierungscodes')
     return
 
+def crawlRegisteredCardIDs(br, orderArray):
+    # TODO: Add pagination support
+    itemsToProcess = []
+    for aralItem in orderArray:
+        if "supercard_nr" in aralItem:
+            itemsToProcess.append(aralItem)
+    # if len(itemsToProcess) == 0:
+    #     print("Es gibt keine Datensaetze mit Supercard-Nummer -> Suche nach registrierten Karten abgebrochen")
+    #     return
+
+    response = br.open(ARAL_BASE_URL + '/services/kartenverwaltung')
+    html = getHTML(response)
+    # TODO: Add functionality
+    registeredCardHTMLs = re.compile(r'<tr>(.*?/kartenansicht/\\d+.*?)</tr>').findall(html)
+    for registeredCardHTML in registeredCardHTMLs:
+        cardNumberRegex = re.compile('Kartennummer\\s*:\\s*\">(\\d+)<').search(registeredCardHTML)
+        registeredCardIDRegex = re.compile('kartenansicht/(\\d+)').search(registeredCardHTML)
+        if not cardNumberRegex or not registeredCardIDRegex:
+            print("Ueberspringe ungueltigen Eintrag")
+            continue
+        print("Karte gefunden: " + cardNumberRegex.group(1))
 
 print('Welcome to AralActivator %s' % getVersion())
 
@@ -389,14 +401,28 @@ printSeparator()
 settings = loadSettings()
 requires_account = settings['requires_aral_account']
 
-br = prepareBrowser()
-
 logged_in = False
+br = None
 if requires_account is False:
     # Continue without loggin in
     print('Fahre ohne login fort')
 else:
-    logged_in = loginAccount(br, settings)
+    if settings.get('login_aral_email', None) is None or settings.get('login_aral_password', None) is None:
+        print('Login aral-supercard.de Account')
+        print('Erster Start!')
+        print(
+            'Falls du Karten ueber mehrere Accounts bestellt hast musst du dieses Script jeweils 1x pro Account in verschiedenen Ordnern duplizieren!')
+        print(
+            'Bedenke, dass auch die jeweiligen E-Mail Konten moeglichst nur die E-Mails enthalten sollten, die auch zu den Bestellungen des eingetragenen Aral Accounts passen ansonsten wird der Aktivierungsprozess unnötig lange dauern und es erscheinen ggf. Fehlermeldungen.')
+        print('Achtung: Logge dich NICHT per Browser auf der Aral Webseite ein, waehrend dieses Script laeuft!')
+        print('Gib deine aral-supercard.de Zugangsdaten ein')
+        print('Gib deine E-Mail ein:')
+        settings['login_aral_email'] = input()
+        print('Gib dein Passwort ein:')
+        settings['login_aral_password'] = input()
+        with open(getSettingsPath(), 'w') as outfile:
+            json.dump(settings, outfile)
+    logged_in, br = loginAccount(settings['login_aral_email'], settings['login_aral_password'])
 
 printSeparator()
 
@@ -409,7 +435,7 @@ try:
     readFile.close()
     orderArray = json.loads(settingsJson)
 except:
-    # print('Failed to load ' + PATH_STORED_VOUCHERS)
+    print('Failed to load ' + PATH_STORED_VOUCHERS)
     pass
 
 crawlOrderNumbersFromMail(settings, orderArray)
@@ -428,6 +454,7 @@ try:
         activateSemiAutomatic(br, orderArray)
     else:
         activateAutomatic(br, orderArray)
+    # crawlRegisteredCardIDs(br, orderArray)
 
 finally:
     # Make sure to always save orders!
@@ -437,8 +464,4 @@ finally:
     with open(getSettingsPath(), 'w') as outfile:
         json.dump(settings, outfile)
 
-    # TODO: Save output to logfile so user can view it later
-    # Debug
-    # raise
-    # input()
     smoothExit()

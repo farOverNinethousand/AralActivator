@@ -50,7 +50,7 @@ def getHTML(response):
     return response.read().decode('utf-8', 'ignore')
 
 
-def prepareBrowser():
+def getNewBrowser():
     # Prepare browser
     br = mechanize.Browser()
     # br.set_all_readonly(False)    # allow everything to be written to
@@ -124,28 +124,18 @@ def findOrderObjectIndexByOrderNumber(orderArray, orderNumber):
         index += 1
     return -1
 
-def loginAccount(br, settings):
+def loginAccount(email: str, password: str):
+    br = getNewBrowser()
+    # TODO: Fix loadCookies handling
     cookies = mechanize.LWPCookieJar(getCookiesPath())
-    if settings.get('login_aral_email', None) is None or settings.get('login_aral_password', None) is None:
-        print('Login aral-supercard.de Account')
-        print('Erster Start!')
-        print(
-            'Falls du Karten ueber mehrere Accounts bestellt hast musst du dieses Script jeweils 1x pro Account in verschiedenen Ordnern duplizieren!')
-        print(
-            'Bedenke, dass auch die jeweiligen E-Mail Konten moeglichst nur die E-Mails enthalten sollten, die auch zu den Bestellungen des eingetragenen Aral Accounts passen ansonsten wird der Aktivierungsprozess unnötig lange dauern und es erscheinen ggf. Fehlermeldungen.')
-        print('Achtung: Logge dich NICHT per Browser auf der Aral Webseite ein waehrend dieses Script laeuft!')
-        print('Gib deine aral-supercard.de Zugangsdaten ein')
-        print('Gib deine E-Mail ein:')
-        settings['login_aral_email'] = input()
-        print('Gib dein Passwort ein:')
-        settings['login_aral_password'] = input()
+    if email is None or password is None:
+        print("Kein Zugangsdaten vorhanden...")
+        return False, br
     elif cookies is not None and os.path.exists(getCookiesPath()):
         # Try to login via stored cookies first - Aral only allows one active session which means we will most likely have to perform a full login
-        print('Login aral-supercard.de Account | %s' % settings['login_aral_email'])
+        print('Login aral-supercard.de Account | ' + email)
         print('Versuche Login ueber zuvor gespeicherte Cookies ...')
         br.set_cookiejar(cookies)
-    account_email = settings['login_aral_email']
-    account_password = ['login_aral_password']
     response = br.open(getBaseDomain())
     html = getHTML(response)
     logged_in = isLoggedIN(html)
@@ -153,26 +143,24 @@ def loginAccount(br, settings):
         if cookies is not None and os.path.exists(getCookiesPath()):
             print('Login ueber Cookies fehlgeschlagen --> Versuche vollstaendigen Login')
         else:
-            print('Login aral-supercard.de Account | %s' % settings['login_aral_email'])
-        response = br.open(getBaseDomain() + '/login')
+            print('Login aral-supercard.de Account | ' + email)
+        br.open(getBaseDomain() + '/login')
         form_index = getFormIndexBySubmitKey(br, 'email')
         if form_index == -1:
             print('Login-Form konnte nicht gefunden werden')
-            return False
+            return False, br
         br.select_form(nr=form_index)
-        br['email'] = settings['login_aral_email']
-        br['password'] = settings['login_aral_password']
+        br['email'] = email
+        br['password'] = password
         response = br.submit()
         html = getHTML(response)
         if not isLoggedIN(html):
             print(
                 'Login fehlgeschlagen - Ungueltige Zugangsdaten? Korrigiere deine eingetragenen Zugangsdaten in der Datei %s bevor du dieses Script wieder startest!' % getSettingsPath())
-            logged_in = False
-        else:
-            print('Vollstaendiger Login erfolgreich')
-            logged_in = True
-    else:
-        print('Login ueber gueltige Cookies erfolgreich')
+            return False, br
+        print('Vollstaendiger Login erfolgreich')
+        logged_in = True
+    cookies = br._ua_handlers['_cookies'].cookiejar
 
     if cookies is not None:
         # Save cookies and logindata
@@ -180,9 +168,7 @@ def loginAccount(br, settings):
         cookies.save()
     else:
         print('Keine Cookies zum Speichern vorhanden')
-    with open(getSettingsPath(), 'w') as outfile:
-        json.dump(settings, outfile)
-    return logged_in
+    return logged_in, br
 
 
 def isLoggedIN(html):
