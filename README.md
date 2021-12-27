@@ -119,10 +119,10 @@ Zudem stehen auf jeder Aral Karte Folgende Infos:
 Per E-Mail bekommt man dann einen Aktivierungscode, der für die gesamte Bestellung(?) gilt - meistens muss man sowieso nur eine Karte aktivieren.
 
 ### Haltbarkeit und Einlösebedingungen
-- SuperCards sind ab Aktivierungsdatum 36 Monate lang' gültig
+- SuperCards sind ab Aktivierungsdatum 36 Monate lang gültig
 - Manche der gratis Karten werden erst zu einem bestimmten Datum automatisch von Aral aktiviert
 - SuperCards sind idR. erst ab dem nächsten Tag nach Aktivierung gültig
-- [03.01.2020] Man kann an der Tankstellen-Kasse beliebig viele Karten verwenden; es gab mal eine angebliche Maximalsumme von 100€, die aber nicht mehr zu existieren scheint: https://www.mydealz.de/comments/permalink/24512889
+- [03.01.2020] Man kann an der Tankstellen-Kasse beliebig viele Karten verwenden; es gab mal eine angebliche Maximalsumme von 100€, die aber nicht mehr zu existieren scheint siehe: https://www.mydealz.de/comments/permalink/24512889
 
 # Das große Aral FAQ - alles rund um Kauf- und Aktivierung von SuperCards, Cashback usw.
 ## Aral FAQ
@@ -131,7 +131,8 @@ Per E-Mail bekommt man dann einen Aktivierungscode, der für die gesamte Bestell
 Per Brief - jede Bestellung in einem Brief also idR. 2 Karten pro Brief.
 
 **Muss ich die Karten überhaupt aktivieren, wenn sie ankommen?**  
-Das variiert von Aktion zu Aktion. Bei [dieser](https://www.mydealz.de/deals/aral-supercard-einkaufen-und-tanken-fur-30-kaufen-5-supercard-einkaufen-und-tanken-geschenkt-jeweils-36-monate-gultig-1477242) im November 2019 musste man sie aktivieren und bei [dieser](https://www.mydealz.de/deals/42eur-aral-supercard-fur-40eur-einlosbar-ab-1801-groupon-1719400) im Dezember 2020 nicht.
+Das variiert von Aktion zu Aktion.  
+Bei [dieser](https://www.mydealz.de/deals/aral-supercard-einkaufen-und-tanken-fur-30-kaufen-5-supercard-einkaufen-und-tanken-geschenkt-jeweils-36-monate-gultig-1477242) im November 2019 musste man sie aktivieren und bei [dieser](https://www.mydealz.de/deals/42eur-aral-supercard-fur-40eur-einlosbar-ab-1801-groupon-1719400) im Dezember 2020 nicht.
 
 **Kommen die Aktivierungscodes per Post oder E-Mail?**  
 Per E-Mail.
@@ -191,13 +192,18 @@ Nein. Im Bestellverlauf sollte ein Hinweis angezeigt werden, aber kein extra "5�
 Anhand der E-Mails oder auch des Namens der Aktion auf der Detailseite einer Bestellung kann man herausfinden, ob/welche Gratis-SuperCards dazu gehören: aral-supercard.de/services/bestellungen/detailansicht/**Bestellnummer**
 
 **Wie lange sind die SuperCards gültig?**  
-Laut offiziellem Aral FAQ (unten verlinkt) ab Aktivierung 36 Monate.
+Laut offiziellem Aral FAQ (unten verlinkt) ab Aktivierung 36 Monate.  
+Es scheint jedoch zu gelten: 3 Jahre ab Ende des Aktivierungsjahres.  
+Beispiel: Aktivierung am: 17.01.2022  
+Gültig bis: 31.12.2025  
+(Danke an MyDealz User [hotspot22](https://www.mydealz.de/profile/hotspot22) - [Quelle](https://www.mydealz.de/comments/permalink/34560992))
 
 **Wie lange habe ich Zeit, die Karten zu aktivieren?**  
 Bis Dezember 2049. [[Quelle](https://www.mydealz.de/comments/permalink/24098442)]
 
 **Kann ich Karten automatsich zu einem bestimmten Datum in der Zukunft aktivieren lassen?**  
-Ja über die Aktivierung in der Bestellübersicht kannst du z.B. heute schon festlegen, dass deine Karten in 2 Jahren erst aktiviert werden sollen.
+Ja über die Aktivierung in der Bestellübersicht kannst du z.B. heute schon festlegen, dass deine Karten in 2 Jahren erst aktiviert werden sollen.  
+Das geht nicht mit Karten, die nach der Bestellung automatisch zu einem bestimmten Datum aktiviert werden.
 
 **Meine Frage taucht hier nicht auf wo finde ich eine Antwort?**  
 Schau ins [offizielle Aral FAQ](https://www.aral-supercard.de/uebersicht/fragen-und-antworten/)
@@ -208,6 +214,8 @@ Schau ins [offizielle Aral FAQ](https://www.aral-supercard.de/uebersicht/fragen-
 
 ## Cashback Aral / Groupon FAQ
 
+# Cashback FAQ
+
 **Wo gibt es Cashback beim kauf von Aral Gutscheinen per Groupon?**  
 PayBack, Shopbuddies, ~~Aklamio~~, iGraal, Shoop, uvm.  
 Es gibt unterschiedliche Erfahrungen was die Zuverlässigkeit dieser Anbieter angeht.
@@ -215,12 +223,17 @@ Aklamio hat am 20.01.2020 die Bedingungen aktualisiert und bietet kein Cashback 
 Generell gab es seit anfang 2020 nur noch sehr selten Cashback auf Aral Deals.  
 [Quelle1](https://www.aklamio.com/de/shops/groupon_de) | [Quelle2](https://www.mydealz.de/comments/permalink/24747098)
 
-**Mein Cashback / PayBack Punkte wurde nicht oder nicht korrekt erfasst was kann ich tun?**  
-Warte 1-2 Tage ab und kontaktiere dann den Support des jeweiligen Cashback Anbieters.
+**Mein Cashback / Payback Punkte wurde nicht oder nicht korrekt erfasst was kann ich tun?**  
+Warte 6-7 Werktage ab und kontaktiere dann den Support des jeweiligen Cashback Anbieters.
 
-**Wo kann ich bei PayBack eine Nachbuchungsanfrage stellen?**
+**Wo kann ich bei Paynack eine Nachbuchungsanfrage stellen?**
 Du kannst PayBack über [das Kontaktformular](https://www.payback.de/pb/kontakt_call_center/)  und den [WhatsApp Support](https://www.payback.de/info/whatsapp1) erreichen.  
 PayBack E-Mails, die man als Antwort auf eine Anfrage über's Kontaktformular bekommt kann man nicht einfach per E-Mail beantworten - Antworten geht nur, indem man das Kontaktformular mitsamt aller Informationen erneut ausfüllt!
+
+**Wo finde ich immer aktuelle Aral Payback X-fach Coupons?**  
+Siehe unten bei den Links.
+
+# Groupon FAQ
 
 **Wo finde ich meine Groupon Kundennummer/User-ID [oft für Cashback Nachbuchungsanfragen benötigt]?**  
 Navigiere auf Groupon oben rechts zu "Meine Bestellungen" und klicke rechts bei einem beliebigen Gutschein auf "Details anzeigen".
@@ -230,8 +243,9 @@ Die Kundennummer besteht aus 32 Stellen und enthält Bindestriche z.B.:
 dddd1234-9ab8-12e9-b89a-0cad4d1234c0  
 Falls du deine Groupon Kundennummer in das PayBack Kontaktformular eingeben willst: Sie ist zu lang für das vorgesehene Feld. Trage sie unten als Kommentar ein!
 
-**Wo finde ich immer aktuelle Aral PayBack X-fach Coupons?**  
-Siehe unten bei den Links.
+**Wie ist die bei Groupon angegebene Gültigkeit zu verstehen bzw. was bedeutet z.B. `Das Guthaben auf der Aral SuperCard muss bis 31.12.2025 abgegolten werden.` und wie lange sind über Groupon gekaufte Karten wirklich gültig?**  
+* Die **Gültigkeit**, die Groupon angibt liegt oft 1-2 Monate in der Zukunft und kann ignoriert werden.
+* Die Karten werden oft am Anfang/Ende eines Monats automatisch aktiviert: z.B. Gültigkeit 31.12.2022, Versand am 14.01.2022, **Aktivierung** am 17.01.2022 --> Echte Gültigkeit bis: 31.12.2025 (steht unter den Konditionen bei `...abgegolten werden`)
 
 ## Links
 Karten hier 'manuell' bzw. ohne sich einzuloggen aktivieren:  
@@ -243,9 +257,12 @@ https://www.aral-supercard.de/services/bestellungen/
 Hier Guthaben abfragen (Captcha notwendig!):  
 https://www.aral-supercard.de/services/kartenguthaben-abrufen/
 
-Warum man bei Aral tanken sollte bzw. wie man dort günstiger tanken kann [von mydealz.de/profile/Remy_Scherer]:  
+Warum man bei Aral tanken sollte bzw. wie man dort günstiger tanken kann - von MyDealz User [Remy_Scherer](https://www.mydealz.de/profile/Remy_Scherer):  
 https://docs.google.com/document/d/1qPv0Z4vss3M9wdyS4efymtHG_wVNo0bCACLaEnb6Iv0
 
 Aktuelle PayBack (Aral) Coupons:
 * https://www.mydealz.de/search?q=aral+payback
 * Alte Google Tabelle (ist nun eine geschlossene FB Gruppe): https://docs.google.com/spreadsheets/d/e/2PACX-1vTJuNdXygioH8a3ti_8kWlFsBcVyEOsF3NE2ze2f5tuIfx6RS94-kZWcC4-UoVU0x6nc0u01hlRrNIk/pubhtml?sfns=mo#
+
+Aktuelle Aral Groupon Angebote:
+* https://www.mydealz.de/search?q=aral+groupon
