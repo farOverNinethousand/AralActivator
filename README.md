@@ -176,9 +176,8 @@ Das hat somit nichts mit dem Bezahlvorgang mit SuperCards zu tun!
 Wenn du gerade eingekauft hast steht das Restguthaben aller verwendeten Karten auf dem Kassenbon.
 Wenn du das Guthaben separat abfragen willst geht das hier:  
 https://www.aral-supercard.de/services/kartenguthaben-abrufen/  
-Falls du deine SuperCards registriert hast kannst du das Guthaben ohne die Eingabe der Sicherheitscodes hier einsehen:  
-https://www.aral-supercard.de/services/kartenverwaltung/  
-(Eine Registrierung der SuperCards ist nicht notwendig und zeitaufwändig)
+Falls du deine SuperCards registriert hast, kannst du das Guthaben und das Gültigkeitsdatum jederzeit ohne die Eingabe der Sicherheitscodes hier einsehen:  
+https://www.aral-supercard.de/services/kartenverwaltung/
 
 **Was bringt mir die Registrierung von AralSupercards?**  
 Du bekommst Ersatz bei Verlust und kannst das verbleibende Guthaben einfacher einsehen.
