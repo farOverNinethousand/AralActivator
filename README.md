@@ -213,6 +213,7 @@ Schau ins [offizielle Aral FAQ](https://www.aral-supercard.de/uebersicht/fragen-
 PayBack, Shopbuddies, ~~Aklamio~~, iGraal, Shoop, uvm.  
 Es gibt unterschiedliche Erfahrungen was die Zuverlässigkeit dieser Anbieter angeht.
 Aklamio hat am 20.01.2020 die Bedingungen aktualisiert und bietet kein Cashback mehr für Groupon Aral Käufe.  
+Generell gab es seit anfang 2020 nur noch sehr selten Cashback auf Aral Deals.  
 [Quelle1](https://www.aklamio.com/de/shops/groupon_de) | [Quelle2](https://www.mydealz.de/comments/permalink/24747098)
 
 **Mein Cashback / PayBack Punkte wurde nicht oder nicht korrekt erfasst was kann ich tun?**  
