@@ -26,7 +26,7 @@ und
 ## Vorbereitung
 Du solltest wissen, wie viele Karten noch aktiviert werden müssen um das Ergebnis gegenprüfen zu können.
 Du musst deine aral-supercard.de Zugangsdaten UND deine E-Mail Zugangsdaten samt IMAP-URL wissen.
-Achtung! Deine Zugangsdaten werden unverschlüsselt im Ordner des Scripts gespeichert!
+**Achtung!** Deine Zugangsdaten werden unverschlüsselt im Ordner des Scripts gespeichert!
 
 ## Anleitung [Vollautomatische Version - empfohlen]
 1. Starte das Script(AralActivator.py). Es wird dich beim ersten Start nach deinen Aral-Supercard.de Zugangsdaten UND E-Mail IMAP Zugangsdaten fragen.
