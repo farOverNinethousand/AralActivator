@@ -224,9 +224,10 @@ Ja, aber nur wenn du dein Payback Konto zuvor mit dem MeinAral App Konto verknü
 Nein - lediglich die MeinAral Karte und ggf. Payback Mehrfachcoupons.
 
 **Auf meinem Kassenbon wird Payback nicht aufgeführt, obwohl ich meine MeinAral Kundenkarte vorgezeigt habe, woran liegt das?**  
-Stand 07.01.2022 fehlen diese Informationen mangels Implementation seitens Aral.  
+Stand 07.01.2022 fehlen diese Informationen auf dem Kassenbon mangels Implementation seitens Aral.  
+Auch die Kassierer Fragen manchmal noch nach der Payback Karte, wenn man nur die MeinAral Karte und einen Mehrfachcoupon zeigt jedoch werden die Punkte am Ende ohne zusätzliches Zeigen der Payback Karte gutgeschrieben.  
 Du solltest deine Payback Punkte kurz nach dem Tankvorgang in der App sehen.  
-Das wird vermutlich bald von Aral nachgebessert.
+Das wird hoffentlich bald von Aral nachgebessert.
 
 **Ich habe mehrere Coupons in der MeinAral App - welcher wird verwendet und kann ich das beeinflussen?**  
 Bisher wurde immer der 'bessere' verwendet (oder der, der zuerst abläuft?).  
