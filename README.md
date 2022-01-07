@@ -211,6 +211,30 @@ Schau ins [offizielle Aral FAQ](https://www.aral-supercard.de/uebersicht/fragen-
 **Wie lautet die Support E-Mail Adresse von Aral?**  
 `service@aral-supercard.de`
 
+# MeinAral (App) FAQ
+
+**Wichtig: Stand 01.01.2022 sind die MeinAral Accounts der mein.aral.de Webseite und die, die in der [MeinAral App](https://mein.aral.de/service-tools/meinaral-app/) erstellt wurden unterschiedliche Accounts/Zugangsdaten!**  
+Dieses FAQ bezieht sich lediglich auf die MeinAral App und die darin enthaltenen Coupons!!  
+Coupons der mein.aral.de Webseite sind idR. mit Payback und Payback Mehrfachcoupons kombinierbar ([Beispiel](https://www.mydealz.de/deals/1-liter-kraftstoff-gratis-ab-30-liter-im-aral-adventskalender-1919227)).
+
+**Sind MeinAral Coupons mit Payback kombinierbar?**  
+Ja, aber nur wenn du dein Payback Konto zuvor mit dem MeinAral App Konto verknüpfst.
+
+**Muss ich meine Payback Karte an der Kasse zeigen, wenn ich meine MeinAral Kundenkarte zeige und Payback bereits damit verknüpft habe?**  
+Nein - lediglich die MeinAral Karte und ggf. Payback Mehrfachcoupons.
+
+**Auf meinem Kassenbon wird Payback nicht aufgeführt, obwohl ich meine MeinAral Kundenkarte vorgezeigt habe, woran liegt das?**  
+Stand 07.01.2022 fehlen diese Informationen mangels Implementation seitens Aral.  
+Du solltest deine Payback Punkte kurz nach dem Tankvorgang in der App sehen.  
+Das wird vermutlich bald von Aral nachgebessert.
+
+**Ich habe mehrere Coupons in der MeinAral App - welcher wird verwendet und kann ich das beeinflussen?**  
+Bisher wurde immer der 'bessere' verwendet (oder der, der zuerst abläuft?).  
+Gab es z.B. gleichzeitig einen '2 Cent pro Liter Rabatt' ([Beispiel](https://www.mydealz.de/deals/aral-app-3-cent-ab-26-liter-sparen-1905779)) Coupon und einen '1L gratis ab 20L' ([Beispiel](https://www.mydealz.de/deals/aral-1l-gratis-bei-20l-1925481?page=3#thread-comments)), wurde der letztere verwendet.  
+Da man die Coupons in der MeinAral App nicht aktivieren kann/muss, kann man keinen Einfluss darauf nehmen.
+
+**Kann ich dasselbe Payback Konto mit mehreren verschiedenen MeinAral Konten verknüpfen?**  
+Diese frage ist noch nicht geklärt.
 
 ## Cashback Aral / Groupon FAQ
 
