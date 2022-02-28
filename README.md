@@ -221,7 +221,7 @@ Coupons der mein.aral.de Webseite sind idR. mit Payback und Payback Mehrfachcoup
 Ja, aber nur wenn du dein Payback Konto zuvor mit dem MeinAral App Konto verknüpfst.
 
 **Muss ich meine Payback Karte an der Kasse zeigen, wenn ich meine MeinAral Kundenkarte zeige und Payback bereits damit verknüpft habe?**  
-Nein - lediglich die MeinAral Karte und ggf. Payback Mehrfachcoupons.
+Nein - lediglich die MeinAral Karte und ggf. PB Mehrfachcoupons.
 
 **Auf meinem Kassenbon wird Payback nicht aufgeführt, obwohl ich meine mit Payback verknüpfte MeinAral Kundenkarte vorgezeigt habe, woran liegt das?**  
 Stand 07.01.2022 fehlen diese Informationen auf dem Kassenbon mangels Implementation seitens Aral.  
@@ -235,7 +235,8 @@ Gab es z.B. gleichzeitig einen '2 Cent pro Liter Rabatt' ([Beispiel](https://www
 Da man die Coupons in der MeinAral App nicht aktivieren kann/muss, kann man keinen Einfluss darauf nehmen.
 
 **Kann ich dasselbe Payback Konto mit mehreren verschiedenen MeinAral Konten verknüpfen?**  
-Diese Frage ist noch nicht geklärt.
+Ja!
+(Stand: 28.02.2022)
 
 ## Cashback Aral / Groupon FAQ
 
