@@ -40,7 +40,6 @@ def getSettingsPath():
 def getCookiesPath():
     return os.path.join('cookies.txt')
 
-
 def getBaseDomain():
     return 'https://www.aral-supercard.de'
 
